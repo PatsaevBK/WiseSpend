@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.compose)
-    alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.android.library)
 }
 
@@ -10,7 +9,7 @@ kotlin {
     androidTarget()
 
     sourceSets {
-        commonMain.dependencies {
+        commonMain {
             dependencies {
                 implementation(compose.runtime)
                 implementation(compose.foundation)

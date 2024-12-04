@@ -25,6 +25,10 @@ android {
         compose = true
     }
 
+    composeOptions{
+        kotlinCompilerExtensionVersion = "1.5.4"
+    }
+
     kotlinOptions {
         jvmTarget = "17"
     }
@@ -32,8 +36,5 @@ android {
 
 dependencies {
     implementation(project(":shared"))
-    implementation(libs.androidx.activity.ktx)
-    implementation(libs.androidx.runtime.android)
-
     implementation(libs.androidx.activity.compose)
 }

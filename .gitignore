@@ -5,3 +5,8 @@
 build
 
 .idea
+.kotlin
+.DS_Store
+*.cache
+*/build/
+*/out/

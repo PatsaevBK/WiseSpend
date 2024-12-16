@@ -4,7 +4,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import info.javaway.spend_sense.greeting
-import info.javaway.spend_sense.root.MainScreen
+import info.javaway.spend_sense.root.compose.RootScreen
 
 fun main() {
     greeting()
@@ -14,7 +14,7 @@ fun main() {
             state = rememberWindowState().apply { size = DpSize(200.dp, 200.dp) },
             title = "SpendSense"
         ) {
-            MainScreen()
+            RootScreen()
         }
     }
 }

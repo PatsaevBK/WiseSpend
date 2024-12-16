@@ -4,7 +4,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import info.javaway.spend_sense.greeting
-import info.javaway.spend_sense.ui.MainScreen
+import info.javaway.spend_sense.root.MainScreen
 
 fun main() {
     greeting()

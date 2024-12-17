@@ -19,7 +19,7 @@ abstract class BaseViewModel<State : BaseViewState, Event : BaseViewEvent> {
     val events = _events.receiveAsFlow()
 
     fun updateState(block: State.() -> State) {
-        _state.value = block(_state.value)
+        _state.value = _state.value.block()
     }
 
     fun pushEvent(event: Event) {

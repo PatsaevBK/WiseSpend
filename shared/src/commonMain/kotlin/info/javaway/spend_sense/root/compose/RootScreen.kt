@@ -6,17 +6,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import info.javaway.spend_sense.categories.compose.CategoriesScreen
 import info.javaway.spend_sense.common.ui.AppThemeProvider
 import info.javaway.spend_sense.common.ui.Theme
+import info.javaway.spend_sense.events.common.EventsScreen
 import info.javaway.spend_sense.root.RootViewModel
-import info.javaway.spend_sense.settings.compose.SettingScreen
+import info.javaway.spend_sense.root.model.AppTab
 import info.javaway.spend_sense.settings.SettingsViewModel
+import info.javaway.spend_sense.settings.compose.SettingScreen
 
 @Composable
 fun RootScreen(
     modifier: Modifier = Modifier,
-    rootViewModel: RootViewModel = RootViewModel()
+    rootViewModel: RootViewModel
 ) {
     val state by rootViewModel.state.collectAsState()
     Theme(
@@ -24,7 +28,20 @@ fun RootScreen(
         appPrefs = state.appPrefs
     ) {
         Box(modifier = modifier.fillMaxSize().background(AppThemeProvider.colors.background)) {
-            SettingScreen(modifier = modifier, settingsViewModel = SettingsViewModel())
+            RootNavigation(state.selectedTab)
+            RootBottomBar(
+                modifier = Modifier.align(Alignment.BottomCenter),
+                selectedTab = state.selectedTab
+            ) { rootViewModel.handleClickOnTab(it) }
         }
+    }
+}
+
+@Composable
+fun RootNavigation(selectedTab: AppTab) {
+    when (selectedTab) {
+        AppTab.Categories -> CategoriesScreen()
+        AppTab.Events -> EventsScreen()
+        AppTab.Settings -> SettingScreen(settingsViewModel = SettingsViewModel())
     }
 }

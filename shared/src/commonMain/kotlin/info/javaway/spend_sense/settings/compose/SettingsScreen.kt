@@ -18,6 +18,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import dev.icerock.moko.resources.compose.stringResource
+import info.javaway.spend_sense.MR
 import info.javaway.spend_sense.common.ui.AppThemeProvider
 import info.javaway.spend_sense.settings.SettingsViewModel
 
@@ -48,7 +50,7 @@ fun SettingScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    "Dark theme",
+                    stringResource(MR.strings.dark_theme),
                     modifier = Modifier.weight(1f),
                     color = AppThemeProvider.colors.onSurface
                 )

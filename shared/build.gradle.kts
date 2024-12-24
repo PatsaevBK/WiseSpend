@@ -28,6 +28,8 @@ kotlin {
 
                 api(libs.resources.core)
                 api(libs.resources.compose)
+
+                implementation(libs.multiplatform.settings)
             }
         }
 

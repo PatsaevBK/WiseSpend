@@ -13,7 +13,7 @@ fun main() {
         val rootViewModel = RootViewModel()
         Window(
             onCloseRequest = { exitApplication() },
-            state = rememberWindowState().apply { size = DpSize(200.dp, 200.dp) },
+            state = rememberWindowState().apply { size = DpSize(1200.dp, 1200.dp) },
             title = "SpendSense"
         ) {
             RootScreen(rootViewModel = rootViewModel)

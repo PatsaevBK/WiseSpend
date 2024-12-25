@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import info.javaway.spend_sense.categories.compose.CategoriesScreen
 import info.javaway.spend_sense.common.ui.AppThemeProvider
 import info.javaway.spend_sense.common.ui.Theme
+import info.javaway.spend_sense.di.getKoinInstance
 import info.javaway.spend_sense.events.common.EventsScreen
 import info.javaway.spend_sense.root.RootViewModel
 import info.javaway.spend_sense.root.model.AppTab
@@ -42,6 +43,6 @@ fun RootNavigation(selectedTab: AppTab) {
     when (selectedTab) {
         AppTab.Categories -> CategoriesScreen()
         AppTab.Events -> EventsScreen()
-        AppTab.Settings -> SettingScreen(settingsViewModel = SettingsViewModel())
+        AppTab.Settings -> SettingScreen(settingsViewModel = SettingsViewModel(getKoinInstance(), getKoinInstance()))
     }
 }

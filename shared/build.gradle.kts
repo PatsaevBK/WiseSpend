@@ -36,6 +36,9 @@ kotlin {
 
                 //di
                 api(libs.koin.core)
+
+                //dateTime
+                implementation(libs.dateTime)
             }
         }
 

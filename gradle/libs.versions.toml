@@ -6,6 +6,7 @@ activity-ktx = "1.8.2"
 moko-res = "0.23.0"
 multiplatform-settings = "1.2.0"
 koin = "3.4.0"
+kotlinx-dateTime = "0.4.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-ktx" }
@@ -13,6 +14,7 @@ multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", vers
 resources-core = { module = "dev.icerock.moko:resources", version.ref = "moko-res" }
 resources-compose = { module = "dev.icerock.moko:resources-compose", version.ref = "moko-res" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+dateTime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-dateTime" }
 
 [plugins]
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

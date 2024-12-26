@@ -6,11 +6,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import info.javaway.spend_sense.categories.compose.CategoriesScreen
 import info.javaway.spend_sense.common.ui.AppThemeProvider
 import info.javaway.spend_sense.common.ui.Theme
+import info.javaway.spend_sense.di.getKoinInstance
 import info.javaway.spend_sense.events.common.EventsScreen
 import info.javaway.spend_sense.root.RootViewModel
 import info.javaway.spend_sense.root.model.AppTab
@@ -20,8 +22,8 @@ import info.javaway.spend_sense.settings.compose.SettingScreen
 @Composable
 fun RootScreen(
     modifier: Modifier = Modifier,
-    rootViewModel: RootViewModel
 ) {
+    val rootViewModel = remember { getKoinInstance<RootViewModel>() }
     val state by rootViewModel.state.collectAsState()
     Theme(
         themeIsDark = state.themeIsDark,
@@ -42,6 +44,6 @@ fun RootNavigation(selectedTab: AppTab) {
     when (selectedTab) {
         AppTab.Categories -> CategoriesScreen()
         AppTab.Events -> EventsScreen()
-        AppTab.Settings -> SettingScreen(settingsViewModel = SettingsViewModel())
+        AppTab.Settings -> SettingScreen(settingsViewModel = SettingsViewModel(getKoinInstance(), getKoinInstance()))
     }
 }

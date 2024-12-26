@@ -21,6 +21,6 @@ object StorageModule {
 object ViewModelModule {
     val viewModels = module {
         single { RootViewModel(get()) }
-        single { SettingsViewModel(get(), get()) }
+        factory { SettingsViewModel(get(), get()) }
     }
 }

@@ -3,7 +3,6 @@ package info.spend
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import info.javaway.spend_sense.di.getKoinInstance
 import info.javaway.spend_sense.greeting
 import info.javaway.spend_sense.root.compose.RootScreen
 
@@ -14,7 +13,7 @@ class RootActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         greeting()
         setContent {
-            RootScreen(rootViewModel = getKoinInstance())
+            RootScreen()
         }
     }
 }

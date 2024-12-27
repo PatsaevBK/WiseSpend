@@ -1,4 +1,4 @@
-package info.javaway.spend_sense.common.ui
+package info.javaway.spend_sense.common.ui.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider

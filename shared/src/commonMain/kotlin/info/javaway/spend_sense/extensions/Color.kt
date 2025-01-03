@@ -9,5 +9,5 @@ fun Color.Companion.fromHex(hexString: String): Color {
     val red = (hexColor shr 16 and 0xFF) / 255f
     val green = (hexColor shr 8 and 0xFF) / 255f
     val blue = (hexColor and 0xFF) / 255f
-    return Color(red = red, green = green, blue = blue)
+    return Color(red = red, green = green, blue = blue, alpha = alpha)
 }

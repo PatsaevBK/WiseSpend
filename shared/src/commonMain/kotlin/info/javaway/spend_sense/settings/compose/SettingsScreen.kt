@@ -2,6 +2,7 @@ package info.javaway.spend_sense.settings.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,7 +25,7 @@ import info.javaway.spend_sense.common.ui.theme.AppThemeProvider
 import info.javaway.spend_sense.settings.SettingsViewModel
 
 @Composable
-fun SettingScreen(
+fun BoxScope.SettingScreen(
     modifier: Modifier = Modifier,
     settingsViewModel: SettingsViewModel,
 ) {

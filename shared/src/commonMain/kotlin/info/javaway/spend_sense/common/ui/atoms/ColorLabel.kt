@@ -14,8 +14,8 @@ import info.javaway.spend_sense.extensions.fromHex
 
 @Composable
 fun ColorLabel(
-    modifier: Modifier = Modifier,
     colorHex: String,
+    modifier: Modifier = Modifier,
 ) {
     val color = colorHex.let {
         runCatching { Color.fromHex(it) }.getOrDefault(AppThemeProvider.colors.accent)

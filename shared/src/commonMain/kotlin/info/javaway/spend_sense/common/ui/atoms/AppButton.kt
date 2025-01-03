@@ -12,8 +12,8 @@ import info.javaway.spend_sense.common.ui.theme.AppThemeProvider
 
 @Composable
 fun AppButton(
-    modifier: Modifier = Modifier,
     title: String,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
     OutlinedButton(

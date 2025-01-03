@@ -1,5 +1,7 @@
 package info.javaway.spend_sense.di
 
+import info.javaway.spend_sense.categories.CategoriesRepository
+import info.javaway.spend_sense.categories.list.CategoriesListViewModel
 import info.javaway.spend_sense.common.ui.calendar.DatePickerViewModel
 import info.javaway.spend_sense.platform.DeviceInfo
 import info.javaway.spend_sense.root.RootViewModel
@@ -19,10 +21,17 @@ object StorageModule {
     }
 }
 
+object RepositoriesModule {
+    val categoriesRepository = module {
+        single { CategoriesRepository() }
+    }
+}
+
 object ViewModelModule {
     val viewModels = module {
         single { RootViewModel(get()) }
         factory { SettingsViewModel(get(), get()) }
         single { DatePickerViewModel() }
+        single { CategoriesListViewModel(get()) }
     }
 }

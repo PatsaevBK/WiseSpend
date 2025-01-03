@@ -17,7 +17,7 @@ import info.javaway.spend_sense.categories.compose.CategoriesScreen
 import info.javaway.spend_sense.common.ui.theme.AppThemeProvider
 import info.javaway.spend_sense.common.ui.theme.Theme
 import info.javaway.spend_sense.di.getKoinInstance
-import info.javaway.spend_sense.events.common.EventsScreen
+import info.javaway.spend_sense.events.list.compose.EventsScreen
 import info.javaway.spend_sense.root.RootViewModel
 import info.javaway.spend_sense.root.model.AppTab
 import info.javaway.spend_sense.settings.SettingsViewModel
@@ -41,7 +41,7 @@ fun RootScreen(
             bottomBar = {
                 if (isBottomBarVisible.value) {
                     RootBottomBar(
-                        modifier = Modifier,
+                        modifier = Modifier.background(AppThemeProvider.colors.background),
                         selectedTab = state.selectedTab
                     ) { rootViewModel.handleClickOnTab(it) }
                 }
@@ -62,7 +62,7 @@ fun RootScreen(
 fun BoxScope.RootNavigation(selectedTab: AppTab, isBottomBarVisible: MutableState<Boolean>) {
     when (selectedTab) {
         AppTab.Categories -> CategoriesScreen(getKoinInstance(), isBottomBarVisible)
-        AppTab.Events -> EventsScreen()
+        AppTab.Events -> EventsScreen(getKoinInstance(), isBottomBarVisible)
         AppTab.Settings -> SettingScreen(
             settingsViewModel = SettingsViewModel(
                 getKoinInstance(),

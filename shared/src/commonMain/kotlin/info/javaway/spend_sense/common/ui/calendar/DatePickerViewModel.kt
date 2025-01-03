@@ -72,7 +72,6 @@ class DatePickerViewModel : BaseViewModel<State, Event>() {
     private fun updateWeeks() = viewModelScope.launch(Dispatchers.Default) {
         with(state.value) {
             val weeks = calendarMonth.getWeeks(firstDayIsMonday, selectedDay, labels)
-            println("XXX weeks = $weeks")
             updateState { copy(weeks = weeks) }
         }
     }

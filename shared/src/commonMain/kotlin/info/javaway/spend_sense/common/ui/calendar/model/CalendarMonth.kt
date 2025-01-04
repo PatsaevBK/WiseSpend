@@ -45,13 +45,11 @@ data class CalendarMonth(
         firstDayIsMonday: Boolean,
         accumulateWeek: MutableList<CalendarDay>
     ) {
-        println("XXX firstDayOfMonth.ordinal = ${firstDayOfMonth.ordinal}")
         val startStubsCount = if (firstDayIsMonday) firstDayOfMonth.ordinal
         else when (firstDayOfMonth) {
             DayOfWeek.SUNDAY -> 0
             else -> firstDayOfMonth.ordinal + 1
         }
-        println("XXX startStubsCount = $startStubsCount")
         repeat(startStubsCount) { accumulateWeek.add((CalendarDay.NONE)) }
     }
 

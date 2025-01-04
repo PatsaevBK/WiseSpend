@@ -32,8 +32,10 @@ fun BoxScope.CategoriesScreen(
     ModalBottomSheetLayout(
         sheetContent = {
             //create category
-            CreateCategoryView(isExpanded = sheetState.currentValue == ModalBottomSheetValue.Expanded) {
-                isBottomBarVisible.value = true
+            CreateCategoryView(
+                isExpanded = sheetState.currentValue == ModalBottomSheetValue.Expanded,
+                isBottomBarVisible = isBottomBarVisible
+            ) {
                 scope.launch { sheetState.hide() }
                 viewModel.createCategory(it)
             }

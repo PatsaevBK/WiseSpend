@@ -1,5 +1,6 @@
 package info.javaway.spend_sense.events.list.compose
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
@@ -32,7 +33,10 @@ fun BoxScope.EventsScreen(
     isBottomBarVisible: MutableState<Boolean>,
 ) {
     val modalBottomSheetState =
-        rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+        rememberModalBottomSheetState(
+            initialValue = ModalBottomSheetValue.Hidden,
+            skipHalfExpanded = true
+        )
     val scope = rememberCoroutineScope()
     val state by eventsScreenViewModel.state.collectAsState()
 
@@ -43,6 +47,7 @@ fun BoxScope.EventsScreen(
                 selectedDay = state.selectedDay,
                 viewModel = getKoinInstance(),
                 isBottomBarVisible = isBottomBarVisible,
+                modifier = Modifier.background(AppThemeProvider.colors.background)
             ) {
                 eventsScreenViewModel.createEvent(it)
                 scope.launch {

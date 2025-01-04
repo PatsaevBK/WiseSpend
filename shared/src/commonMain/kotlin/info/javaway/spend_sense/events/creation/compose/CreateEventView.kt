@@ -41,6 +41,7 @@ fun CreateEventView(
     selectedDay: CalendarDay?,
     viewModel: CreateEventViewModel,
     isBottomBarVisible: MutableState<Boolean>,
+    modifier: Modifier = Modifier,
     createListener: (SpendEvent) -> Unit
 ) {
 
@@ -53,6 +54,7 @@ fun CreateEventView(
             viewModel.selectDate(selectedDay?.date)
         } else {
             viewModel.resetState()
+            isBottomBarVisible.value = true
         }
 
         viewModel.events.onEach { event ->
@@ -63,7 +65,7 @@ fun CreateEventView(
     }
 
 
-    BottomModalContainer {
+    BottomModalContainer(modifier = modifier) {
         TextPairButton(
             title = stringResource(MR.strings.category),
             buttonTitle = state.category.title.ifEmpty { stringResource(MR.strings.empty_category) },
@@ -95,7 +97,6 @@ fun CreateEventView(
         ) { viewModel.changeCost(it) }
 
         AppButton(stringResource(MR.strings.save)) {
-            isBottomBarVisible.value = true
             viewModel.finish()
         }
     }

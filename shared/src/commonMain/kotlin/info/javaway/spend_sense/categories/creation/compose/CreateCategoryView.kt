@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +27,7 @@ import info.javaway.spend_sense.common.ui.atoms.BottomModalContainer
 @Composable
 fun CreateCategoryView(
     isExpanded: Boolean,
+    isBottomBarVisible: MutableState<Boolean>,
     onSaveButtonClick: (CreateCategoryData) -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
@@ -46,6 +48,7 @@ fun CreateCategoryView(
             rColor = 0.3f
             gColor = 0.6f
             bColor = 0.9f
+            isBottomBarVisible.value = true
         }
     }
 

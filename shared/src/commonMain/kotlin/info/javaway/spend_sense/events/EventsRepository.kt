@@ -1,13 +1,13 @@
 package info.javaway.spend_sense.events
 
+import info.javaway.spend_sense.events.models.EventDao
 import info.javaway.spend_sense.events.models.SpendEvent
-import kotlinx.coroutines.flow.flow
 
-class EventsRepository {
+class EventsRepository(
+    private val dao: EventDao
+) {
 
-    fun getAllFlow() = flow { emit(SpendEvent.getStubs()) }
+    fun getAllFlow() = dao.getAllFlow()
 
-    fun create(spendEvent: SpendEvent) {
-
-    }
+    suspend fun create(spendEvent: SpendEvent) = dao.insert(spendEvent)
 }

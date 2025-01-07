@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
     alias(libs.plugins.android.library)
-    alias(libs.plugins.moko.res)
     alias(libs.plugins.sqldelight)
 }
 
@@ -46,19 +45,15 @@ kotlin {
             }
         }
 
-        jvmMain {
-//            dependsOn(commonMain)
-
-            dependencies {
-                implementation(libs.sqldelight.desktop.driver)
-            }
+        jvmMain.dependencies {
+            implementation(libs.sqldelight.desktop.driver)
         }
 
         val iosArm64Main by getting
         val iosX64Main by getting
         val iosSimulatorArm64Main by getting
-        iosMain {
-//            dependsOn(commonMain)
+        val iosMain by creating {
+            dependsOn(commonMain)
             iosArm64Main.dependsOn(this)
             iosX64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
@@ -68,12 +63,8 @@ kotlin {
             }
         }
 
-        androidMain {
-//            dependsOn(commonMain)
-
-            dependencies {
-                implementation(libs.sqldelight.android.driver)
-            }
+        androidMain.dependencies {
+            implementation(libs.sqldelight.android.driver)
         }
     }
 }

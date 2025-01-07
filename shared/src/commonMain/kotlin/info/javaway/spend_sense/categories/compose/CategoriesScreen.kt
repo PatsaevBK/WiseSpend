@@ -29,7 +29,6 @@ fun BoxScope.CategoriesScreen(
 
     ModalBottomSheetLayout(
         sheetContent = {
-            //create category
             CreateCategoryView(
                 isExpanded = sheetState.currentValue == ModalBottomSheetValue.Expanded,
                 isBottomBarVisible = isBottomBarVisible

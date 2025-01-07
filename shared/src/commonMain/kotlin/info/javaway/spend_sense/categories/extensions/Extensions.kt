@@ -10,6 +10,6 @@ fun CreateCategoryData.toCategory(dateTime: LocalDateTime) = Category(
     title = title,
     description = subtitle,
     createdAt = dateTime,
-    updateAt = dateTime,
+    updatedAt = dateTime,
     colorHex = colorHex,
 )

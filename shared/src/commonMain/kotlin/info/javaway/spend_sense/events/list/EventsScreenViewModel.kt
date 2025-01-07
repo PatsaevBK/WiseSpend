@@ -7,11 +7,12 @@ import info.javaway.spend_sense.events.EventsRepository
 import info.javaway.spend_sense.events.models.SpendEvent
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.launch
 
 class EventsScreenViewModel(
     private val categoriesRepository: CategoriesRepository,
     private val eventsRepository: EventsRepository,
-): BaseViewModel<EventsScreenContract.State, EventsScreenContract.Events>() {
+) : BaseViewModel<EventsScreenContract.State, EventsScreenContract.Events>() {
 
     init {
         activate()
@@ -22,7 +23,9 @@ class EventsScreenViewModel(
     fun selectDay(calendarDay: CalendarDay) = updateState { copy(selectedDay = calendarDay) }
 
     fun createEvent(newEvent: SpendEvent) {
-        eventsRepository.create(newEvent)
+        viewModelScope.launch {
+            eventsRepository.create(newEvent)
+        }
     }
 
     private fun activate() {

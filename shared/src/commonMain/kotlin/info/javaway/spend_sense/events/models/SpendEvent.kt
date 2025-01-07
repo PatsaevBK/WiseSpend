@@ -1,5 +1,6 @@
 package info.javaway.spend_sense.events.models
 
+import db.events.EventTable
 import info.javaway.spend_sense.extensions.now
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
@@ -12,8 +13,8 @@ data class SpendEvent(
     val title: String,
     val cost: Double,
     val date: LocalDate,
-    val createAt: LocalDateTime,
-    val updateAt: LocalDateTime,
+    val createdAt: LocalDateTime,
+    val updatedAt: LocalDateTime,
 ) {
     companion object {
         val NONE = SpendEvent(
@@ -22,10 +23,10 @@ data class SpendEvent(
             title = "",
             cost = 0.0,
             date = LocalDate.now(),
-            createAt = LocalDateTime.now(),
-            updateAt = LocalDateTime.now()
+            createdAt = LocalDateTime.now(),
+            updatedAt = LocalDateTime.now()
         )
-        
+
         fun getStubs() = List(20) {
             NONE.copy(
                 id = "$it",
@@ -36,3 +37,23 @@ data class SpendEvent(
         }
     }
 }
+
+fun EventTable.toSpendEvent() = SpendEvent(
+    id = id,
+    categoryId = categoryId,
+    title = title.orEmpty(),
+    cost = cost,
+    date = date,
+    createdAt = createdAt,
+    updatedAt = updatedAt
+)
+
+fun SpendEvent.toDb() = EventTable(
+    id = id,
+    categoryId = categoryId,
+    title = title,
+    cost = cost,
+    date = date,
+    createdAt = createdAt,
+    updatedAt = updatedAt
+)

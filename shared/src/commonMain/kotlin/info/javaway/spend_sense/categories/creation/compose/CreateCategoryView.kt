@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import info.javaway.spend_sense.categories.creation.CreateCategoryData
 import info.javaway.spend_sense.common.ui.atoms.AppButton
@@ -103,7 +104,7 @@ fun CreateCategoryView(
                 CreateCategoryData(
                     title = title,
                     subtitle = subtitle,
-                    colorHex = Color(red = rColor, green = gColor, blue = bColor).toString()
+                    colorHex = Color(red = rColor, green = gColor, blue = bColor).toArgb().toString(16)
                 )
             )
         }

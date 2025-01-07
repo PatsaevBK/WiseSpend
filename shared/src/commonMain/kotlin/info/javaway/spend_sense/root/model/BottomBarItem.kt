@@ -1,15 +1,22 @@
 package info.javaway.spend_sense.root.model
 
-import dev.icerock.moko.resources.ImageResource
-import dev.icerock.moko.resources.StringResource
-import info.javaway.spend_sense.MR
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.CalendarMonth
+import androidx.compose.material.icons.rounded.Folder
+import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.ui.graphics.vector.ImageVector
+import org.jetbrains.compose.resources.StringResource
+import spendsense.shared.generated.resources.Res
+import spendsense.shared.generated.resources.categories
+import spendsense.shared.generated.resources.events
+import spendsense.shared.generated.resources.settings
 
 enum class BottomBarItem(
     val title: StringResource,
     val appTab: AppTab,
-    val image: ImageResource
+    val image: ImageVector
 ) {
-    EVENTS(MR.strings.events, AppTab.Events, MR.images.icon_calendar),
-    CATEGORIES(MR.strings.categories, AppTab.Categories, MR.images.icon_folder),
-    SETTINGS(MR.strings.settings, AppTab.Settings, MR.images.icon_settings),
+    EVENTS(Res.string.events, AppTab.Events, Icons.Rounded.CalendarMonth),
+    CATEGORIES(Res.string.categories, AppTab.Categories, Icons.Rounded.Folder),
+    SETTINGS(Res.string.settings, AppTab.Settings, Icons.Rounded.Settings),
 }

@@ -1,7 +1,6 @@
 package info.javaway.spend_sense.categories.compose
 
 import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.runtime.Composable
@@ -16,7 +15,6 @@ import info.javaway.spend_sense.categories.models.Category
 import info.javaway.spend_sense.common.ui.atoms.FAB
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BoxScope.CategoriesScreen(
     viewModel: CategoriesListViewModel,
@@ -31,7 +29,6 @@ fun BoxScope.CategoriesScreen(
 
     ModalBottomSheetLayout(
         sheetContent = {
-            //create category
             CreateCategoryView(
                 isExpanded = sheetState.currentValue == ModalBottomSheetValue.Expanded,
                 isBottomBarVisible = isBottomBarVisible

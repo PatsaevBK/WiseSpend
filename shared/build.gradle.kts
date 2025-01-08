@@ -1,8 +1,9 @@
 plugins {
     alias(libs.plugins.multiplatform)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
     alias(libs.plugins.android.library)
-    alias(libs.plugins.moko.res)
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
@@ -28,10 +29,7 @@ kotlin {
                 implementation(compose.material)
                 implementation(compose.material3)
                 implementation(compose.materialIconsExtended)
-
-                //resource
-                api(libs.resources.core)
-                api(libs.resources.compose)
+                implementation(compose.components.resources)
 
                 //settings
                 implementation(libs.multiplatform.settings)
@@ -41,31 +39,34 @@ kotlin {
 
                 //dateTime
                 implementation(libs.dateTime)
+
+                //db
+                implementation(libs.sqldelight.coroutines.extensions)
             }
         }
 
-        jvmMain {
-            dependsOn(commonMain)
+        jvmMain.dependencies {
+            implementation(libs.sqldelight.desktop.driver)
         }
 
         val iosArm64Main by getting
         val iosX64Main by getting
         val iosSimulatorArm64Main by getting
-        iosMain {
+        val iosMain by creating {
             dependsOn(commonMain)
             iosArm64Main.dependsOn(this)
             iosX64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+
+            dependencies {
+                implementation(libs.sqldelight.native.driver)
+            }
         }
 
-        androidMain {
-            dependsOn(commonMain)
+        androidMain.dependencies {
+            implementation(libs.sqldelight.android.driver)
         }
     }
-}
-
-multiplatformResources {
-    multiplatformResourcesPackage = "info.javaway.spend_sense"
 }
 
 android {
@@ -75,5 +76,14 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+sqldelight {
+    databases {
+        create("AppDb") {
+            packageName.set("info.javaway.spend-sense.db")
+            schemaOutputDirectory.set(file("src/commonMain/sqldelight/db"))
+        }
     }
 }

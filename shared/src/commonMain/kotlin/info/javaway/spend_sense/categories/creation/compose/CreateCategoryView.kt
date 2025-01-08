@@ -16,13 +16,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
-import dev.icerock.moko.resources.compose.stringResource
-import info.javaway.spend_sense.MR
 import info.javaway.spend_sense.categories.creation.CreateCategoryData
 import info.javaway.spend_sense.common.ui.atoms.AppButton
 import info.javaway.spend_sense.common.ui.atoms.AppTextField
 import info.javaway.spend_sense.common.ui.atoms.BottomModalContainer
+import org.jetbrains.compose.resources.stringResource
+import spendsense.shared.generated.resources.Res
+import spendsense.shared.generated.resources.save
+import spendsense.shared.generated.resources.subtitle_category_placeholder
+import spendsense.shared.generated.resources.title_category_placeholder
 
 @Composable
 fun CreateCategoryView(
@@ -56,7 +60,7 @@ fun CreateCategoryView(
     BottomModalContainer {
         AppTextField(
             value = title,
-            placeholder = stringResource(MR.strings.title_category_placeholder),
+            placeholder = stringResource(Res.string.title_category_placeholder),
             modifier = Modifier.fillMaxWidth()
                 .focusRequester(focusRequester)
         ) { title = it }
@@ -65,7 +69,7 @@ fun CreateCategoryView(
 
         AppTextField(
             value = subtitle,
-            placeholder = stringResource(MR.strings.subtitle_category_placeholder),
+            placeholder = stringResource(Res.string.subtitle_category_placeholder),
             modifier = Modifier.fillMaxWidth()
         ) { subtitle = it }
 
@@ -95,12 +99,12 @@ fun CreateCategoryView(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        AppButton(title = stringResource(MR.strings.save)) {
+        AppButton(title = stringResource(Res.string.save)) {
             onSaveButtonClick(
                 CreateCategoryData(
                     title = title,
                     subtitle = subtitle,
-                    colorHex = Color(red = rColor, green = gColor, blue = bColor).toString()
+                    colorHex = Color(red = rColor, green = gColor, blue = bColor).toArgb().toString(16)
                 )
             )
         }

@@ -16,8 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import dev.icerock.moko.resources.compose.stringResource
-import info.javaway.spend_sense.MR
 import info.javaway.spend_sense.categories.list.compose.CategoriesListView
 import info.javaway.spend_sense.common.ui.atoms.AppButton
 import info.javaway.spend_sense.common.ui.atoms.AppTextField
@@ -34,6 +32,14 @@ import info.javaway.spend_sense.events.creation.CreateEventViewModel
 import info.javaway.spend_sense.events.models.SpendEvent
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.jetbrains.compose.resources.stringResource
+import spendsense.shared.generated.resources.Res
+import spendsense.shared.generated.resources.category
+import spendsense.shared.generated.resources.cost
+import spendsense.shared.generated.resources.date
+import spendsense.shared.generated.resources.empty_category
+import spendsense.shared.generated.resources.save
+import spendsense.shared.generated.resources.spend_to
 
 @Composable
 fun CreateEventView(
@@ -67,19 +73,19 @@ fun CreateEventView(
 
     BottomModalContainer(modifier = modifier) {
         TextPairButton(
-            title = stringResource(MR.strings.category),
-            buttonTitle = state.category.title.ifEmpty { stringResource(MR.strings.empty_category) },
+            title = stringResource(Res.string.category),
+            buttonTitle = state.category.title.ifEmpty { stringResource(Res.string.empty_category) },
             colorHex = state.category.colorHex.takeIf { it.isNotEmpty() }
         ) { showCategoriesDialog = true }
 
         TextPairButton(
-            title = stringResource(MR.strings.date),
+            title = stringResource(Res.string.date),
             buttonTitle = state.date.toString()
         ) { showDateDialog = true }
 
         AppTextField(
             value = state.title,
-            placeholder = stringResource(MR.strings.spend_to),
+            placeholder = stringResource(Res.string.spend_to),
             modifier = Modifier.fillMaxWidth()
         ) { viewModel.changeTitle(it) }
 
@@ -91,12 +97,12 @@ fun CreateEventView(
 
         AppTextField(
             value = state.cost.toString(),
-            placeholder = stringResource(MR.strings.cost),
+            placeholder = stringResource(Res.string.cost),
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         ) { viewModel.changeCost(it) }
 
-        AppButton(stringResource(MR.strings.save)) {
+        AppButton(stringResource(Res.string.save)) {
             viewModel.finish()
         }
     }

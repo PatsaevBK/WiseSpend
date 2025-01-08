@@ -16,11 +16,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
-import dev.icerock.moko.resources.compose.painterResource
-import dev.icerock.moko.resources.compose.stringResource
 import info.javaway.spend_sense.common.ui.theme.AppThemeProvider
 import info.javaway.spend_sense.root.model.AppTab
 import info.javaway.spend_sense.root.model.BottomBarItem
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun RootBottomBar(
@@ -68,7 +67,7 @@ fun RowScope.BottomBarItemView(
             modifier = Modifier.padding(4.dp)
         )
         Image(
-            painter = painterResource(bottomBarItem.image),
+            imageVector = bottomBarItem.image,
             contentDescription = bottomBarItem.name,
             modifier = Modifier.size(22.dp),
             colorFilter = ColorFilter.tint(foreground)

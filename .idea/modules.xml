@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android/SpendSense.android.main.iml" filepath="$PROJECT_DIR$/.idea/modules/android/SpendSense.android.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/desktop/SpendSense.desktop.desktopMain.iml" filepath="$PROJECT_DIR$/.idea/modules/desktop/SpendSense.desktop.desktopMain.iml" />
-    </modules>
-  </component>
-</project>

@@ -29,8 +29,9 @@ class CreateEventViewModel : BaseViewModel<State, Event>() {
                 cost = cost,
                 date = date,
                 categoryId = category.id,
-                createAt = now,
-                updateAt = now,
+                createdAt = now,
+                updatedAt = now,
+                note = note
             )
         }
         resetState()

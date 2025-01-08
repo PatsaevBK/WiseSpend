@@ -19,10 +19,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dev.icerock.moko.resources.compose.stringResource
-import info.javaway.spend_sense.MR
 import info.javaway.spend_sense.common.ui.theme.AppThemeProvider
 import info.javaway.spend_sense.settings.SettingsViewModel
+import org.jetbrains.compose.resources.stringResource
+import spendsense.shared.generated.resources.Res
+import spendsense.shared.generated.resources.dark_theme
 
 @Composable
 fun BoxScope.SettingScreen(
@@ -51,7 +52,7 @@ fun BoxScope.SettingScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    stringResource(MR.strings.dark_theme),
+                    stringResource(Res.string.dark_theme),
                     modifier = Modifier.weight(1f),
                     color = AppThemeProvider.colors.onSurface
                 )

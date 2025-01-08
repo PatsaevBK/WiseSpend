@@ -19,13 +19,13 @@ interface EventsScreenContract {
         val eventsByDay: List<SpendEventUI>
             get() = events.filter { it.date == selectedDay?.date }
                 .map { spendEvent ->
-                    spendEvent.toUI(categories.firstOrNull { it.id == spendEvent.id }
+                    spendEvent.toUI(categories.firstOrNull { it.id == spendEvent.categoryId }
                         ?: Category.NONE)
                 }
 
         val calendarLabels: List<CalendarLabel>
-            get() = events.map { event ->
-                event.toCalendarLabel(category = categories.firstOrNull { it.id == event.categoryId }
+            get() = events.map { spendEvent ->
+                spendEvent.toCalendarLabel(category = categories.firstOrNull { it.id == spendEvent.categoryId }
                     ?: Category.NONE)
             }
 

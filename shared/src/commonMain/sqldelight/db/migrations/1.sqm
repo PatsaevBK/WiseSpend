@@ -1,0 +1,1 @@
+ALTER TABLE EventTable ADD COLUMN note TEXT;

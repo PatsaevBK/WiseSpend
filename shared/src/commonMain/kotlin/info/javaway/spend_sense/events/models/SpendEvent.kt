@@ -15,6 +15,7 @@ data class SpendEvent(
     val date: LocalDate,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime,
+    val note: String,
 ) {
     companion object {
         val NONE = SpendEvent(
@@ -24,7 +25,8 @@ data class SpendEvent(
             cost = 0.0,
             date = LocalDate.now(),
             createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
+            updatedAt = LocalDateTime.now(),
+            note = ""
         )
 
         fun getStubs() = List(20) {
@@ -45,7 +47,8 @@ fun EventTable.toSpendEvent() = SpendEvent(
     cost = cost,
     date = date,
     createdAt = createdAt,
-    updatedAt = updatedAt
+    updatedAt = updatedAt,
+    note = note.orEmpty(),
 )
 
 fun SpendEvent.toDb() = EventTable(
@@ -55,5 +58,6 @@ fun SpendEvent.toDb() = EventTable(
     cost = cost,
     date = date,
     createdAt = createdAt,
-    updatedAt = updatedAt
+    updatedAt = updatedAt,
+    note = note
 )

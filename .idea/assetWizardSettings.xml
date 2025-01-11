@@ -80,7 +80,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="$USER_HOME$/Downloads/rocket_11084787.png" />
+                                                <entry key="imagePath" value="$USER_HOME$/Downloads/spendSenceIcon.png" />
                                                 <entry key="scalingPercent" value="71" />
                                               </map>
                                             </option>
@@ -113,6 +113,8 @@
                                   </option>
                                   <option name="values">
                                     <map>
+                                      <entry key="backgroundAssetType" value="COLOR" />
+                                      <entry key="backgroundColor" value="ffffff" />
                                       <entry key="previewDensity" value="xxhdpi" />
                                     </map>
                                   </option>

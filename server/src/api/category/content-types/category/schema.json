@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "categories",
+  "info": {
+    "singularName": "category",
+    "pluralName": "categories",
+    "displayName": "Category",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "idLocal": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "colorHex": {
+      "type": "string"
+    },
+    "userId": {
+      "type": "biginteger"
+    },
+    "createdAtLocal": {
+      "type": "string"
+    },
+    "updatedAtLocal": {
+      "type": "string"
+    }
+  }
+}

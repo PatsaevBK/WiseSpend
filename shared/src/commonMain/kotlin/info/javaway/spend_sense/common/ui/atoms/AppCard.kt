@@ -16,10 +16,10 @@ fun AppCard(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Card(
-        modifier = modifier.padding(16.dp).fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().padding(16.dp),
         colors = CardDefaults.cardColors(
-            contentColor = AppThemeProvider.colors.surface,
-            containerColor = AppThemeProvider.colors.onSurface
+            contentColor = AppThemeProvider.colors.onSurface,
+            containerColor = AppThemeProvider.colors.surface
         )
     ) {
         content()

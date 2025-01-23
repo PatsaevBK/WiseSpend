@@ -1,4 +1,4 @@
-package info.javaway.spend_sense.settings.auth.signin.model
+package info.javaway.spend_sense.settings.auth.signIn.model
 
 import kotlinx.serialization.Serializable
 

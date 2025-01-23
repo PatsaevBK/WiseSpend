@@ -66,6 +66,9 @@ fun BoxScope.RootNavigation(selectedTab: AppTab, isBottomBarVisible: MutableStat
         AppTab.Settings -> SettingScreen(
             settingsViewModel = SettingsViewModel(
                 getKoinInstance(),
+                getKoinInstance(),
+                getKoinInstance(),
+                getKoinInstance(),
                 getKoinInstance()
             )
         )

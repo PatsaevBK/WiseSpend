@@ -20,8 +20,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun BoxScope.AppToast(
-    modifier: Modifier = Modifier,
     message: String?,
+    modifier: Modifier = Modifier,
     backgroundColor: Color = AppThemeProvider.colors.background,
     hide: () -> Unit
 ) {

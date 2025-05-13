@@ -69,9 +69,9 @@ object NetworkModule {
         single {
             Json {
                 encodeDefaults = false
-                isLenient = true
-                ignoreUnknownKeys = true
-                explicitNulls = false
+                isLenient = true // не очень хорошие json кушает
+                ignoreUnknownKeys = true // не знает ключ не падает
+                explicitNulls = false // нет в json nullable поля не падаем
                 prettyPrint = true
             }
         }

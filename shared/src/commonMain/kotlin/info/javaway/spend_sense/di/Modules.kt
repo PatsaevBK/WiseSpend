@@ -9,14 +9,26 @@ import info.javaway.spend_sense.events.EventsRepository
 import info.javaway.spend_sense.events.creation.CreateEventViewModel
 import info.javaway.spend_sense.events.list.EventsScreenViewModel
 import info.javaway.spend_sense.events.models.EventDao
+import info.javaway.spend_sense.extensions.appLog
+import info.javaway.spend_sense.network.AppApi
 import info.javaway.spend_sense.platform.DeviceInfo
 import info.javaway.spend_sense.root.RootViewModel
 import info.javaway.spend_sense.settings.SettingsViewModel
+import info.javaway.spend_sense.settings.auth.register.RegisterViewModel
+import info.javaway.spend_sense.settings.auth.signIn.SignInViewModel
 import info.javaway.spend_sense.storage.DbAdapters
 import info.javaway.spend_sense.storage.SettingsManager
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.cio.CIO
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.serialization.json.Json
 import org.koin.core.qualifier.Qualifier
 import org.koin.core.qualifier.QualifierValue
 import org.koin.dsl.module
@@ -52,6 +64,43 @@ object StorageModule {
     }
 }
 
+object NetworkModule {
+    val json = module {
+        single {
+            Json {
+                encodeDefaults = false
+                isLenient = true // не очень хорошие json кушает
+                ignoreUnknownKeys = true // не знает ключ не падает
+                explicitNulls = false // нет в json nullable поля не падаем
+                prettyPrint = true
+            }
+        }
+    }
+
+    val httpClient = module {
+        single {
+            HttpClient(CIO) {
+                expectSuccess = false
+                install(ContentNegotiation) {
+                    json(get())
+                }
+                install(Logging) {
+                    level = LogLevel.ALL
+                    logger = object : Logger {
+                        override fun log(message: String) {
+                            appLog(message)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    val api = module {
+        single { AppApi(get(), get()) }
+    }
+}
+
 object RepositoriesModule {
     val repository = module {
         single { CategoriesRepository(get()) }
@@ -62,12 +111,14 @@ object RepositoriesModule {
 object ViewModelModule {
     val viewModels = module {
         single { RootViewModel(get()) }
-        factory { SettingsViewModel(get(), get()) }
+        factory { SettingsViewModel(get(), get(), get(), get(), get()) }
         single(DatePickerSingleQualifier) { DatePickerViewModel() }
         factory(DatePickerFactoryQualifier) { DatePickerViewModel() }
         single { CategoriesListViewModel(get()) }
         single { EventsScreenViewModel(get(), get()) }
         single { CreateEventViewModel() }
+        factory { RegisterViewModel(get(), get()) }
+        factory { SignInViewModel(get(), get()) }
     }
 }
 

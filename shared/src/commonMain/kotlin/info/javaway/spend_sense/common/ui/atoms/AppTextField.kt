@@ -14,9 +14,9 @@ import info.javaway.spend_sense.common.ui.theme.AppThemeProvider
 
 @Composable
 fun AppTextField(
-    modifier: Modifier = Modifier,
     value: String,
     placeholder: String = "",
+    modifier: Modifier = Modifier,
     fontSize: TextUnit = 20.sp,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     onValueChange: (String) -> Unit

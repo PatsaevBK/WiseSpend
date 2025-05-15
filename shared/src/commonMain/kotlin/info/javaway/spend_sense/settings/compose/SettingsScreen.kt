@@ -16,42 +16,34 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import info.javaway.spend_sense.common.ui.theme.AppThemeProvider
 import info.javaway.spend_sense.extensions.appLog
-import info.javaway.spend_sense.settings.SettingsViewModel
-import info.javaway.spend_sense.settings.auth.compose.AuthView
-import info.javaway.spend_sense.settings.sync.SyncView
+import info.javaway.spend_sense.settings.SettingsComponent
+import info.javaway.spend_sense.settings.child.auth.compose.AuthView
+import info.javaway.spend_sense.settings.child.sync.compose.SyncView
 import org.jetbrains.compose.resources.stringResource
 import spendsense.shared.generated.resources.Res
 import spendsense.shared.generated.resources.dark_theme
 
 @Composable
 fun SettingScreen(
+    component: SettingsComponent,
     modifier: Modifier = Modifier,
-    settingsViewModel: SettingsViewModel,
 ) {
-    val state by settingsViewModel.state.collectAsState()
+    val model by component.model.collectAsState()
+    val stack by component.stack.subscribeAsState()
 
     Box(modifier = modifier.fillMaxSize().padding(16.dp)) {
         Column {
 
-            if (state.isAuth) {
-                SyncView(
-                    email = state.email,
-                    isLoading = state.isLoading,
-                    syncListener = { settingsViewModel.sync() },
-                    logoutListener = { settingsViewModel.logout() }
-                )
-            } else {
-                AuthView {
-                    appLog("XXX success logging after register")
-                    settingsViewModel.sync()
-                }
+            when(val child = stack.active.instance){
+                is SettingsComponent.Child.Auth -> AuthView(child.component)
+                is SettingsComponent.Child.Sync -> SyncView(child.component)
             }
 
             Row(
                 modifier = Modifier
-                    .padding(16.dp)
                     .background(AppThemeProvider.colors.surface, RoundedCornerShape(16.dp))
                     .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
@@ -62,8 +54,8 @@ fun SettingScreen(
                     color = AppThemeProvider.colors.onSurface
                 )
                 Switch(
-                    checked = state.themeIsDark,
-                    onCheckedChange = { settingsViewModel.switchTheme(it) },
+                    checked = model.themeIsDark,
+                    onCheckedChange = { component.switchTheme(it) },
                     colors = SwitchDefaults.colors(
                         checkedThumbColor = AppThemeProvider.colors.accent,
                         checkedTrackColor = AppThemeProvider.colors.onSurface,
@@ -72,7 +64,7 @@ fun SettingScreen(
                 )
             }
 
-            DeviceInfo(state.deviceInfo)
+            DeviceInfo(model.deviceInfo)
         }
     }
 }

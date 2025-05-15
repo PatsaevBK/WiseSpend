@@ -8,6 +8,8 @@ class EventsRepository(
 ) {
 
     fun getAllFlow() = dao.getAllFlow()
+    fun getAll() = dao.getAll()
 
+    suspend fun insertAll(events: List<SpendEvent>) = dao.insertAll(events)
     suspend fun create(spendEvent: SpendEvent) = dao.insert(spendEvent)
 }

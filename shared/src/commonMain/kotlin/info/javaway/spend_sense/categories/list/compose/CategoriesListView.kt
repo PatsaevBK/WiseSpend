@@ -6,16 +6,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import info.javaway.spend_sense.categories.list.CategoriesListViewModel
+import info.javaway.spend_sense.categories.list.CategoriesListComponent
 import info.javaway.spend_sense.categories.models.Category
 
 @Composable
 fun CategoriesListView(
-    viewModel: CategoriesListViewModel,
+    component: CategoriesListComponent,
     modifier: Modifier = Modifier,
     onClick: (Category) -> Unit,
 ) {
-    val state by viewModel.state.collectAsState()
+    val state by component.model.collectAsState()
 
     LazyColumn(modifier = modifier) {
         items(state.categories) {

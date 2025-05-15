@@ -58,6 +58,7 @@ kotlin {
 
                 //decompose
                 implementation(libs.decompose)
+                implementation(libs.decompose.extensions.compose)
             }
         }
 

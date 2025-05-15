@@ -31,7 +31,6 @@ import spendsense.shared.generated.resources.title_category_placeholder
 @Composable
 fun CreateCategoryView(
     isExpanded: Boolean,
-    isBottomBarVisible: MutableState<Boolean>,
     onSaveButtonClick: (CreateCategoryData) -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
@@ -52,7 +51,6 @@ fun CreateCategoryView(
             rColor = 0.3f
             gColor = 0.6f
             bColor = 0.9f
-            isBottomBarVisible.value = true
         }
     }
 

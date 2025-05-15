@@ -2,8 +2,8 @@ package info.javaway.spend_sense.network
 
 import info.javaway.spend_sense.categories.models.CategoryApi
 import info.javaway.spend_sense.events.models.SpendEventApi
-import info.javaway.spend_sense.settings.auth.register.model.RegisterRequest
-import info.javaway.spend_sense.settings.auth.signIn.model.SignInRequest
+import info.javaway.spend_sense.settings.child.auth.child.register.model.RegisterRequest
+import info.javaway.spend_sense.settings.child.auth.child.signIn.model.SignInRequest
 import info.javaway.spend_sense.storage.SettingsManager
 import io.ktor.client.HttpClient
 import io.ktor.client.request.bearerAuth

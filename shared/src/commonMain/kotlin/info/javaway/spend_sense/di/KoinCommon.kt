@@ -24,6 +24,7 @@ fun initKoin(appModule: Module = module {  }) = startKoin {
         StorageModule.dao,
         RepositoriesModule.repository,
         ViewModelModule.viewModels,
+        ComponentsFactoryModule.componentFactory,
         platformModule,
         appModule,
         NetworkModule.json,

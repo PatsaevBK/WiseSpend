@@ -23,8 +23,8 @@ interface SettingsContract {
         }
     }
 
-    sealed interface Event: BaseViewEvent {
-        data class Error(val msg: String) : Event
-        data object DataSynced: Event
+    sealed interface Effect: BaseViewEvent {
+        data class Error(val msg: String) : Effect
+        data object DataSynced: Effect
     }
 }

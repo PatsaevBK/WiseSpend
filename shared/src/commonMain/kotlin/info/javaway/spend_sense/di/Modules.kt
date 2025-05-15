@@ -2,20 +2,30 @@ package info.javaway.spend_sense.di
 
 import info.javaway.`spend-sense`.db.AppDb
 import info.javaway.spend_sense.categories.CategoriesRepository
-import info.javaway.spend_sense.categories.list.CategoriesListViewModel
+import info.javaway.spend_sense.categories.list.CategoriesListComponent
+import info.javaway.spend_sense.categories.list.CategoriesListComponentImpl
 import info.javaway.spend_sense.categories.models.CategoryDao
 import info.javaway.spend_sense.common.ui.calendar.DatePickerViewModel
 import info.javaway.spend_sense.events.EventsRepository
 import info.javaway.spend_sense.events.creation.CreateEventViewModel
-import info.javaway.spend_sense.events.list.EventsScreenViewModel
+import info.javaway.spend_sense.events.list.EventsListComponent
+import info.javaway.spend_sense.events.list.EventsListComponentImpl
 import info.javaway.spend_sense.events.models.EventDao
 import info.javaway.spend_sense.extensions.appLog
 import info.javaway.spend_sense.network.AppApi
 import info.javaway.spend_sense.platform.DeviceInfo
-import info.javaway.spend_sense.root.RootViewModel
-import info.javaway.spend_sense.settings.SettingsViewModel
-import info.javaway.spend_sense.settings.auth.register.RegisterViewModel
-import info.javaway.spend_sense.settings.auth.signIn.SignInViewModel
+import info.javaway.spend_sense.root.RootComponent
+import info.javaway.spend_sense.root.RootComponentImpl
+import info.javaway.spend_sense.settings.SettingsComponent
+import info.javaway.spend_sense.settings.SettingsComponentImpl
+import info.javaway.spend_sense.settings.child.auth.AuthComponent
+import info.javaway.spend_sense.settings.child.auth.AuthComponentImpl
+import info.javaway.spend_sense.settings.child.auth.child.register.RegisterComponent
+import info.javaway.spend_sense.settings.child.auth.child.register.RegisterComponentImpl
+import info.javaway.spend_sense.settings.child.auth.child.signIn.SignInComponent
+import info.javaway.spend_sense.settings.child.auth.child.signIn.SignInComponentImpl
+import info.javaway.spend_sense.settings.child.sync.SyncComponent
+import info.javaway.spend_sense.settings.child.sync.SyncComponentImpl
 import info.javaway.spend_sense.storage.DbAdapters
 import info.javaway.spend_sense.storage.SettingsManager
 import io.ktor.client.HttpClient
@@ -29,10 +39,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.serialization.json.Json
+import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.Qualifier
 import org.koin.core.qualifier.QualifierValue
 import org.koin.dsl.module
 import org.koin.ext.getFullName
+import kotlin.math.sin
 
 object CoreModules {
     val deviceInfo = module {
@@ -110,15 +122,22 @@ object RepositoriesModule {
 
 object ViewModelModule {
     val viewModels = module {
-        single { RootViewModel(get()) }
-        factory { SettingsViewModel(get(), get(), get(), get(), get()) }
         single(DatePickerSingleQualifier) { DatePickerViewModel() }
         factory(DatePickerFactoryQualifier) { DatePickerViewModel() }
-        single { CategoriesListViewModel(get()) }
-        single { EventsScreenViewModel(get(), get()) }
         single { CreateEventViewModel() }
-        factory { RegisterViewModel(get(), get()) }
-        factory { SignInViewModel(get(), get()) }
+    }
+}
+
+object ComponentsFactoryModule {
+    val componentFactory = module {
+        single<RootComponent.Factory> { RootComponentImpl.Factory(get(), get(), get(), get())  }
+        single<SettingsComponent.Factory> { SettingsComponentImpl.Factory(get(), get(), get(), get()) }
+        factory<CategoriesListComponent.Factory> { CategoriesListComponentImpl.Factory(get()) }
+        factory<EventsListComponent.Factory> { EventsListComponentImpl.Factory(get(), get()) }
+        factory<AuthComponent.Factory> { AuthComponentImpl.Factory(get(), get()) }
+        factory<SignInComponent.Factory> { SignInComponentImpl.Factory(get(), get()) }
+        factory<RegisterComponent.Factory> { RegisterComponentImpl.Factory(get(), get()) }
+        factory<SyncComponent.Factory> { SyncComponentImpl.Factory(get(), get(), get(), get()) }
     }
 }
 

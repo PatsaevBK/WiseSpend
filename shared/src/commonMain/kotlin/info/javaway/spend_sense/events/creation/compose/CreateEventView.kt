@@ -46,7 +46,6 @@ fun CreateEventView(
     isExpand: Boolean,
     selectedDay: CalendarDay?,
     viewModel: CreateEventViewModel,
-    isBottomBarVisible: MutableState<Boolean>,
     modifier: Modifier = Modifier,
     createListener: (SpendEvent) -> Unit
 ) {
@@ -60,7 +59,6 @@ fun CreateEventView(
             viewModel.selectDate(selectedDay?.date)
         } else {
             viewModel.resetState()
-            isBottomBarVisible.value = true
         }
 
         viewModel.events.onEach { event ->
@@ -113,7 +111,7 @@ fun CreateEventView(
             onDismissRequest = { showCategoriesDialog = false }
         ) {
             CategoriesListView(
-                getKoinInstance(),
+                component = getKoinInstance(),
                 modifier = Modifier.background(
                     AppThemeProvider.colors.surface,
                     RoundedCornerShape(16.dp)

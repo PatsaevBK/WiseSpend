@@ -15,13 +15,13 @@ import androidx.compose.ui.unit.dp
 import info.javaway.spend_sense.common.ui.theme.AppThemeProvider
 
 @Composable
-fun BoxScope.FAB(
+fun FAB(
     modifier: Modifier = Modifier,
     clickListener: () -> Unit
 ) {
     FloatingActionButton(
         onClick = clickListener,
-        modifier = modifier.padding(16.dp).align(Alignment.BottomEnd),
+        modifier = modifier.padding(16.dp),
         containerColor = AppThemeProvider.colors.surface
     ) {
         Image(

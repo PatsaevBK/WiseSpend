@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import info.javaway.spend_sense.common.ui.theme.AppThemeProvider
-import info.javaway.spend_sense.extensions.appLog
 import info.javaway.spend_sense.settings.SettingsComponent
 import info.javaway.spend_sense.settings.child.auth.compose.AuthView
 import info.javaway.spend_sense.settings.child.sync.compose.SyncView

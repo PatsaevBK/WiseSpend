@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.sp
 import info.javaway.spend_sense.common.ui.atoms.AppButton
 import info.javaway.spend_sense.common.ui.atoms.AppCard
 import info.javaway.spend_sense.common.ui.theme.AppThemeProvider
-import info.javaway.spend_sense.extensions.appLog
 import info.javaway.spend_sense.settings.child.sync.SyncComponent
 import org.jetbrains.compose.resources.stringResource
 import spendsense.shared.generated.resources.Res

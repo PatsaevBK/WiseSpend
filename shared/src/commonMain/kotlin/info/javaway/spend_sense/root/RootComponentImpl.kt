@@ -11,7 +11,6 @@ import info.javaway.spend_sense.events.extensions.componentScope
 import info.javaway.spend_sense.events.list.EventsListComponent
 import info.javaway.spend_sense.root.model.RootContract
 import info.javaway.spend_sense.settings.SettingsComponent
-import info.javaway.spend_sense.settings.SettingsComponentImpl
 import info.javaway.spend_sense.storage.SettingsManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

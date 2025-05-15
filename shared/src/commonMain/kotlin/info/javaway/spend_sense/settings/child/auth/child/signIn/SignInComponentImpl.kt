@@ -2,13 +2,16 @@ package info.javaway.spend_sense.settings.child.auth.child.signIn
 
 import com.arkivanov.decompose.ComponentContext
 import info.javaway.spend_sense.events.extensions.componentScope
+import info.javaway.spend_sense.network.ApiErrorWrapper
 import info.javaway.spend_sense.network.AppApi
 import info.javaway.spend_sense.settings.child.auth.child.register.model.AuthResponse
 import info.javaway.spend_sense.settings.child.auth.child.signIn.SignInComponent.Output
 import info.javaway.spend_sense.settings.child.auth.child.signIn.model.SignInContract
+import info.javaway.spend_sense.settings.child.auth.child.signIn.model.SignInContract.Effect
 import info.javaway.spend_sense.settings.child.auth.child.signIn.model.SignInRequest
 import info.javaway.spend_sense.storage.SettingsManager
 import io.ktor.client.call.body
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -18,11 +21,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import info.javaway.spend_sense.network.ApiErrorWrapper
-import info.javaway.spend_sense.settings.child.auth.child.register.RegisterComponent
-import info.javaway.spend_sense.settings.child.auth.child.register.RegisterComponentImpl
-import info.javaway.spend_sense.settings.child.auth.child.signIn.model.SignInContract.Effect
-import io.ktor.client.statement.bodyAsText
 
 class SignInComponentImpl(
     componentContext: ComponentContext,

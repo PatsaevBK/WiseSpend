@@ -5,7 +5,6 @@ import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.Folder
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
-import info.javaway.spend_sense.root.RootComponent
 import org.jetbrains.compose.resources.StringResource
 import spendsense.shared.generated.resources.Res
 import spendsense.shared.generated.resources.categories

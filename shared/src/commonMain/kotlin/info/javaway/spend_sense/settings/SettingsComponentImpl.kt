@@ -11,7 +11,6 @@ import info.javaway.spend_sense.platform.DeviceInfo
 import info.javaway.spend_sense.settings.SettingsContract.Effect
 import info.javaway.spend_sense.settings.child.auth.AuthComponent
 import info.javaway.spend_sense.settings.child.sync.SyncComponent
-import info.javaway.spend_sense.settings.child.sync.model.SyncContract
 import info.javaway.spend_sense.storage.SettingsManager
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -55,6 +55,9 @@ kotlin {
 
                 //Logs
                 api(libs.napier)
+
+                //decompose
+                implementation(libs.decompose)
             }
         }
 

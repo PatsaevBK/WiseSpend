@@ -17,6 +17,8 @@ kotlin {
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "shared"
+            export(libs.decompose)
+            export((libs.lifecycle))
         }
     }
 
@@ -57,8 +59,9 @@ kotlin {
                 api(libs.napier)
 
                 //decompose
-                implementation(libs.decompose)
-                implementation(libs.decompose.extensions.compose)
+                api(libs.decompose)
+                api(libs.decompose.extensions.compose)
+                api(libs.lifecycle)
             }
         }
 

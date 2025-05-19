@@ -1,5 +1,6 @@
 package info.javaway.spend_sense.root.compose
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -13,7 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import info.javaway.spend_sense.categories.compose.CategoriesScreen
+import info.javaway.spend_sense.categories.list.compose.CategoriesScreen
 import info.javaway.spend_sense.common.ui.theme.AppThemeProvider
 import info.javaway.spend_sense.common.ui.theme.Theme
 import info.javaway.spend_sense.events.list.compose.EventsScreen
@@ -28,21 +29,23 @@ fun RootScreen(
     modifier: Modifier = Modifier,
 ) {
     val state by rootComponent.state.collectAsState()
+    isSystemInDarkTheme()
 
     Theme(
-        themeIsDark = state.themeIsDark,
+        themeIsDark = isSystemInDarkTheme(),
         appPrefs = state.appPrefs
     ) {
+
         Scaffold(
             modifier = modifier,
             bottomBar = {
                 NavigationBar(
-                    containerColor = AppThemeProvider.colors.onBackground,
+                    containerColor = AppThemeProvider.colors.surface,
                 ) {
                     NavigationButtons(component = rootComponent)
                 }
             },
-            contentColor = AppThemeProvider.colors.background
+            backgroundColor = AppThemeProvider.colors.background
         ) { paddingValues ->
             Children(stack = rootComponent.stack, modifier = Modifier.padding(paddingValues)) {
                 when (val child = it.instance) {
@@ -78,7 +81,7 @@ private fun RowScope.NavigationButtons(
         NavigationBarItem(
             selected = isSelected,
             icon = { Icon(imageVector = bottomBarItem.image, contentDescription = label) },
-            label = { Text(text = label) },
+            label = { Text(text = label, color = AppThemeProvider.colors.onSurface) },
             onClick = onClick
         )
     }

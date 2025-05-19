@@ -1,8 +1,15 @@
 package info.javaway.spend_sense.categories.list
 
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.router.slot.ChildSlot
+import com.arkivanov.decompose.router.slot.SlotNavigation
+import com.arkivanov.decompose.router.slot.activate
+import com.arkivanov.decompose.router.slot.childSlot
+import com.arkivanov.decompose.router.slot.dismiss
+import com.arkivanov.decompose.value.Value
 import info.javaway.spend_sense.categories.CategoriesRepository
-import info.javaway.spend_sense.categories.creation.CreateCategoryData
+import info.javaway.spend_sense.categories.creation.CreateCategoryComponent
+import info.javaway.spend_sense.categories.creation.CreateCategoryComponentImpl
 import info.javaway.spend_sense.categories.extensions.toCategory
 import info.javaway.spend_sense.events.extensions.componentScope
 import info.javaway.spend_sense.extensions.now
@@ -14,6 +21,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
+import kotlinx.serialization.Serializable
 
 class CategoriesListComponentImpl(
     componentContext: ComponentContext,
@@ -25,17 +33,38 @@ class CategoriesListComponentImpl(
 
     private val scope = componentScope()
 
+    private val nav = SlotNavigation<Config>()
+    private val _dialogSlot = childSlot(
+        source = nav,
+        serializer = Config.serializer(),
+        handleBackButton = true,
+        childFactory = { _ , _ ->
+            CreateCategoryComponentImpl(
+                onDismiss = { nav.dismiss() },
+                onSaveCategory = {
+                    scope.launch {
+                        categoriesRepository.createCategory(it.toCategory(LocalDateTime.now()))
+                    }
+                    nav.dismiss()
+                }
+            )
+        }
+    )
+
+    override val dialogSlot: Value<ChildSlot<*, CreateCategoryComponent>> = _dialogSlot
+
     init {
         categoriesRepository.getAllFlow().onEach {
             _model.update { oldState -> oldState.copy(categories = it) }
         }.launchIn(scope)
     }
 
-    override fun createCategory(createCategoryData: CreateCategoryData) {
-        scope.launch {
-            categoriesRepository.createCategory(createCategoryData.toCategory(LocalDateTime.now()))
-        }
+    override fun openCreateCategory() {
+        nav.activate(Config)
     }
+
+    @Serializable
+    private data object Config
 
     class Factory(
         private val categoriesRepository: CategoriesRepository

@@ -9,7 +9,9 @@ plugins {
 
 kotlin {
     jvm()
+
     androidTarget()
+
     listOf(
         iosArm64(),
         iosX64(),
@@ -90,7 +92,7 @@ kotlin {
 }
 
 android {
-    namespace = "info.javaway.spend_sense"
+    namespace = "info.javaway.wiseSpend"
     compileSdk = findProperty("android.compileSdk").toString().toInt()
 
     compileOptions {
@@ -102,7 +104,7 @@ android {
 sqldelight {
     databases {
         create("AppDb") {
-            packageName.set("info.javaway.spend-sense.db")
+            packageName.set("info.javaway.wiseSpend.db")
             schemaOutputDirectory.set(file("src/commonMain/sqldelight/db"))
         }
     }

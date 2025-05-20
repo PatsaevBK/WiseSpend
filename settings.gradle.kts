@@ -1,4 +1,4 @@
-rootProject.name = "SpendSense"
+rootProject.name = "WiseSpend"
 include("shared")
 include("desktop")
 include("android")

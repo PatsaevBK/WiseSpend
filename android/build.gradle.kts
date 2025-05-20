@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "info.spend"
+    namespace = "info.wiseSpend"
     compileSdk = findProperty("android.compileSdk").toString().toInt()
 
     defaultConfig {

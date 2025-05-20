@@ -2,7 +2,7 @@
   <artifact type="jar" name="desktop-desktop">
     <output-path>$PROJECT_DIR$/desktop/build/libs</output-path>
     <root id="archive" name="desktop-desktop.jar">
-      <element id="module-output" name="SpendSense.desktop.desktopMain" />
+      <element id="module-output" name="WiseSpend.desktop.desktopMain" />
     </root>
   </artifact>
 </component>

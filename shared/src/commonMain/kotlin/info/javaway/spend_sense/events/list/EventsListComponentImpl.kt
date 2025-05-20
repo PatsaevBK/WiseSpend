@@ -44,7 +44,6 @@ class EventsListComponentImpl(
         }
     }
 
-
     class Factory(
         private val categoriesRepository: CategoriesRepository,
         private val eventsRepository: EventsRepository,

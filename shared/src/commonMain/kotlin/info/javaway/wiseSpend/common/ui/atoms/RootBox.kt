@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun RootBox(content: @Composable BoxScope.() -> Unit){
-    Box(modifier = Modifier.fillMaxSize().padding(bottom = 70.dp)){
+    Box(modifier = Modifier.fillMaxSize()){
         content()
     }
 }

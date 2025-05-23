@@ -3,7 +3,9 @@ package info.javaway.wiseSpend.common.ui.calendar.model
 import info.javaway.wiseSpend.common.ui.calendar.extensions.initValue
 import info.javaway.wiseSpend.extensions.now
 import kotlinx.datetime.LocalDate
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class CalendarDay(
     val selectable: Boolean,
     val isSelected: Boolean,

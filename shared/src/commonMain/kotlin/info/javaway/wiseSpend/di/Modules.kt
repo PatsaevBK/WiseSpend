@@ -129,7 +129,7 @@ object ViewModelModule {
 object ComponentsFactoryModule {
     val componentFactory = module {
         single<RootComponent.Factory> { RootComponentImpl.Factory(get(), get(), get(), get())  }
-        single<SettingsComponent.Factory> { SettingsComponentImpl.Factory(get(), get(), get(), get()) }
+        factory<SettingsComponent.Factory> { SettingsComponentImpl.Factory(get(), get(), get(), get()) }
         factory<CategoriesListComponent.Factory> { CategoriesListComponentImpl.Factory(get()) }
         factory<EventsListComponent.Factory> { EventsListComponentImpl.Factory(get(), get()) }
         factory<AuthComponent.Factory> { AuthComponentImpl.Factory(get(), get()) }

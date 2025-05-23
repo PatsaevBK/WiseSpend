@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "info.spend"
+    namespace = "info.wiseSpend"
     compileSdk = findProperty("android.compileSdk").toString().toInt()
 
     defaultConfig {
@@ -38,4 +38,5 @@ android {
 dependencies {
     implementation(project(":shared"))
     implementation(libs.androidx.activity.compose)
+    implementation(libs.decompose)
 }

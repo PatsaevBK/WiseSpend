@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  iosApp
-//
-//  Created by Beknur Patsaev on 06.12.2024.
-//
-
 import SwiftUI
 import shared
 
@@ -19,11 +12,13 @@ struct ContentView: View {
 }
 
 struct ComposeView: UIViewControllerRepresentable {
-  func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-    
-  }
+  
+  func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
   
   func makeUIViewController(context: Context) -> some UIViewController {
-    RootViewKt.mainViewController()
+    let context = DefaultComponentContext(lifecycle: ApplicationLifecycle())
+    let rootComponent: RootComponent = RootViewKt.getRootFactory()
+      .create(componentContext: context)
+    return RootViewKt.mainViewController(rootComponent: rootComponent)
   }
 }

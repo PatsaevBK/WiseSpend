@@ -1,7 +1,7 @@
 package info.javaway.wiseSpend.settings.child.auth.child.signIn
 
 import com.arkivanov.decompose.ComponentContext
-import info.javaway.wiseSpend.events.extensions.componentScope
+import info.javaway.wiseSpend.extensions.componentScope
 import info.javaway.wiseSpend.network.ApiErrorWrapper
 import info.javaway.wiseSpend.network.AppApi
 import info.javaway.wiseSpend.settings.child.auth.child.register.model.AuthResponse

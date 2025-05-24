@@ -12,7 +12,7 @@ import info.javaway.wiseSpend.common.ui.calendar.model.CalendarDay
 import info.javaway.wiseSpend.events.EventsRepository
 import info.javaway.wiseSpend.events.creation.CreateEventComponent
 import info.javaway.wiseSpend.events.creation.CreateEventComponentImpl
-import info.javaway.wiseSpend.events.extensions.componentScope
+import info.javaway.wiseSpend.extensions.componentScope
 import info.javaway.wiseSpend.events.models.SpendEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

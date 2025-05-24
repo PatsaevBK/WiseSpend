@@ -1,4 +1,4 @@
-package info.javaway.wiseSpend.events.extensions
+package info.javaway.wiseSpend.extensions
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.essenty.lifecycle.doOnDestroy

@@ -6,7 +6,7 @@ import info.javaway.wiseSpend.categories.extensions.toApi
 import info.javaway.wiseSpend.categories.models.CategoryApi
 import info.javaway.wiseSpend.categories.models.toEntity
 import info.javaway.wiseSpend.events.EventsRepository
-import info.javaway.wiseSpend.events.extensions.componentScope
+import info.javaway.wiseSpend.extensions.componentScope
 import info.javaway.wiseSpend.events.models.SpendEventApi
 import info.javaway.wiseSpend.events.models.toApi
 import info.javaway.wiseSpend.events.models.toEntity

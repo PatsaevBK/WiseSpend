@@ -11,7 +11,7 @@ import info.javaway.wiseSpend.categories.CategoriesRepository
 import info.javaway.wiseSpend.categories.creation.CreateCategoryComponent
 import info.javaway.wiseSpend.categories.creation.CreateCategoryComponentImpl
 import info.javaway.wiseSpend.categories.extensions.toCategory
-import info.javaway.wiseSpend.events.extensions.componentScope
+import info.javaway.wiseSpend.extensions.componentScope
 import info.javaway.wiseSpend.extensions.now
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

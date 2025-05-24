@@ -7,7 +7,7 @@ import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
 import info.javaway.wiseSpend.categories.list.CategoriesListComponent
-import info.javaway.wiseSpend.events.extensions.componentScope
+import info.javaway.wiseSpend.extensions.componentScope
 import info.javaway.wiseSpend.events.list.EventsListComponent
 import info.javaway.wiseSpend.root.model.RootContract
 import info.javaway.wiseSpend.settings.SettingsComponent

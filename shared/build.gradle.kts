@@ -69,6 +69,7 @@ kotlin {
 
         jvmMain.dependencies {
             implementation(libs.sqldelight.desktop.driver)
+            implementation(libs.kotlinx.coroutines.swing)
         }
 
         val iosArm64Main by getting
@@ -88,6 +89,10 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.sqldelight.android.driver)
         }
+    }
+
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 }
 

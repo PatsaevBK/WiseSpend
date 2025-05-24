@@ -1,7 +1,7 @@
 package info.javaway.wiseSpend.root.model
 
 import info.javaway.wiseSpend.base.BaseViewState
-import info.javaway.wiseSpend.common.ui.theme.AppPrefs
+import info.javaway.wiseSpend.uiLibrary.ui.theme.AppPrefs
 
 interface RootContract {
     data class State(

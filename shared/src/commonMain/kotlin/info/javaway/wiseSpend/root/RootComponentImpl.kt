@@ -6,11 +6,11 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
-import info.javaway.wiseSpend.categories.list.CategoriesListComponent
+import info.javaway.wiseSpend.features.categories.list.CategoriesListComponent
 import info.javaway.wiseSpend.extensions.componentScope
-import info.javaway.wiseSpend.events.list.EventsListComponent
+import info.javaway.wiseSpend.features.events.list.EventsListComponent
 import info.javaway.wiseSpend.root.model.RootContract
-import info.javaway.wiseSpend.settings.SettingsComponent
+import info.javaway.wiseSpend.features.settings.SettingsComponent
 import info.javaway.wiseSpend.storage.SettingsManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

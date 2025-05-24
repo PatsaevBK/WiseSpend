@@ -1,9 +1,9 @@
 package info.javaway.wiseSpend.network
 
-import info.javaway.wiseSpend.categories.models.CategoryApi
-import info.javaway.wiseSpend.events.models.SpendEventApi
-import info.javaway.wiseSpend.settings.child.auth.child.register.model.RegisterRequest
-import info.javaway.wiseSpend.settings.child.auth.child.signIn.model.SignInRequest
+import info.javaway.wiseSpend.features.categories.models.CategoryApi
+import info.javaway.wiseSpend.features.events.models.SpendEventApi
+import info.javaway.wiseSpend.features.settings.child.auth.child.register.model.RegisterRequest
+import info.javaway.wiseSpend.features.settings.child.auth.child.signIn.model.SignInRequest
 import info.javaway.wiseSpend.storage.SettingsManager
 import io.ktor.client.HttpClient
 import io.ktor.client.request.bearerAuth

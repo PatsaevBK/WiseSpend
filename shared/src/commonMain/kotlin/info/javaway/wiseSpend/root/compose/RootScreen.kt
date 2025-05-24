@@ -14,13 +14,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import info.javaway.wiseSpend.categories.list.compose.CategoriesScreen
-import info.javaway.wiseSpend.common.ui.theme.AppThemeProvider
-import info.javaway.wiseSpend.common.ui.theme.Theme
-import info.javaway.wiseSpend.events.list.compose.EventsScreen
+import info.javaway.wiseSpend.features.categories.list.compose.CategoriesScreen
+import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
+import info.javaway.wiseSpend.uiLibrary.ui.theme.Theme
+import info.javaway.wiseSpend.features.events.list.compose.EventsScreen
 import info.javaway.wiseSpend.root.RootComponent
 import info.javaway.wiseSpend.root.model.BottomBarItem
-import info.javaway.wiseSpend.settings.compose.SettingScreen
+import info.javaway.wiseSpend.features.settings.compose.SettingScreen
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

@@ -8,7 +8,6 @@ import info.javaway.wiseSpend.extensions.appLog
 import info.javaway.wiseSpend.features.categories.list.CategoriesListComponent
 import info.javaway.wiseSpend.features.categories.list.CategoriesListComponentImpl
 import info.javaway.wiseSpend.features.categories.models.CategoryDao
-import info.javaway.wiseSpend.features.events.creation.CreateEventViewModel
 import info.javaway.wiseSpend.features.events.list.EventsListComponent
 import info.javaway.wiseSpend.features.events.models.EventDao
 import info.javaway.wiseSpend.features.settings.SettingsComponent
@@ -24,6 +23,8 @@ import info.javaway.wiseSpend.features.settings.child.auth.child.signIn.SignInCo
 import info.javaway.wiseSpend.features.settings.child.auth.child.signIn.SignInComponentImpl
 import info.javaway.wiseSpend.features.settings.child.sync.SyncComponent
 import info.javaway.wiseSpend.features.settings.child.sync.SyncComponentImpl
+import info.javaway.wiseSpend.network.DateSerializer
+import info.javaway.wiseSpend.network.DateTimeSerializer
 import info.javaway.wiseSpend.storage.DbAdapters
 import info.javaway.wiseSpend.storage.SettingsManager
 import info.javaway.wiseSpend.uiLibrary.ui.calendar.DatePickerViewModel
@@ -37,7 +38,10 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.SerializersModule
 import org.koin.core.qualifier.Qualifier
 import org.koin.core.qualifier.QualifierValue
 import org.koin.dsl.module
@@ -82,6 +86,10 @@ object NetworkModule {
                 ignoreUnknownKeys = true // не знает ключ не падает
                 explicitNulls = false // нет в json nullable поля не падаем
                 prettyPrint = true
+                serializersModule = SerializersModule {
+                    contextual(LocalDateTime::class, DateTimeSerializer)
+                    contextual(LocalDate::class, DateSerializer)
+                }
             }
         }
     }
@@ -121,7 +129,6 @@ object ViewModelModule {
     val viewModels = module {
         single(DatePickerSingleQualifier) { DatePickerViewModel() }
         factory(DatePickerFactoryQualifier) { DatePickerViewModel() }
-        single { CreateEventViewModel() }
     }
 }
 

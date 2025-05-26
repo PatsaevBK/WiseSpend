@@ -1,28 +1,25 @@
 {
   "kind": "collectionType",
-  "collectionName": "categories",
+  "collectionName": "accounts",
   "info": {
-    "singularName": "category",
-    "pluralName": "categories",
-    "displayName": "Category",
+    "singularName": "account",
+    "pluralName": "accounts",
+    "displayName": "Account",
     "description": ""
   },
   "options": {
-    "draftAndPublish": false
+    "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
     "idLocal": {
       "type": "string"
     },
-    "title": {
+    "name": {
       "type": "string"
     },
-    "description": {
-      "type": "string"
-    },
-    "colorHex": {
-      "type": "string"
+    "amount": {
+      "type": "decimal"
     },
     "userId": {
       "type": "biginteger"

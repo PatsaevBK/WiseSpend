@@ -23,8 +23,8 @@ import info.javaway.wiseSpend.features.settings.child.auth.child.signIn.SignInCo
 import info.javaway.wiseSpend.features.settings.child.auth.child.signIn.SignInComponentImpl
 import info.javaway.wiseSpend.features.settings.child.sync.SyncComponent
 import info.javaway.wiseSpend.features.settings.child.sync.SyncComponentImpl
-import info.javaway.wiseSpend.network.DateSerializer
-import info.javaway.wiseSpend.network.DateTimeSerializer
+import info.javaway.wiseSpend.network.serializers.DateSerializer
+import info.javaway.wiseSpend.network.serializers.DateTimeSerializer
 import info.javaway.wiseSpend.storage.DbAdapters
 import info.javaway.wiseSpend.storage.SettingsManager
 import info.javaway.wiseSpend.uiLibrary.ui.calendar.DatePickerViewModel

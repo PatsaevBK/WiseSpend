@@ -1,4 +1,4 @@
-package info.javaway.wiseSpend.network
+package info.javaway.wiseSpend.network.serializers
 
 import info.javaway.wiseSpend.extensions.now
 import kotlinx.datetime.Instant

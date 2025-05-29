@@ -1,7 +1,5 @@
 'use strict';
 
-const category = require('../../category/controllers/category');
-
 /**
  * account service
  */
@@ -49,27 +47,29 @@ module.exports = createCoreService('api::account.account',
                 await strapi.db.query(type).createMany({ data: accountsToCreate })
             }
 
-            if(accountsToUpdate.length > 0){
-            //удалить все категории с таким idLocal
-            await strapi.db.query(type).deleteMany({
-                where: {
-                    idLocal: {
-                        $in: accountsToUpdate.map(c => c.idLocal)
+            if(accountsToUpdate.length > 0){ 
+                //удалить все категории с таким idLocal
+                await strapi.db.query(type).deleteMany({
+                    where: {
+                        idLocal: {
+                            $in: accountsToUpdate.map(c => c.idLocal)
+                        }
                     }
-                }
-            })
-            //вставить новые данные
-            await strapi.db.query(type).createMany({
-                data : accountsToUpdate
-            })
+                })
+                //вставить новые данные
+                await strapi.db.query(type).createMany({
+                    data : accountsToUpdate
+                })
+            }
+            
 
             const dictAccountsFromClient = Object.fromEntries(body.map(c => [c.idLocal, c]))
 
+            console.log('Accounts to create:', accountsToCreate);
+            console.log('Accounts to update:', accountsToUpdate);
             return accountsFromDb
                 .filter(account => dictAccountsFromClient[account.idLocal] ?
-                    dictAccountsFromClient[account.idLocal].updatedAtLocal < account.updatedAtLocal : true
-                )
-        }
+                    dictAccountsFromClient[account.idLocal].updatedAtLocal < account.updatedAtLocal : true)
         }
     })
 );

@@ -378,7 +378,7 @@ export interface ApiAccountAccount extends Struct.CollectionTypeSchema {
     singularName: 'account';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     amount: Schema.Attribute.Decimal;

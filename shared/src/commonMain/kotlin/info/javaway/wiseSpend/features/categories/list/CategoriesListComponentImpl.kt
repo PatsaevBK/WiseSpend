@@ -9,7 +9,7 @@ import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
 import info.javaway.wiseSpend.extensions.componentScope
 import info.javaway.wiseSpend.extensions.now
-import info.javaway.wiseSpend.features.categories.CategoriesRepository
+import info.javaway.wiseSpend.features.categories.data.CategoriesRepository
 import info.javaway.wiseSpend.features.categories.creation.CreateCategoryComponent
 import info.javaway.wiseSpend.features.categories.creation.CreateCategoryComponentImpl
 import info.javaway.wiseSpend.features.categories.extensions.toCategory

@@ -1,7 +1,6 @@
-package info.javaway.wiseSpend.features.categories
+package info.javaway.wiseSpend.features.categories.data
 
 import info.javaway.wiseSpend.features.categories.models.Category
-import info.javaway.wiseSpend.features.categories.models.CategoryDao
 
 class CategoriesRepository(
     private val dao: CategoryDao

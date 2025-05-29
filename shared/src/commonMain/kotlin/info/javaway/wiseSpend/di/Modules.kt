@@ -1,15 +1,15 @@
 package info.javaway.wiseSpend.di
 
-import info.javaway.wiseSpend.features.categories.CategoriesRepository
+import info.javaway.wiseSpend.features.categories.data.CategoriesRepository
 import info.javaway.wiseSpend.db.AppDb
-import info.javaway.wiseSpend.features.events.EventsRepository
+import info.javaway.wiseSpend.features.events.data.EventsRepository
 import info.javaway.wiseSpend.features.events.list.EventsListComponentImpl
 import info.javaway.wiseSpend.extensions.appLog
 import info.javaway.wiseSpend.features.categories.list.CategoriesListComponent
 import info.javaway.wiseSpend.features.categories.list.CategoriesListComponentImpl
-import info.javaway.wiseSpend.features.categories.models.CategoryDao
+import info.javaway.wiseSpend.features.categories.data.CategoryDao
 import info.javaway.wiseSpend.features.events.list.EventsListComponent
-import info.javaway.wiseSpend.features.events.models.EventDao
+import info.javaway.wiseSpend.features.events.data.EventDao
 import info.javaway.wiseSpend.features.settings.SettingsComponent
 import info.javaway.wiseSpend.features.settings.SettingsComponentImpl
 import info.javaway.wiseSpend.network.AppApi

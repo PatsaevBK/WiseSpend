@@ -1,9 +1,12 @@
-package info.javaway.wiseSpend.features.events.models
+package info.javaway.wiseSpend.features.events.data
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import db.events.EventTable
 import info.javaway.wiseSpend.db.AppDb
+import info.javaway.wiseSpend.features.events.models.SpendEvent
+import info.javaway.wiseSpend.features.events.models.toDb
+import info.javaway.wiseSpend.features.events.models.toSpendEvent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlin.coroutines.CoroutineContext

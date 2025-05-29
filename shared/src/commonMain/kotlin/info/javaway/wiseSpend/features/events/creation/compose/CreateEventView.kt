@@ -114,5 +114,4 @@ fun CreateEventView(
             }
         }
     }
-
 }

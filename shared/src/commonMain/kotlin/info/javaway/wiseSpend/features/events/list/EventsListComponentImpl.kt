@@ -8,8 +8,8 @@ import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
 import info.javaway.wiseSpend.extensions.componentScope
-import info.javaway.wiseSpend.features.categories.CategoriesRepository
-import info.javaway.wiseSpend.features.events.EventsRepository
+import info.javaway.wiseSpend.features.categories.data.CategoriesRepository
+import info.javaway.wiseSpend.features.events.data.EventsRepository
 import info.javaway.wiseSpend.features.events.creation.CreateEventComponent
 import info.javaway.wiseSpend.features.events.creation.CreateEventComponentImpl
 import info.javaway.wiseSpend.features.events.models.SpendEvent

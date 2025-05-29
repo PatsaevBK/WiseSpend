@@ -52,13 +52,13 @@ fun EventsScreen(
             }
         }
 
-        dialogSlot.child?.instance?.let { eventComponent ->
+        dialogSlot.child?.instance?.let { createEventComponent ->
             ModalBottomSheet(
                 onDismissRequest = component::onDismiss,
                 sheetState = sheetState,
                 containerColor = AppThemeProvider.colors.surface,
             ) {
-                CreateEventView(eventComponent)
+                CreateEventView(createEventComponent)
             }
         }
 

@@ -1,6 +1,5 @@
-package info.javaway.wiseSpend.features.events
+package info.javaway.wiseSpend.features.events.data
 
-import info.javaway.wiseSpend.features.events.models.EventDao
 import info.javaway.wiseSpend.features.events.models.SpendEvent
 
 class EventsRepository(

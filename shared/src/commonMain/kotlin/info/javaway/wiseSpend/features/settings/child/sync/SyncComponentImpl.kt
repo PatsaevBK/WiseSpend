@@ -1,11 +1,11 @@
 package info.javaway.wiseSpend.features.settings.child.sync
 
 import com.arkivanov.decompose.ComponentContext
-import info.javaway.wiseSpend.features.categories.CategoriesRepository
+import info.javaway.wiseSpend.features.categories.data.CategoriesRepository
 import info.javaway.wiseSpend.features.categories.extensions.toApi
 import info.javaway.wiseSpend.features.categories.models.CategoryApi
 import info.javaway.wiseSpend.features.categories.models.toEntity
-import info.javaway.wiseSpend.features.events.EventsRepository
+import info.javaway.wiseSpend.features.events.data.EventsRepository
 import info.javaway.wiseSpend.extensions.componentScope
 import info.javaway.wiseSpend.features.events.models.SpendEventApi
 import info.javaway.wiseSpend.features.events.models.toApi

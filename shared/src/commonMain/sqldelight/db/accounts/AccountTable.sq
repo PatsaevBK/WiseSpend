@@ -1,0 +1,9 @@
+import kotlinx.datetime.LocalDateTime;
+
+CREATE TABLE Account (
+    id TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    amount REAL NOT NULL,
+    createdAt TEXT AS LocalDateTime NOT NULL,
+    updatedAt TEXT AS LocalDateTime NOT NULL
+);

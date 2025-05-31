@@ -28,10 +28,10 @@
       "type": "biginteger"
     },
     "createdAtLocal": {
-      "type": "string"
+      "type": "biginteger"
     },
     "updatedAtLocal": {
-      "type": "string"
+      "type": "biginteger"
     }
   }
 }

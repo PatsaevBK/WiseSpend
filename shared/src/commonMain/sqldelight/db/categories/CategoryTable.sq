@@ -1,12 +1,12 @@
 import kotlinx.datetime.LocalDateTime;
 
 CREATE TABLE CategoryTable(
-id TEXT NOT NULL PRIMARY KEY,
-title TEXT NOT NULL,
-description TEXT,
-createdAt TEXT AS LocalDateTime NOT NULL,
-updatedAt TEXT AS LocalDateTime NOT NULL,
-colorHex TEXT NOT NULL
+    id TEXT NOT NULL PRIMARY KEY,
+    title TEXT NOT NULL,
+    description TEXT,
+    createdAt TEXT AS LocalDateTime NOT NULL,
+    updatedAt TEXT AS LocalDateTime NOT NULL,
+    colorHex TEXT NOT NULL
 );
 
 get:

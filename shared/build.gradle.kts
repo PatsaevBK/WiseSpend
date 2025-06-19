@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.sqldelight)
     alias(libs.plugins.kotlin.serialization)
+    `maven-publish`
 }
 
 kotlin {
@@ -61,15 +62,17 @@ kotlin {
                 api(libs.napier)
 
                 //decompose
-                api(libs.decompose)
+                implementation(libs.decompose)
+                implementation(libs.lifecycle)
                 api(libs.decompose.extensions.compose)
-                api(libs.lifecycle)
             }
         }
 
         jvmMain.dependencies {
             implementation(libs.sqldelight.desktop.driver)
             implementation(libs.kotlinx.coroutines.swing)
+            api(libs.decompose)
+            api(libs.lifecycle)
         }
 
         val iosArm64Main by getting
@@ -112,5 +115,19 @@ sqldelight {
             packageName.set("info.javaway.wiseSpend.db")
             schemaOutputDirectory.set(file("src/commonMain/sqldelight/db"))
         }
+    }
+}
+
+publishing {
+    publications {
+        withType<MavenPublication>().configureEach {
+            groupId = "info.javaway.wisespend"
+            artifactId = "shared-${name}"
+            version = "1.0"
+        }
+    }
+
+    repositories {
+        mavenLocal()
     }
 }

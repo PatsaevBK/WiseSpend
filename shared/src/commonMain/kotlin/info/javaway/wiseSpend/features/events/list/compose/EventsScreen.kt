@@ -12,15 +12,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import info.javaway.wiseSpend.uiLibrary.ui.atoms.FAB
-import info.javaway.wiseSpend.uiLibrary.ui.atoms.RootBox
-import info.javaway.wiseSpend.uiLibrary.ui.calendar.compose.CalendarColors
-import info.javaway.wiseSpend.uiLibrary.ui.calendar.compose.DatePickerView
-import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
 import info.javaway.wiseSpend.di.DatePickerSingleQualifier
 import info.javaway.wiseSpend.di.getKoinInstance
 import info.javaway.wiseSpend.features.events.creation.compose.CreateEventView
 import info.javaway.wiseSpend.features.events.list.EventsListComponent
+import info.javaway.wiseSpend.uiLibrary.ui.atoms.FAB
+import info.javaway.wiseSpend.uiLibrary.ui.atoms.RootBox
+import info.javaway.wiseSpend.uiLibrary.ui.calendar.compose.DatePickerView
+import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,11 +34,6 @@ fun EventsScreen(
         Column {
             DatePickerView(
                 viewModel = getKoinInstance(DatePickerSingleQualifier),
-                colors = CalendarColors.default.copy(
-                    colorSurface = AppThemeProvider.colors.surface,
-                    colorOnSurface = AppThemeProvider.colors.onSurface,
-                    colorAccent = AppThemeProvider.colors.accent
-                ),
                 firstDayIsMonday = true,
                 labels = model.calendarLabels,
                 selectDayListener = component::selectDay

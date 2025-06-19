@@ -20,12 +20,12 @@ fun FAB(
     FloatingActionButton(
         onClick = clickListener,
         modifier = modifier.padding(16.dp),
-        containerColor = AppThemeProvider.colors.surface
+        containerColor = AppThemeProvider.colorsSystem.icon.active
     ) {
         Image(
             imageVector = Icons.Rounded.Add,
             contentDescription = null,
-            colorFilter = ColorFilter.tint(AppThemeProvider.colors.accent),
+            colorFilter = ColorFilter.tint(AppThemeProvider.colorsSystem.icon.controls),
             modifier = Modifier.size(32.dp)
         )
     }

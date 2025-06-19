@@ -23,7 +23,6 @@ import info.javaway.wiseSpend.uiLibrary.ui.atoms.AppButton
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.AppTextField
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.BottomModalContainer
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.TextPairButton
-import info.javaway.wiseSpend.uiLibrary.ui.calendar.compose.CalendarColors
 import info.javaway.wiseSpend.uiLibrary.ui.calendar.compose.DatePickerView
 import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
 import org.jetbrains.compose.resources.stringResource
@@ -103,11 +102,6 @@ fun CreateEventView(
         Dialog(onDismissRequest = { showDateDialog = false }) {
             DatePickerView(
                 viewModel = getKoinInstance(DatePickerFactoryQualifier),
-                colors = CalendarColors.default.copy(
-                    colorAccent = AppThemeProvider.colors.accent,
-                    colorOnSurface = AppThemeProvider.colors.onSurface,
-                    colorSurface = AppThemeProvider.colors.surface
-                )
             ){ day ->
                 showDateDialog = false
                 component.selectDate(day.date)

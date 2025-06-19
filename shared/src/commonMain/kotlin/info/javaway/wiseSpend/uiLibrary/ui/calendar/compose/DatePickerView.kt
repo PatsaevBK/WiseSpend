@@ -18,7 +18,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ChevronLeft
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -30,13 +29,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.capitalize
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.intl.Locale
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import info.javaway.wiseSpend.uiLibrary.ui.calendar.DatePickerContract
 import info.javaway.wiseSpend.uiLibrary.ui.calendar.DatePickerViewModel
 import info.javaway.wiseSpend.uiLibrary.ui.calendar.extensions.fromSunday
@@ -44,6 +39,7 @@ import info.javaway.wiseSpend.uiLibrary.ui.calendar.model.CalendarDay
 import info.javaway.wiseSpend.uiLibrary.ui.calendar.model.CalendarLabel
 import info.javaway.wiseSpend.uiLibrary.ui.calendar.model.CalendarMonth
 import info.javaway.wiseSpend.uiLibrary.ui.calendar.model.CalendarWeek
+import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.datetime.DayOfWeek
@@ -51,7 +47,6 @@ import kotlinx.datetime.DayOfWeek
 @Composable
 fun DatePickerView(
     viewModel: DatePickerViewModel,
-    colors: CalendarColors = CalendarColors.default,
     firstDayIsMonday: Boolean = false,
     labels: List<CalendarLabel> = emptyList(),
     selectDayListener: (CalendarDay) -> Unit = {}
@@ -70,28 +65,26 @@ fun DatePickerView(
             }
         }.launchIn(this)
     }
-    CompositionLocalProvider(
-        LocalCalendarColors provides colors
-    ){
-        Column(
-            modifier = Modifier
-                .padding(8.dp)
-                .background(colors.colorSurface, shape = RoundedCornerShape(16.dp))
-        ) {
-            CalendarHeader(
-                calendarMonth = state.calendarMonth,
-                colors = colors,
-                prevMonthListener = { viewModel.prevMonth() },
-                nextMonthListener = { viewModel.nextMonth() },
-                yearSelectListener = { viewModel.updateYear(it) }
+    Column(
+        modifier = Modifier
+            .padding(8.dp)
+            .background(
+                AppThemeProvider.colorsSystem.fill.secondary,
+                shape = RoundedCornerShape(16.dp)
             )
+    ) {
+        CalendarHeader(
+            calendarMonth = state.calendarMonth,
+            prevMonthListener = { viewModel.prevMonth() },
+            nextMonthListener = { viewModel.nextMonth() },
+            yearSelectListener = { viewModel.updateYear(it) }
+        )
 
-            Divider(color = colors.colorOnSurface.copy(alpha = 0.5f))
+        Divider(color = AppThemeProvider.colorsSystem.separator.primary, thickness = 4.dp)
 
-            CalendarDaysLabels(firstDayIsMonday = firstDayIsMonday, colors = colors)
-            state.weeks.forEach { week ->
-                WeekView(week = week, colors = colors) { day -> viewModel.selectDay(day) }
-            }
+        CalendarDaysLabels(firstDayIsMonday = firstDayIsMonday)
+        state.weeks.forEach { week ->
+            WeekView(week = week) { day -> viewModel.selectDay(day) }
         }
     }
 }
@@ -100,7 +93,6 @@ fun DatePickerView(
 @Composable
 fun CalendarHeader(
     calendarMonth: CalendarMonth,
-    colors: CalendarColors,
     prevMonthListener: () -> Unit,
     nextMonthListener: () -> Unit,
     yearSelectListener: (Int) -> Unit,
@@ -113,31 +105,23 @@ fun CalendarHeader(
     ) {
         Text(
             calendarMonth.year.toString(),
-            style = TextStyle(
-                color = colors.colorOnSurface,
-                fontSize = 18.sp,
-                textAlign = TextAlign.Center
-            ),
+            style = AppThemeProvider.typography.l.body,
+            color = AppThemeProvider.colorsSystem.text.secondary,
             modifier = Modifier.clickable { selectYearDialogIsShown = true }
         )
         Spacer(modifier = Modifier.weight(1f))
 
-
-
         Text(
-            calendarMonth.month.name.lowercase().capitalize(Locale.current),
+            text = calendarMonth.month.name.lowercase().capitalize(Locale.current),
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
-            style = TextStyle(
-                color = colors.colorOnSurface,
-                fontSize = 18.sp,
-                textAlign = TextAlign.Center,
-            )
+            style = AppThemeProvider.typography.l.heading3,
+            color = AppThemeProvider.colorsSystem.text.primary
         )
 
         Image(
             imageVector = Icons.Rounded.ChevronLeft,
             contentDescription = "back",
-            colorFilter = ColorFilter.tint(colors.colorAccent),
+            colorFilter = ColorFilter.tint(AppThemeProvider.colorsSystem.icon.primary),
             modifier = Modifier
                 .padding(end = 24.dp)
                 .size(38.dp)
@@ -149,7 +133,7 @@ fun CalendarHeader(
         Image(
             imageVector = Icons.Rounded.ChevronRight,
             contentDescription = "next",
-            colorFilter = ColorFilter.tint(colors.colorAccent),
+            colorFilter = ColorFilter.tint(AppThemeProvider.colorsSystem.icon.primary),
             modifier = Modifier
                 .size(38.dp)
                 .clickable { nextMonthListener() }
@@ -160,24 +144,21 @@ fun CalendarHeader(
                 initialYear = calendarMonth.year,
                 onDismissRequest = { selectYearDialogIsShown = false },
                 onYearSelectListener = yearSelectListener,
-                colors = colors
             )
         }
     }
-
 }
 
 @Composable
 fun CalendarDaysLabels(
     firstDayIsMonday: Boolean,
-    colors: CalendarColors
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        DayOfWeek.values()
+        DayOfWeek.entries.toTypedArray()
             .let { if (firstDayIsMonday) it.toList() else it.fromSunday() }
             .forEach { dayOfWeek ->
                 Column(
@@ -189,11 +170,8 @@ fun CalendarDaysLabels(
                 ) {
                     Text(
                         dayOfWeek.name.take(2),
-                        style = TextStyle(
-                            color = colors.colorOnSurface.copy(alpha = 0.6f),
-                            textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Bold
-                        )
+                        style = AppThemeProvider.typography.l.body,
+                        color = AppThemeProvider.colorsSystem.text.primary
                     )
                 }
 
@@ -205,7 +183,6 @@ fun CalendarDaysLabels(
 @Composable
 fun WeekView(
     week: CalendarWeek,
-    colors: CalendarColors,
     selectDayListener: (CalendarDay) -> Unit
 ) {
     Row(
@@ -216,7 +193,6 @@ fun WeekView(
         week.days.forEach { calendarDay ->
             CalendarDayView(
                 calendarDay = calendarDay,
-                colors = colors,
                 selectDayListener = selectDayListener
             )
         }

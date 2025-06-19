@@ -23,17 +23,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import info.javaway.wiseSpend.extensions.fromHex
 import info.javaway.wiseSpend.uiLibrary.ui.calendar.model.CalendarDay
 import info.javaway.wiseSpend.uiLibrary.ui.calendar.model.CalendarLabel
-import info.javaway.wiseSpend.extensions.fromHex
+import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
 
 @Composable
 fun RowScope.CalendarDayView(
     calendarDay: CalendarDay,
-    colors: CalendarColors,
     selectDayListener: (CalendarDay) -> Unit,
 ) {
 
@@ -44,8 +42,8 @@ fun RowScope.CalendarDayView(
             calendarDay = calendarDay,
             selectDayListener = selectDayListener
         ) {
-            DayText(calendarDay, colors)
-            CurrentDayLabel(calendarDay, colors)
+            DayText(calendarDay)
+            CurrentDayLabel(calendarDay)
             GradientLabels(calendarDay.labels)
         }
     }
@@ -74,29 +72,26 @@ fun RowScope.DayContainer(
 }
 
 @Composable
-fun BoxScope.DayText(
+fun DayText(
     calendarDay: CalendarDay,
-    colors: CalendarColors
 ) {
 
     Box(
         modifier = Modifier.fillMaxSize()
             .padding(2.dp)
-            .border(
-                1.dp,
-                colors.colorAccent.copy(if (calendarDay.isSelected) 1f else 0f),
-                RoundedCornerShape(8.dp)
-            ),
+            .run {
+                if (calendarDay.isSelected) border(
+                    width = 2.dp,
+                    color = AppThemeProvider.colorsSystem.fill.card.grey,
+                    shape = RoundedCornerShape(8.dp)
+                ) else this
+            },
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = calendarDay.number.toString(),
-            style = TextStyle(
-                color = if (calendarDay.isToday) colors.colorAccent else colors.colorOnSurface.copy(
-                    0.6f
-                ),
-                textAlign = TextAlign.Center,
-            )
+            style = if (calendarDay.isToday) AppThemeProvider.typography.l.heading3 else AppThemeProvider.typography.l.body,
+            color = if (calendarDay.isToday) AppThemeProvider.colorsSystem.text.primary else AppThemeProvider.colorsSystem.text.secondary
         )
     }
 }
@@ -104,17 +99,16 @@ fun BoxScope.DayText(
 @Composable
 fun BoxScope.CurrentDayLabel(
     calendarDay: CalendarDay,
-    colors: CalendarColors
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 6.dp)
-            .height(2.dp)
+            .height(4.dp)
             .align(Alignment.BottomCenter)
-            .background(
-                colors.colorOnSurface.copy(if (calendarDay.isToday) 1f else 0f)
-            )
+            .run {
+                if (calendarDay.isToday) background(color = AppThemeProvider.colorsSystem.fill.active) else this
+            }
     ) {}
 }
 

@@ -45,7 +45,7 @@ object AppThemeProvider {
         @ReadOnlyComposable
         get() = LocalAppPrefs.current
 
-    val colorSystem: ColorSystem
+    val colorsSystem: ColorSystem
         @Composable
         @ReadOnlyComposable
         get() = LocalColorSystem.current

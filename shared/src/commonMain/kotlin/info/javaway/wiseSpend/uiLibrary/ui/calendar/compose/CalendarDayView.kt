@@ -82,7 +82,7 @@ fun DayText(
             .run {
                 if (calendarDay.isSelected) border(
                     width = 2.dp,
-                    color = AppThemeProvider.colorsSystem.fill.card.grey,
+                    color = AppThemeProvider.colorsSystem.icon.secondary,
                     shape = RoundedCornerShape(8.dp)
                 ) else this
             },

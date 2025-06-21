@@ -25,12 +25,13 @@ import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
 @Composable
 fun EventsScreen(
     component: EventsListComponent,
+    modifier: Modifier = Modifier,
 ) {
     val model by component.model.collectAsState()
     val dialogSlot by component.slot.subscribeAsState()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
-    RootBox {
+    RootBox(modifier) {
         Column {
             DatePickerView(
                 viewModel = getKoinInstance(DatePickerSingleQualifier),

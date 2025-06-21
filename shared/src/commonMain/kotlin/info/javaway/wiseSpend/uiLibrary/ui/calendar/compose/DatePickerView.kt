@@ -67,9 +67,8 @@ fun DatePickerView(
     }
     Column(
         modifier = Modifier
-            .padding(8.dp)
             .background(
-                AppThemeProvider.colorsSystem.fill.secondary,
+                AppThemeProvider.colorsSystem.fill.card.grey,
                 shape = RoundedCornerShape(16.dp)
             )
     ) {

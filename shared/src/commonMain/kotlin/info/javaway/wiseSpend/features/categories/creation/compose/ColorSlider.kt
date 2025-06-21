@@ -32,9 +32,9 @@ fun ColorSlider(
             value = sliderValue,
             onValueChange = onValueChange,
             colors = SliderDefaults.colors(
-                thumbColor = AppThemeProvider.colors.accent,
-                activeTrackColor = AppThemeProvider.colors.accent.copy(0.8f),
-                inactiveTrackColor = AppThemeProvider.colors.onSurface
+                thumbColor = AppThemeProvider.colorsSystem.icon.secondary,
+                activeTrackColor = AppThemeProvider.colorsSystem.icon.secondary,
+                inactiveTrackColor = AppThemeProvider.colorsSystem.icon.tertiary
             )
         )
     }

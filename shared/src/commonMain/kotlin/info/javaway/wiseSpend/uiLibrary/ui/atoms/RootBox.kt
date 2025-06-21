@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun RootBox(content: @Composable BoxScope.() -> Unit){
-    Box(modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp)){
+fun RootBox(modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit) {
+    Box(modifier = modifier.fillMaxSize().padding(horizontal = 16.dp)){
         content()
     }
 }

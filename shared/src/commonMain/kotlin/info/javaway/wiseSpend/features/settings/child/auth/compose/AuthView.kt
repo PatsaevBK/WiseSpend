@@ -33,37 +33,39 @@ import wisespend.shared.generated.resources.to_sync_info
 @Composable
 fun AuthView(
     component: AuthComponent,
+    modifier: Modifier = Modifier,
 ) {
 
     val slots by component.slots.subscribeAsState()
 
-    AppCard {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                stringResource(Res.string.to_sync_info),
-                fontSize = 18.sp
-            )
+    AppCard(modifier) {
+        Text(
+            text = stringResource(Res.string.to_sync_info),
+            color = AppThemeProvider.colorsSystem.text.primary,
+            style = AppThemeProvider.typography.l.body
+        )
 
-            AppButton(
-                stringResource(Res.string.enter),
-                modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
-            ) { component.onClickOnSignIn() }
+        AppButton(
+            stringResource(Res.string.enter),
+            modifier = Modifier
+        ) { component.onClickOnSignIn() }
 
-            Text(
-                text = buildAnnotatedString {
-                    append(stringResource(Res.string.if_you_dont_have_acc))
-                    withStyle(
-                        style = SpanStyle(
-                            color = AppThemeProvider.colors.accent,
-                            textDecoration = TextDecoration.Underline,
-                            fontWeight = FontWeight.Bold
-                        )
-                    ) { append(stringResource(Res.string.register)) }
-                },
-                modifier = Modifier.padding(16.dp).align(Alignment.CenterHorizontally)
-                    .clickable { component.onClickOnRegister() }
-            )
-        }
+        Text(
+            text = buildAnnotatedString {
+                append(stringResource(Res.string.if_you_dont_have_acc))
+                withStyle(
+                    style = SpanStyle(
+                        color = AppThemeProvider.colorsSystem.text.link,
+                        textDecoration = TextDecoration.Underline,
+                        fontWeight = FontWeight.Bold
+                    )
+                ) { append(stringResource(Res.string.register)) }
+            },
+            color = AppThemeProvider.colorsSystem.text.primary,
+            style = AppThemeProvider.typography.l.body,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+                .clickable { component.onClickOnRegister() }
+        )
     }
 
     when (val child = slots.child?.instance) {

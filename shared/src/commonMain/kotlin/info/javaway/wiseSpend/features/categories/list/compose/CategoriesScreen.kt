@@ -1,7 +1,5 @@
 package info.javaway.wiseSpend.features.categories.list.compose
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -14,12 +12,14 @@ import info.javaway.wiseSpend.features.categories.creation.compose.CreateCategor
 import info.javaway.wiseSpend.features.categories.list.CategoriesListComponent
 import info.javaway.wiseSpend.features.categories.models.Category
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.FAB
+import info.javaway.wiseSpend.uiLibrary.ui.atoms.RootBox
 import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoriesScreen(
     component: CategoriesListComponent,
+    modifier: Modifier = Modifier,
 ) {
 
     val sheetState = rememberModalBottomSheetState(
@@ -28,7 +28,7 @@ fun CategoriesScreen(
 
     val dialogSlot by component.dialogSlot.subscribeAsState()
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    RootBox(modifier) {
         CategoriesListView(
             component = component,
             modifier = Modifier,
@@ -45,7 +45,7 @@ fun CategoriesScreen(
         ModalBottomSheet(
             onDismissRequest = { categoryComponent.onDismiss() },
             sheetState = sheetState,
-            containerColor = AppThemeProvider.colors.surface,
+            containerColor = AppThemeProvider.colorsSystem.fill.secondary,
         ) {
             CreateCategoryView(component = categoryComponent)
         }

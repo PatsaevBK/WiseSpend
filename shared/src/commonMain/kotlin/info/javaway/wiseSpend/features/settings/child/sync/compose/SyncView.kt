@@ -30,13 +30,14 @@ import wisespend.shared.generated.resources.sync
 
 @Composable
 fun SyncView(
-    component: SyncComponent
+    component: SyncComponent,
+    modifier: Modifier = Modifier,
 ) {
 
     val model by component.model.collectAsState()
 
-    AppCard {
-        Box(modifier = Modifier.height(IntrinsicSize.Min)) {
+    AppCard(modifier) {
+        Box {
             Column {
                 Text(
                     text = stringResource(Res.string.auth_info, model.email),

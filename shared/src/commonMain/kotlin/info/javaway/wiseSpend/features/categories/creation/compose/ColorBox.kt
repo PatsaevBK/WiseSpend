@@ -22,7 +22,7 @@ fun ColorBox(
         modifier = modifier
             .border(
                 color = Color(rColor, gColor, bColor),
-                width = 2.dp,
+                width = 4.dp,
                 shape = RoundedCornerShape(8.dp)
             )
             .padding(8.dp)

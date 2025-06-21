@@ -32,10 +32,6 @@ fun SpendEventItem(event: SpendEventUI) {
         modifier = Modifier
             .padding(horizontal = 8.dp)
             .padding(bottom = 8.dp)
-            .background(
-                AppThemeProvider.colors.surface.copy(0.8f),
-                RoundedCornerShape(8.dp)
-            )
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

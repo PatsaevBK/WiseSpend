@@ -1,8 +1,10 @@
 package info.javaway.wiseSpend.features.events.list.compose
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -11,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import info.javaway.wiseSpend.di.DatePickerSingleQualifier
 import info.javaway.wiseSpend.di.getKoinInstance
@@ -32,7 +35,7 @@ fun EventsScreen(
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     RootBox(modifier) {
-        Column {
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             DatePickerView(
                 viewModel = getKoinInstance(DatePickerSingleQualifier),
                 firstDayIsMonday = true,
@@ -43,6 +46,7 @@ fun EventsScreen(
             LazyColumn(modifier = Modifier.weight(1f)) {
                 items(model.eventsByDay) {
                     SpendEventItem(it)
+                    Divider()
                 }
             }
         }

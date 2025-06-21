@@ -21,7 +21,7 @@ fun CategoryItem(category: Category, modifier: Modifier = Modifier, onClick: () 
     Row(
         modifier = modifier
             .padding(8.dp)
-            .background(AppThemeProvider.colors.surface, RoundedCornerShape(8.dp))
+            .background(AppThemeProvider.colorsSystem.fill.card.grey, RoundedCornerShape(8.dp))
             .padding(8.dp)
             .clickable { onClick.invoke() }
     ) {

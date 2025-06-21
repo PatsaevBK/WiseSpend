@@ -50,7 +50,7 @@ fun EventsScreen(
             ModalBottomSheet(
                 onDismissRequest = component::onDismiss,
                 sheetState = sheetState,
-                containerColor = AppThemeProvider.colors.surface,
+                containerColor = AppThemeProvider.colorsSystem.fill.secondary,
             ) {
                 CreateEventView(createEventComponent)
             }

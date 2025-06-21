@@ -13,9 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
 import info.javaway.wiseSpend.extensions.fromHex
+import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
 
 @Composable
 fun TextPairButton(
@@ -23,22 +22,27 @@ fun TextPairButton(
     subtitle: String? = null,
     buttonTitle: String,
     colorHex: String? = null,
+    enabled: Boolean = true,
     onClick: () -> Unit
 ) {
 
-    val color = colorHex?.let { Color.fromHex(it) } ?: AppThemeProvider.colors.accent
+    val color = colorHex?.let { Color.fromHex(it) } ?: AppThemeProvider.colorsSystem.fill.label.grey
 
     Row(
         modifier = Modifier.fillMaxWidth().padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
-            Text(title, fontSize = 20.sp, color = AppThemeProvider.colors.onSurface)
+            Text(
+                text = title,
+                style = AppThemeProvider.typography.l.body,
+                color = AppThemeProvider.colorsSystem.text.primary,
+            )
             if(subtitle != null){
                 Text(
                     text = subtitle,
-                    fontSize = 18.sp,
-                    color = AppThemeProvider.colors.onSurface.copy(0.8f),
+                    style = AppThemeProvider.typography.l.body,
+                    color = AppThemeProvider.colorsSystem.text.secondary,
                     modifier = Modifier.padding(top = 16.dp)
                 )
             }
@@ -46,13 +50,13 @@ fun TextPairButton(
 
         OutlinedButton(
             onClick = onClick,
+            enabled = enabled,
             colors = ButtonDefaults.outlinedButtonColors(
-                containerColor = AppThemeProvider.colors.background,
-                contentColor = color
+                containerColor = AppThemeProvider.colorsSystem.fill.secondary,
             ),
             border = BorderStroke(1.dp, color)
         ){
-            Text(buttonTitle, color = color)
+            Text(buttonTitle, color = AppThemeProvider.colorsSystem.text.caption, style = AppThemeProvider.typography.l.body)
         }
     }
 

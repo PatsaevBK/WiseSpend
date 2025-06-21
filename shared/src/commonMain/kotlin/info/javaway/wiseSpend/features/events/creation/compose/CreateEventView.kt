@@ -20,6 +20,7 @@ import info.javaway.wiseSpend.di.getKoinInstance
 import info.javaway.wiseSpend.features.categories.list.compose.CategoriesListView
 import info.javaway.wiseSpend.features.events.creation.CreateEventComponent
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.AppButton
+import info.javaway.wiseSpend.uiLibrary.ui.atoms.AppCostTextField
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.AppTextField
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.BottomModalContainer
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.TextPairButton
@@ -31,6 +32,7 @@ import wisespend.shared.generated.resources.category
 import wisespend.shared.generated.resources.cost
 import wisespend.shared.generated.resources.date
 import wisespend.shared.generated.resources.empty_category
+import wisespend.shared.generated.resources.note
 import wisespend.shared.generated.resources.save
 import wisespend.shared.generated.resources.spend_to
 
@@ -46,9 +48,16 @@ fun CreateEventView(
     var showDateDialog by remember { mutableStateOf(false) }
 
     BottomModalContainer(modifier = modifier) {
+        AppCostTextField(
+            value = model.cost.toString(),
+            placeholder = stringResource(Res.string.cost),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        ) { component.changeCost(it) }
+
         TextPairButton(
             title = stringResource(Res.string.category),
             buttonTitle = model.category.title.ifEmpty { stringResource(Res.string.empty_category) },
+            enabled = model.isCategoriesEmpty.not(),
             colorHex = model.category.colorHex.takeIf { it.isNotEmpty() }
         ) { component.showCategory() }
 
@@ -65,16 +74,9 @@ fun CreateEventView(
 
         AppTextField(
             value = model.note,
-            placeholder = "note",
+            placeholder = stringResource(Res.string.note),
             modifier = Modifier.fillMaxWidth()
         ) { component.changeNote(it) }
-
-        AppTextField(
-            value = model.cost.toString(),
-            placeholder = stringResource(Res.string.cost),
-            modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-        ) { component.changeCost(it) }
 
         AppButton(stringResource(Res.string.save)) {
             component.finish()

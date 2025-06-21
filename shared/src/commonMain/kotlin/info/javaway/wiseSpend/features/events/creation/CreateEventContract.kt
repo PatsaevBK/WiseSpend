@@ -12,6 +12,7 @@ interface CreateEventContract {
     data class State(
         val title: String,
         val category: Category,
+        val isCategoriesEmpty: Boolean,
         val date: LocalDate,
         val cost: Double,
         val note: String
@@ -20,6 +21,7 @@ interface CreateEventContract {
             val NONE = State(
                 title = "",
                 category = Category.NONE,
+                isCategoriesEmpty = true,
                 date = LocalDate.now(),
                 cost = 0.0,
                 note = ""

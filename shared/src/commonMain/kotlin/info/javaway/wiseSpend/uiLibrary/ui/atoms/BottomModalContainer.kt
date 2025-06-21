@@ -21,7 +21,7 @@ fun BottomModalContainer(
     Column(
         modifier = modifier
             .background(
-                AppThemeProvider.colors.surface,
+                AppThemeProvider.colorsSystem.fill.secondary,
                 RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
             )
             .padding(16.dp)

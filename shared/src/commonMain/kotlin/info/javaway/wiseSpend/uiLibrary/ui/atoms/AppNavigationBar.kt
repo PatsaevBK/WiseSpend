@@ -54,7 +54,7 @@ private fun RowScope.NavigationButtons(
         NavigationBarItem(
             selected = isSelected,
             icon = { Icon(imageVector = bottomBarItem.image, contentDescription = label) },
-            label = { Text(text = label, color = AppThemeProvider.colors.onSurface) },
+            label = { Text(text = label, color = AppThemeProvider.colorsSystem.text.primary, style = AppThemeProvider.typography.m.label2) },
             colors = NavigationBarItemDefaults.colors().copy(
                 selectedIndicatorColor = AppThemeProvider.colorsSystem.fill.card.grey,
             ),

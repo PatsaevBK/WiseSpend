@@ -47,7 +47,6 @@ fun AuthView(
 
         AppButton(
             stringResource(Res.string.enter),
-            modifier = Modifier
         ) { component.onClickOnSignIn() }
 
         Text(

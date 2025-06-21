@@ -31,7 +31,8 @@ fun ThemeSwitch(
         Text(
             stringResource(Res.string.dark_theme),
             modifier = Modifier.weight(1f),
-            color = AppThemeProvider.colors.onSurface
+            color = AppThemeProvider.colorsSystem.text.primary,
+            style = AppThemeProvider.typography.l.body,
         )
         Switch(
             checked = checked,

@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -55,26 +56,32 @@ fun RegisterDialog(
 
             Column(
                 modifier = Modifier
-                    .background(AppThemeProvider.colors.surface, RoundedCornerShape(16.dp))
+                    .background(
+                        color = AppThemeProvider.colorsSystem.fill.secondary,
+                        shape = RoundedCornerShape(16.dp)
+                    )
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 AppTextField(
-                    state.email,
-                    stringResource(Res.string.email),
-                    onValueChange = component::changeEmail
+                    value = state.email,
+                    placeholder = stringResource(Res.string.email),
+                    modifier = Modifier.fillMaxWidth(),
+                    onValueChange = component::changeEmail,
                 )
 
                 AppTextField(
-                    state.password,
-                    stringResource(Res.string.password),
-                    onValueChange = component::changePassword
+                    value = state.password,
+                    placeholder = stringResource(Res.string.password),
+                    modifier = Modifier.fillMaxWidth(),
+                    onValueChange = component::changePassword,
                 )
 
                 AppTextField(
-                    state.confirmPassword,
-                    stringResource(Res.string.confirm_password),
-                    onValueChange = component::changeConfirmPassword
+                    value = state.confirmPassword,
+                    placeholder = stringResource(Res.string.confirm_password),
+                    modifier = Modifier.fillMaxWidth(),
+                    onValueChange = component::changeConfirmPassword,
                 )
 
                 AnimatedVisibility(

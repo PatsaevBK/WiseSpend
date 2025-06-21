@@ -11,6 +11,9 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.withContext
 
 class AppApi(
     private val httpClient: HttpClient,
@@ -18,28 +21,36 @@ class AppApi(
 ) {
 
     suspend fun register(req: RegisterRequest) =
-        httpClient.post("${settingsManager.serverUrl}/api/auth/local/register") {
-            contentType(ContentType.Application.Json)
-            setBody(req)
+        withContext(Dispatchers.IO) {
+            httpClient.post("${settingsManager.serverUrl}/api/auth/local/register") {
+                contentType(ContentType.Application.Json)
+                setBody(req)
+            }
         }
 
     suspend fun signIn(req: SignInRequest) =
-        httpClient.post("${settingsManager.serverUrl}/api/auth/local") {
-            contentType(ContentType.Application.Json)
-            setBody(req)
+        withContext(Dispatchers.IO) {
+            httpClient.post("${settingsManager.serverUrl}/api/auth/local") {
+                contentType(ContentType.Application.Json)
+                setBody(req)
+            }
         }
 
     suspend fun syncCategories(categories: List<CategoryApi>) =
-        httpClient.post("${settingsManager.serverUrl}/api/categories/sync") {
-            contentType(ContentType.Application.Json)
-            bearerAuth(settingsManager.token)
-            setBody(categories)
+        withContext(Dispatchers.IO) {
+            httpClient.post("${settingsManager.serverUrl}/api/categories/sync") {
+                contentType(ContentType.Application.Json)
+                bearerAuth(settingsManager.token)
+                setBody(categories)
+            }
         }
 
     suspend fun syncEvents(events: List<SpendEventApi>) =
-        httpClient.post("${settingsManager.serverUrl}/api/spend-events/sync") {
-            contentType(ContentType.Application.Json)
-            bearerAuth(settingsManager.token)
-            setBody(events)
+        withContext(Dispatchers.IO) {
+            httpClient.post("${settingsManager.serverUrl}/api/spend-events/sync") {
+                contentType(ContentType.Application.Json)
+                bearerAuth(settingsManager.token)
+                setBody(events)
+            }
         }
 }

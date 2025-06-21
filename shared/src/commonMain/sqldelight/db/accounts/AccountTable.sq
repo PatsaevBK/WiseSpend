@@ -1,9 +1,24 @@
 import kotlinx.datetime.LocalDateTime;
 
-CREATE TABLE Account (
+CREATE TABLE AccountTable (
     id TEXT NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
     amount REAL NOT NULL,
     createdAt TEXT AS LocalDateTime NOT NULL,
     updatedAt TEXT AS LocalDateTime NOT NULL
 );
+
+get:
+SELECT * FROM AccountTable WHERE id = :id LIMIT 1;
+
+getAll:
+SELECT * FROM AccountTable;
+
+insert:
+INSERT OR REPLACE INTO AccountTable VALUES ?;
+
+delete:
+DELETE FROM AccountTable WHERE id = :id;
+
+clear:
+DELETE FROM AccountTable;

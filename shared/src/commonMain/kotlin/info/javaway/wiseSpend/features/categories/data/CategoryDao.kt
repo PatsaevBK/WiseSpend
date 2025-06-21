@@ -5,8 +5,6 @@ import app.cash.sqldelight.coroutines.mapToList
 import db.categories.CategoryTable
 import info.javaway.wiseSpend.db.AppDb
 import info.javaway.wiseSpend.features.categories.models.Category
-import info.javaway.wiseSpend.features.categories.models.toCategory
-import info.javaway.wiseSpend.features.categories.models.toDb
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlin.coroutines.CoroutineContext

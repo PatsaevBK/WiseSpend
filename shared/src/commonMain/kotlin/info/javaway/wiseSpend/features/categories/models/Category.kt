@@ -23,39 +23,3 @@ data class Category(
         )
     }
 }
-
-fun CategoryTable.toCategory() = Category(
-    id = id,
-    title = title,
-    description = description.orEmpty(),
-    createdAt = createdAt,
-    updatedAt = updatedAt,
-    colorHex = colorHex
-)
-
-fun Category.toDb() = CategoryTable(
-    id = id,
-    title = title,
-    description = description,
-    createdAt = createdAt,
-    updatedAt = updatedAt,
-    colorHex = colorHex
-)
-
-fun Category.toApi() = CategoryApi(
-    id = id,
-    title = title,
-    description = description,
-    createdAt = createdAt,
-    updatedAt = updatedAt,
-    colorHex = colorHex,
-)
-
-fun CategoryApi.toEntity() = Category(
-    id = id.orEmpty(),
-    title = title.orEmpty(),
-    description = description.orEmpty(),
-    createdAt = createdAt ?: LocalDateTime.now(),
-    updatedAt = updatedAt ?: LocalDateTime.now(),
-    colorHex = colorHex.orEmpty(),
-)

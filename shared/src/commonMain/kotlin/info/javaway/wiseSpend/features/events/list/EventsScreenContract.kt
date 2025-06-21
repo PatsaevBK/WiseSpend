@@ -2,9 +2,9 @@ package info.javaway.wiseSpend.features.events.list
 
 import info.javaway.wiseSpend.base.BaseViewEvent
 import info.javaway.wiseSpend.base.BaseViewState
-import info.javaway.wiseSpend.features.events.extensions.toCalendarLabel
 import info.javaway.wiseSpend.features.categories.models.Category
-import info.javaway.wiseSpend.features.events.extensions.toUI
+import info.javaway.wiseSpend.features.events.data.toCalendarLabel
+import info.javaway.wiseSpend.features.events.data.toUI
 import info.javaway.wiseSpend.features.events.models.SpendEvent
 import info.javaway.wiseSpend.features.events.models.SpendEventUI
 import info.javaway.wiseSpend.uiLibrary.ui.calendar.model.CalendarDay

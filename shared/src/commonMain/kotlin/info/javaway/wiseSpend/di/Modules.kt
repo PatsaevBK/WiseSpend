@@ -5,6 +5,7 @@ import info.javaway.wiseSpend.db.AppDb
 import info.javaway.wiseSpend.features.events.data.EventsRepository
 import info.javaway.wiseSpend.features.events.list.EventsListComponentImpl
 import info.javaway.wiseSpend.extensions.appLog
+import info.javaway.wiseSpend.features.accounts.data.AccountDao
 import info.javaway.wiseSpend.features.categories.list.CategoriesListComponent
 import info.javaway.wiseSpend.features.categories.list.CategoriesListComponentImpl
 import info.javaway.wiseSpend.features.categories.data.CategoryDao
@@ -30,6 +31,7 @@ import info.javaway.wiseSpend.storage.SettingsManager
 import info.javaway.wiseSpend.uiLibrary.ui.calendar.DatePickerViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
+import io.ktor.client.plugins.HttpRequestRetry
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
@@ -66,7 +68,8 @@ object StorageModule {
             AppDb(
                 driver = get(),
                 CategoryTableAdapter = DbAdapters.categoryTableAdapter,
-                EventTableAdapter = DbAdapters.eventTableAdapter
+                EventTableAdapter = DbAdapters.eventTableAdapter,
+                AccountTableAdapter = DbAdapters.accountTableAdapter,
             )
         }
     }
@@ -74,6 +77,7 @@ object StorageModule {
     val dao = module {
         single { CategoryDao(get(), get()) }
         single { EventDao(get(), get()) }
+        single { AccountDao(get(), get()) }
     }
 }
 
@@ -108,6 +112,10 @@ object NetworkModule {
                             appLog(message)
                         }
                     }
+                }
+                install(HttpRequestRetry) {
+                    retryOnServerErrors(maxRetries = 3)
+                    exponentialDelay()
                 }
             }
         }

@@ -27,11 +27,16 @@ import kotlinx.serialization.Serializable
 class CreateEventComponentImpl(
     componentContext: ComponentContext,
     initialDate: CalendarDay?,
-    categoriesRepository: CategoriesRepository,
+    private val categoriesRepository: CategoriesRepository,
     private val onSave: (SpendEvent) -> Unit,
 ) : CreateEventComponent, ComponentContext by componentContext {
-    
-    private val _model = MutableStateFlow(State.NONE.copy(date = initialDate?.date ?: LocalDate.now()))
+
+    private val _model = MutableStateFlow(
+        State.NONE.copy(
+            date = initialDate?.date ?: LocalDate.now(),
+            isCategoriesEmpty = categoriesRepository.getAll().isEmpty(),
+        )
+    )
     override val model: StateFlow<State> = _model.asStateFlow()
 
     private val nav = SlotNavigation<Config>()

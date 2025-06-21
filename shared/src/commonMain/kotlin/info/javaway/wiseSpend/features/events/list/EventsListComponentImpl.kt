@@ -9,9 +9,9 @@ import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
 import info.javaway.wiseSpend.extensions.componentScope
 import info.javaway.wiseSpend.features.categories.data.CategoriesRepository
-import info.javaway.wiseSpend.features.events.data.EventsRepository
 import info.javaway.wiseSpend.features.events.creation.CreateEventComponent
 import info.javaway.wiseSpend.features.events.creation.CreateEventComponentImpl
+import info.javaway.wiseSpend.features.events.data.EventsRepository
 import info.javaway.wiseSpend.features.events.models.SpendEvent
 import info.javaway.wiseSpend.uiLibrary.ui.calendar.model.CalendarDay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -44,7 +44,10 @@ class EventsListComponentImpl(
                 initialDate = config.calendarDay,
                 categoriesRepository = categoriesRepository,
                 componentContext = ctx,
-                onSave = { scope.launch { eventsRepository.create(it) } }
+                onSave = {
+                    scope.launch { eventsRepository.create(it) }
+                    nav.dismiss()
+                }
             )
         }
     )

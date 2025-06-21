@@ -21,17 +21,18 @@ fun AppButton(
             .fillMaxWidth(),
         onClick = onClick,
         colors = ButtonDefaults.outlinedButtonColors(
-            contentColor = AppThemeProvider.colors.onBackground,
-            containerColor = AppThemeProvider.colors.background,
+            contentColor = AppThemeProvider.colorsSystem.icon.primary,
+            containerColor = AppThemeProvider.colorsSystem.fill.secondary,
         ),
         border = BorderStroke(
             width = 1.dp,
-            color = AppThemeProvider.colors.onSurface
+            color = AppThemeProvider.colorsSystem.separator.secondary
         )
     ) {
         Text(
             text = title,
-            color = AppThemeProvider.colors.onSurface
+            style = AppThemeProvider.typography.l.body,
+            color = AppThemeProvider.colorsSystem.text.primary
         )
     }
 }

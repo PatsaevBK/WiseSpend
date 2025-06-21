@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
 import info.javaway.wiseSpend.extensions.fromHex
+import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
 
 @Composable
 fun ColorLabel(
@@ -18,7 +18,7 @@ fun ColorLabel(
     modifier: Modifier = Modifier,
 ) {
     val color = colorHex.let {
-        runCatching { Color.fromHex(it) }.getOrDefault(AppThemeProvider.colors.accent)
+        runCatching { Color.fromHex(it) }.getOrDefault(AppThemeProvider.colorsSystem.icon.primary)
     }
     Box(
         modifier = modifier

@@ -7,9 +7,6 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.sp
 import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
 
 @Composable
@@ -17,26 +14,28 @@ fun AppTextField(
     value: String,
     placeholder: String = "",
     modifier: Modifier = Modifier,
-    fontSize: TextUnit = 20.sp,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
 ) {
     TextField(
         value = value,
         onValueChange = onValueChange,
         modifier = modifier,
-        textStyle = TextStyle(
-            color = AppThemeProvider.colors.onSurface,
-            fontSize = fontSize
-        ),
+        textStyle = AppThemeProvider.typography.l.body.copy(color = AppThemeProvider.colorsSystem.text.primary),
         colors = TextFieldDefaults.colors(
             focusedIndicatorColor = Color.Transparent,
-            cursorColor = AppThemeProvider.colors.onSurface.copy(0.5f),
+            cursorColor = AppThemeProvider.colorsSystem.fill.active,
             unfocusedIndicatorColor = Color.Transparent,
             focusedContainerColor = Color.Transparent,
             unfocusedContainerColor = Color.Transparent
         ),
-        placeholder = { Text(placeholder, color = AppThemeProvider.colors.onSurface.copy(0.5f)) },
+        placeholder = {
+            Text(
+                text = placeholder,
+                color = AppThemeProvider.colorsSystem.text.secondary,
+                style = AppThemeProvider.typography.l.body
+            )
+        },
         keyboardOptions = keyboardOptions
     )
 }

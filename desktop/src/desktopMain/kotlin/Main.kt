@@ -21,7 +21,8 @@ fun main() {
     application {
         Window(
             onCloseRequest = { exitApplication() },
-            state = rememberWindowState().apply { size = DpSize(1200.dp, 1200.dp) },
+            state = rememberWindowState().apply { size = DpSize(600.dp, 1200.dp) },
+            alwaysOnTop = true,
             title = "SpendSense"
         ) {
             RootScreen(rootComponent)

@@ -3,6 +3,7 @@ package info.javaway.wiseSpend.features.settings.child.auth.child.signIn.compose
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -53,24 +54,29 @@ fun SignInDialog(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .background(
-                        AppThemeProvider.colors.surface,
-                        RoundedCornerShape(16.dp)
+                        color = AppThemeProvider.colorsSystem.fill.secondary,
+                        shape = RoundedCornerShape(16.dp)
                     )
                     .padding(16.dp)
             ) {
                 AppTextField(
-                    model.email,
-                    stringResource(Res.string.email),
-                    onValueChange = signInComponent::changeEmail
+                    value = model.email,
+                    placeholder = stringResource(Res.string.email),
+                    onValueChange = signInComponent::changeEmail,
+                    modifier = Modifier.fillMaxWidth()
                 )
 
                 AppTextField(
-                    model.password,
-                    stringResource(Res.string.password),
-                    onValueChange = signInComponent::changePassword
+                    value = model.password,
+                    placeholder = stringResource(Res.string.password),
+                    onValueChange = signInComponent::changePassword,
+                    modifier = Modifier.fillMaxWidth()
                 )
 
-                AppButton(stringResource(Res.string.login), onClick = signInComponent::login)
+                AppButton(
+                    title = stringResource(Res.string.login),
+                    onClick = signInComponent::login
+                )
             }
 
             AppToast(showMessage) { showMessage = null }

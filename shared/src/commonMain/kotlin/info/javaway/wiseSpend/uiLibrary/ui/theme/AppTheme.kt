@@ -11,7 +11,6 @@ data class AppPrefs(
 )
 
 private val LocalAppPrefs = staticCompositionLocalOf { AppPrefs() }
-private val LocalAppColors = staticCompositionLocalOf { darkPalette }
 private val LocalColorSystem = staticCompositionLocalOf { LightColorSystem }
 private val LocalTypography = staticCompositionLocalOf { typographySystem }
 
@@ -21,12 +20,10 @@ fun Theme(
     appPrefs: AppPrefs,
     content: @Composable () -> Unit
 ) {
-    val colors = if (themeIsDark) darkPalette else lightPalette
     val colorSystem = if (themeIsDark) DarkColorSystem else LightColorSystem
     val typography = typographySystem
 
     CompositionLocalProvider(
-        LocalAppColors provides colors,
         LocalAppPrefs provides appPrefs,
         LocalColorSystem provides colorSystem,
         LocalTypography provides typography,
@@ -35,10 +32,6 @@ fun Theme(
 }
 
 object AppThemeProvider {
-    val colors: AppColors
-        @Composable
-        @ReadOnlyComposable
-        get() = LocalAppColors.current
 
     val appPrefs: AppPrefs
         @Composable

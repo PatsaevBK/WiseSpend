@@ -2,7 +2,6 @@ package info.javaway.wiseSpend.uiLibrary.ui.atoms
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -27,7 +26,7 @@ fun AppButton(
         ),
         border = BorderStroke(
             width = 1.dp,
-            color = AppThemeProvider.colors.onSurface
+            color = AppThemeProvider.colorsSystem.separator.secondary
         )
     ) {
         Text(

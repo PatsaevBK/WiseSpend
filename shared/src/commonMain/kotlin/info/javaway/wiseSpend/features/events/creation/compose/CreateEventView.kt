@@ -90,7 +90,7 @@ fun CreateEventView(
             CategoriesListView(
                 component = it,
                 modifier = Modifier.background(
-                    AppThemeProvider.colors.surface,
+                    AppThemeProvider.colorsSystem.fill.secondary,
                     RoundedCornerShape(16.dp)
                 )
             ) { category ->

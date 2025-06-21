@@ -13,7 +13,8 @@ fun DeviceInfo(
     AppCard {
         Text(
             text = deviceInfo,
-            color = AppThemeProvider.colors.onBackground,
+            style = AppThemeProvider.typography.m.body,
+            color = AppThemeProvider.colorsSystem.text.primary,
         )
     }
 }

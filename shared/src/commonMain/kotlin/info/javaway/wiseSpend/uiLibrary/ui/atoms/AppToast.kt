@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 fun BoxScope.AppToast(
     message: String?,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = AppThemeProvider.colors.background,
+    backgroundColor: Color = AppThemeProvider.colorsSystem.fill.secondary,
     hide: () -> Unit
 ) {
     AnimatedVisibility(
@@ -44,7 +44,8 @@ fun BoxScope.AppToast(
                 .padding(16.dp)
                 .clickable { hide() }
                 .zIndex(1.0f),
-            color = AppThemeProvider.colors.accent
+            color = AppThemeProvider.colorsSystem.text.primary,
+            style = AppThemeProvider.typography.l.body,
         )
     }
 }

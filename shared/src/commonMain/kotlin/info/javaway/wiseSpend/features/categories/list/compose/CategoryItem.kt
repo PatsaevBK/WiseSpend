@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import info.javaway.wiseSpend.features.categories.models.Category
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.ColorLabel
 import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
@@ -31,15 +30,15 @@ fun CategoryItem(category: Category, modifier: Modifier = Modifier, onClick: () 
         ) {
             Text(
                 text = category.title,
-                fontSize = 22.sp,
-                color = AppThemeProvider.colors.onSurface
+                style = AppThemeProvider.typography.m.heading3,
+                color = AppThemeProvider.colorsSystem.text.primary
             )
 
             if (category.description.isNotEmpty()) {
                 Text(
                     text = category.description,
-                    fontSize = 18.sp,
-                    color = AppThemeProvider.colors.onSurface.copy(0.7f)
+                    style = AppThemeProvider.typography.m.body,
+                    color = AppThemeProvider.colorsSystem.text.secondary
                 )
             }
         }

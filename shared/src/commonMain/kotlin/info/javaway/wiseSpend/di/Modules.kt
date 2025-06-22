@@ -1,22 +1,19 @@
 package info.javaway.wiseSpend.di
 
-import info.javaway.wiseSpend.features.categories.data.CategoriesRepository
 import info.javaway.wiseSpend.db.AppDb
-import info.javaway.wiseSpend.features.events.data.EventsRepository
-import info.javaway.wiseSpend.features.events.list.EventsListComponentImpl
 import info.javaway.wiseSpend.extensions.appLog
 import info.javaway.wiseSpend.features.accounts.data.AccountDao
+import info.javaway.wiseSpend.features.accounts.data.AccountRepository
+import info.javaway.wiseSpend.features.categories.data.CategoriesRepository
+import info.javaway.wiseSpend.features.categories.data.CategoryDao
 import info.javaway.wiseSpend.features.categories.list.CategoriesListComponent
 import info.javaway.wiseSpend.features.categories.list.CategoriesListComponentImpl
-import info.javaway.wiseSpend.features.categories.data.CategoryDao
-import info.javaway.wiseSpend.features.events.list.EventsListComponent
 import info.javaway.wiseSpend.features.events.data.EventDao
+import info.javaway.wiseSpend.features.events.data.EventsRepository
+import info.javaway.wiseSpend.features.events.list.EventsListComponent
+import info.javaway.wiseSpend.features.events.list.EventsListComponentImpl
 import info.javaway.wiseSpend.features.settings.SettingsComponent
 import info.javaway.wiseSpend.features.settings.SettingsComponentImpl
-import info.javaway.wiseSpend.network.AppApi
-import info.javaway.wiseSpend.platform.DeviceInfo
-import info.javaway.wiseSpend.root.RootComponent
-import info.javaway.wiseSpend.root.RootComponentImpl
 import info.javaway.wiseSpend.features.settings.child.auth.AuthComponent
 import info.javaway.wiseSpend.features.settings.child.auth.AuthComponentImpl
 import info.javaway.wiseSpend.features.settings.child.auth.child.register.RegisterComponent
@@ -24,8 +21,12 @@ import info.javaway.wiseSpend.features.settings.child.auth.child.signIn.SignInCo
 import info.javaway.wiseSpend.features.settings.child.auth.child.signIn.SignInComponentImpl
 import info.javaway.wiseSpend.features.settings.child.sync.SyncComponent
 import info.javaway.wiseSpend.features.settings.child.sync.SyncComponentImpl
+import info.javaway.wiseSpend.network.AppApi
 import info.javaway.wiseSpend.network.serializers.DateSerializer
 import info.javaway.wiseSpend.network.serializers.DateTimeSerializer
+import info.javaway.wiseSpend.platform.DeviceInfo
+import info.javaway.wiseSpend.root.RootComponent
+import info.javaway.wiseSpend.root.RootComponentImpl
 import info.javaway.wiseSpend.storage.DbAdapters
 import info.javaway.wiseSpend.storage.SettingsManager
 import info.javaway.wiseSpend.uiLibrary.ui.calendar.DatePickerViewModel
@@ -53,7 +54,7 @@ object CoreModules {
     val deviceInfo = module {
         single { DeviceInfo() }
     }
-    val coroutineScope = module {
+    val coroutineContext = module {
         factory { Dispatchers.IO + SupervisorJob() }
     }
 }
@@ -130,6 +131,7 @@ object RepositoriesModule {
     val repository = module {
         single { CategoriesRepository(get()) }
         single { EventsRepository(get()) }
+        single { AccountRepository(get()) }
     }
 }
 
@@ -145,7 +147,7 @@ object ComponentsFactoryModule {
         single<RootComponent.Factory> { RootComponentImpl.Factory(get(), get(), get(), get())  }
         factory<SettingsComponent.Factory> { SettingsComponentImpl.Factory(get(), get(), get(), get()) }
         factory<CategoriesListComponent.Factory> { CategoriesListComponentImpl.Factory(get()) }
-        factory<EventsListComponent.Factory> { EventsListComponentImpl.Factory(get(), get()) }
+        factory<EventsListComponent.Factory> { EventsListComponentImpl.Factory(get(), get(), get()) }
         factory<AuthComponent.Factory> { AuthComponentImpl.Factory(get(), get()) }
         factory<SignInComponent.Factory> { SignInComponentImpl.Factory(get(), get()) }
         factory<RegisterComponent.Factory> { info.javaway.wiseSpend.features.settings.child.auth.child.register.RegisterComponentImpl.Factory(get(), get()) }

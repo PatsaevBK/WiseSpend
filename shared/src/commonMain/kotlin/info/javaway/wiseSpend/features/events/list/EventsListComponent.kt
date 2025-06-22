@@ -11,12 +11,14 @@ import kotlinx.coroutines.flow.StateFlow
 interface EventsListComponent {
 
     val model: StateFlow<EventsScreenContract.State>
-    val slot: Value<ChildSlot<*, CreateEventComponent>>
+    val createEventSlot: Value<ChildSlot<*, CreateEventComponent>>
 
     fun selectDay(calendarDay: CalendarDay)
     fun newEvent(calendarDay: CalendarDay?)
     fun onDismiss()
     fun createEvent(newEvent: SpendEvent)
+
+    fun selectAccount(id: String?)
 
     interface Factory {
         fun create(componentContext: ComponentContext): EventsListComponent

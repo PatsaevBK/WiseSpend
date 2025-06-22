@@ -1,6 +1,5 @@
 package info.javaway.wiseSpend.features.events.models
 
-import db.events.EventTable
 import info.javaway.wiseSpend.extensions.now
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate

@@ -15,6 +15,10 @@ class AccountDao(
 
     private val accountTableQueries = db.accountTableQueries
 
+    init {
+        insertDefaultAccountIfNeed()
+    }
+
     fun getAll(): List<Account> = accountTableQueries
         .getAll()
         .executeAsList()
@@ -42,4 +46,10 @@ class AccountDao(
 
     suspend fun delete(id: String) = accountTableQueries
         .delete(id)
+
+    private fun insertDefaultAccountIfNeed() {
+        if (this.get(Account.DEFAULT_ID) == null) {
+            accountTableQueries.insert(Account.DEFAULT.toDb())
+        }
+    }
 }

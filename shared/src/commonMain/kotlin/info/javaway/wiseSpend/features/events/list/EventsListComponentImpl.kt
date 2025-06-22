@@ -8,6 +8,7 @@ import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
 import info.javaway.wiseSpend.extensions.componentScope
+import info.javaway.wiseSpend.features.accounts.data.AccountRepository
 import info.javaway.wiseSpend.features.categories.data.CategoriesRepository
 import info.javaway.wiseSpend.features.events.creation.CreateEventComponent
 import info.javaway.wiseSpend.features.events.creation.CreateEventComponentImpl
@@ -27,6 +28,7 @@ class EventsListComponentImpl(
     componentContext: ComponentContext,
     private val categoriesRepository: CategoriesRepository,
     private val eventsRepository: EventsRepository,
+    private val accountRepository: AccountRepository,
 ) : EventsListComponent, ComponentContext by componentContext {
 
     private val scope = componentScope()
@@ -34,10 +36,10 @@ class EventsListComponentImpl(
     private val _model = MutableStateFlow(EventsScreenContract.State.NONE)
     override val model: StateFlow<EventsScreenContract.State> = _model.asStateFlow()
 
-    private val nav = SlotNavigation<Config>()
-    override val slot: Value<ChildSlot<*, CreateEventComponent>> = childSlot(
-        source = nav,
-        serializer = Config.serializer(),
+    private val createEventNav = SlotNavigation<CreateEventConfig>()
+    override val createEventSlot: Value<ChildSlot<*, CreateEventComponent>> = childSlot(
+        source = createEventNav,
+        serializer = CreateEventConfig.serializer(),
         handleBackButton = true,
         childFactory = { config, ctx ->
             CreateEventComponentImpl(
@@ -46,19 +48,19 @@ class EventsListComponentImpl(
                 componentContext = ctx,
                 onSave = {
                     scope.launch { eventsRepository.create(it) }
-                    nav.dismiss()
+                    createEventNav.dismiss()
                 }
             )
         }
     )
 
-
     init {
         combine(
             eventsRepository.getAllFlow(),
             categoriesRepository.getAllFlow(),
-        ) { spendEvents, categories ->
-            _model.update { it.copy(events = spendEvents, categories = categories) }
+            accountRepository.getAllFlow(),
+        ) { spendEvents, categories, accounts ->
+            _model.update { it.copy(events = spendEvents, categories = categories, accounts = accounts) }
         }.launchIn(scope)
     }
 
@@ -72,22 +74,28 @@ class EventsListComponentImpl(
         }
     }
 
-    override fun newEvent(calendarDay: CalendarDay?) = nav.activate(Config(calendarDay))
+    override fun newEvent(calendarDay: CalendarDay?) = createEventNav.activate(CreateEventConfig(calendarDay))
 
-    override fun onDismiss() = nav.dismiss()
+    override fun onDismiss() = createEventNav.dismiss()
+
+    override fun selectAccount(id: String?) {
+        _model.update { it.copy(selectedAccountId = id) }
+    }
 
     @Serializable
-    private data class Config(val calendarDay: CalendarDay?)
+    private data class CreateEventConfig(val calendarDay: CalendarDay?)
 
     class Factory(
         private val categoriesRepository: CategoriesRepository,
         private val eventsRepository: EventsRepository,
+        private val accountRepository: AccountRepository,
     ) : EventsListComponent.Factory {
         override fun create(componentContext: ComponentContext): EventsListComponent {
             return EventsListComponentImpl(
                 componentContext = componentContext,
                 categoriesRepository = categoriesRepository,
-                eventsRepository = eventsRepository
+                eventsRepository = eventsRepository,
+                accountRepository = accountRepository,
             )
         }
     }

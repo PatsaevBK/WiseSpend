@@ -1,6 +1,5 @@
 package info.javaway.wiseSpend.features.categories.models
 
-import db.categories.CategoryTable
 import info.javaway.wiseSpend.extensions.now
 import kotlinx.datetime.LocalDateTime
 

@@ -2,7 +2,7 @@ package info.javaway.wiseSpend.uiLibrary.ui.atoms
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -21,7 +21,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun AppNavigationBar(rootComponent: RootComponent, modifier: Modifier = Modifier.Companion) {
     Column(modifier = modifier) {
-        Divider(thickness = 1.dp, color = AppThemeProvider.colorsSystem.separator.primary)
+        HorizontalDivider(thickness = 1.dp, color = AppThemeProvider.colorsSystem.separator.primary)
         NavigationBar(
             containerColor = AppThemeProvider.colorsSystem.fill.primary,
         ) {

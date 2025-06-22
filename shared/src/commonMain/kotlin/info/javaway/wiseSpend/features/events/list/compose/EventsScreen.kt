@@ -2,16 +2,21 @@ package info.javaway.wiseSpend.features.events.list.compose
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Divider
+import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
@@ -31,36 +36,63 @@ fun EventsScreen(
     modifier: Modifier = Modifier,
 ) {
     val model by component.model.collectAsState()
-    val dialogSlot by component.slot.subscribeAsState()
+    val createEventSlot by component.createEventSlot.subscribeAsState()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    var showAccountDialog by remember { mutableStateOf(false) }
 
-    RootBox(modifier) {
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            DatePickerView(
-                viewModel = getKoinInstance(DatePickerSingleQualifier),
-                firstDayIsMonday = true,
-                labels = model.calendarLabels,
-                selectDayListener = component::selectDay
-            )
+    Scaffold(
+        modifier = modifier,
+        containerColor = AppThemeProvider.colorsSystem.fill.primary,
+        floatingActionButton = {
+            FAB { component.newEvent(model.selectedDay) }
+        },
+        topBar = {
+            EventScreenTopBar(
+                accountName = model.selectedAccountUi.name,
+                accountAmount = model.selectedAccountUi.formattedAmount,
+            ) {
+                showAccountDialog = true
+            }
+        }
+    ) {
+        RootBox(Modifier.padding(it)) {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                DatePickerView(
+                    viewModel = getKoinInstance(DatePickerSingleQualifier),
+                    firstDayIsMonday = true,
+                    labels = model.calendarLabels,
+                    selectDayListener = component::selectDay
+                )
 
-            LazyColumn(modifier = Modifier.weight(1f)) {
-                items(model.eventsByDay) {
-                    SpendEventItem(it)
-                    Divider()
+                LazyColumn(modifier = Modifier.weight(1f)) {
+                    items(model.eventsByDay) { spendEvent ->
+                        SpendEventItem(spendEvent)
+                        HorizontalDivider()
+                    }
                 }
             }
         }
+    }
 
-        dialogSlot.child?.instance?.let { createEventComponent ->
-            ModalBottomSheet(
-                onDismissRequest = component::onDismiss,
-                sheetState = sheetState,
-                containerColor = AppThemeProvider.colorsSystem.fill.secondary,
-            ) {
-                CreateEventView(createEventComponent)
-            }
+    createEventSlot.child?.instance?.let { createEventComponent ->
+        ModalBottomSheet(
+            onDismissRequest = component::onDismiss,
+            sheetState = sheetState,
+            containerColor = AppThemeProvider.colorsSystem.fill.secondary,
+        ) {
+            CreateEventView(createEventComponent)
         }
+    }
 
-        FAB(modifier = Modifier.align(Alignment.BottomEnd)) { component.newEvent(model.selectedDay) }
+    if (showAccountDialog) {
+        BasicAlertDialog(
+            onDismissRequest = { showAccountDialog = false }
+        ) {
+            ChooseAccountView(
+                accounts = model.accountsUi,
+                selectedAccountId = model.selectedAccountId,
+                onClick = component::selectAccount,
+            )
+        }
     }
 }

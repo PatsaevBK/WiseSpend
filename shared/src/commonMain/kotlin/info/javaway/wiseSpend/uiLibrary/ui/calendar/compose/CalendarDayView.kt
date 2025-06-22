@@ -58,7 +58,7 @@ fun RowScope.DayContainer(
     Box(
         modifier = Modifier
             .weight(1f)
-            .aspectRatio(1f)
+            .aspectRatio(1.5f)
             .let {
                 if (calendarDay.selectable) {
                     it.clickable {

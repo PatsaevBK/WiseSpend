@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import info.javaway.wiseSpend.extensions.fromHex
 import info.javaway.wiseSpend.features.events.models.SpendEventUI
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.ColorLabel
@@ -21,13 +20,16 @@ import wisespend.shared.generated.resources.empty_category
 
 @OptIn(ExperimentalStdlibApi::class)
 @Composable
-fun SpendEventItem(event: SpendEventUI) {
+fun SpendEventItem(
+    event: SpendEventUI,
+    modifier: Modifier = Modifier,
+) {
 
     val categoryColor = event.category.colorHex.takeIf { it.isNotBlank() }
         ?.let { Color.fromHex(it) } ?: AppThemeProvider.colorsSystem.fill.disable
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .padding(horizontal = 8.dp)
             .padding(bottom = 8.dp)
             .padding(8.dp),

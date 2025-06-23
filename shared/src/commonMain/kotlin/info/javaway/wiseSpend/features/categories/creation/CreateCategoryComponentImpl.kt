@@ -1,5 +1,6 @@
 package info.javaway.wiseSpend.features.categories.creation
 
+import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -8,7 +9,8 @@ import kotlinx.coroutines.flow.update
 class CreateCategoryComponentImpl(
     private val onDismiss: () -> Unit,
     private val onSaveCategory: (state: CreateCategoryComponent.State) -> Unit,
-) : CreateCategoryComponent {
+    componentContext: ComponentContext
+) : CreateCategoryComponent, ComponentContext by componentContext {
 
     private val _model = MutableStateFlow(CreateCategoryComponent.State.DEFAULT)
     override val model: StateFlow<CreateCategoryComponent.State> = _model.asStateFlow()

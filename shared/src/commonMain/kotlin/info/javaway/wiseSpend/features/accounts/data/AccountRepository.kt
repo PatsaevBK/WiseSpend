@@ -15,10 +15,8 @@ class AccountRepository(
             dao.insert(account)
         }
 
-    suspend fun getById(accountId: String): Account? =
-        withContext(Dispatchers.IO) {
-            dao.get(accountId)
-        }
+    fun getById(accountId: String): Account? =
+        dao.get(accountId)
 
     fun getAllFlow(): Flow<List<Account>> =
         dao.getAllFlow()

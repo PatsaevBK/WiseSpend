@@ -1,5 +1,6 @@
 package info.javaway.wiseSpend.features.events.list.compose
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -16,11 +17,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
@@ -44,8 +41,8 @@ fun EventsScreen(
 ) {
     val model by component.model.collectAsState()
     val createEventSlot by component.createEventSlot.subscribeAsState()
+    val accountSlot by component.accountsSlot.subscribeAsState()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    var showAccountDialog by remember { mutableStateOf(false) }
     val walletPainter = rememberVectorPainter(Icons.Outlined.Wallet)
 
     Scaffold(
@@ -55,13 +52,15 @@ fun EventsScreen(
             FAB { component.newEvent(model.selectedDay) }
         },
         topBar = {
-            val icon = if (model.selectedAccountId == null) painterResource(Res.drawable.money_bag_outline) else walletPainter
+            val icon = if (model.selectedAccountId == null)
+                painterResource(Res.drawable.money_bag_outline)
+            else walletPainter
             EventScreenTopBar(
                 accountName = model.selectedAccountUi.name,
                 accountAmount = model.selectedAccountUi.formattedAmount,
                 icon = icon
             ) {
-                showAccountDialog = true
+                component.showAccounts()
             }
         }
     ) {
@@ -76,7 +75,7 @@ fun EventsScreen(
 
                 LazyColumn(modifier = Modifier.weight(1f)) {
                     items(model.eventsByDay) { spendEvent ->
-                        SpendEventItem(spendEvent)
+                        SpendEventItem(spendEvent, Modifier.clickable { component.editEvent(spendEvent.id) })
                         HorizontalDivider()
                     }
                 }
@@ -86,7 +85,7 @@ fun EventsScreen(
 
     createEventSlot.child?.instance?.let { createEventComponent ->
         ModalBottomSheet(
-            onDismissRequest = component::onDismiss,
+            onDismissRequest = component::onEventDismiss,
             sheetState = sheetState,
             containerColor = AppThemeProvider.colorsSystem.fill.secondary,
         ) {
@@ -94,16 +93,17 @@ fun EventsScreen(
         }
     }
 
-    if (showAccountDialog) {
+    accountSlot.child?.instance?.let {
         BasicAlertDialog(
-            onDismissRequest = { showAccountDialog = false }
+            onDismissRequest = component::onAccountsDismiss
         ) {
             ChooseAccountView(
-                accounts = model.accountsUi,
+                accountListComponent = it,
                 selectedAccountId = model.selectedAccountId,
-                onClick = {
-                    component.selectAccount(it)
-                    showAccountDialog = false
+                isTotalsInclude = true,
+                onClick = { accountsListComponent ->
+                    component.selectAccount(accountsListComponent)
+                    component.onAccountsDismiss()
                 },
             )
         }

@@ -57,10 +57,8 @@ class AccountsListComponentImpl(
     }
 
     override fun changeAccount(accountId: String) {
-        scope.launch {
-            val account = accountRepository.getById(accountId) ?: return@launch
-            nav.activate(Config(account))
-        }
+        val account = accountRepository.getById(accountId) ?: return
+        nav.activate(Config(account))
     }
 
     override fun newAccount() {

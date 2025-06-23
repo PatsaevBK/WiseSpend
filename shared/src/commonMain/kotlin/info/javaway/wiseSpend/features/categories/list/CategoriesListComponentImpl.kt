@@ -38,15 +38,16 @@ class CategoriesListComponentImpl(
         source = nav,
         serializer = Config.serializer(),
         handleBackButton = true,
-        childFactory = { _ , _ ->
+        childFactory = { _ , ctx ->
             CreateCategoryComponentImpl(
+                componentContext = ctx,
                 onDismiss = { nav.dismiss() },
                 onSaveCategory = {
                     scope.launch {
                         categoriesRepository.createCategory(it.toCategory(LocalDateTime.now()))
                     }
                     nav.dismiss()
-                }
+                },
             )
         }
     )

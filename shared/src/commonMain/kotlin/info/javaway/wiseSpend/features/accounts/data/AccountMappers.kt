@@ -26,7 +26,7 @@ fun Account.toUi() = AccountUi(
     id = id, name = name, formattedAmount = "$amount $currency",
 )
 
-fun buildAccountsUi(accounts: List<Account>): List<AccountUi> {
+fun buildAccountsUiWithTotals(accounts: List<Account>): List<AccountUi> {
     val totals = accounts.fold(0.0) { total, account ->
         total + account.amount
     }

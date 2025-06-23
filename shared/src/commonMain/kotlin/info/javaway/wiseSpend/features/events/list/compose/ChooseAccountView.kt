@@ -21,11 +21,15 @@ import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
-import info.javaway.wiseSpend.features.accounts.models.AccountUi
+import info.javaway.wiseSpend.features.accounts.list.AccountsListComponent
 import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
 import org.jetbrains.compose.resources.painterResource
 import wisespend.shared.generated.resources.Res
@@ -33,31 +37,58 @@ import wisespend.shared.generated.resources.money_bag_outline
 
 @Composable
 fun ChooseAccountView(
-    accounts: List<AccountUi>,
+    accountListComponent: AccountsListComponent,
     selectedAccountId: String?,
-    onClick: (String?) -> Unit,
+    isTotalsInclude: Boolean,
     modifier: Modifier = Modifier,
+    onClick: (String?) -> Unit = { },
 ) {
+    val model by accountListComponent.model.collectAsState()
+    val walletIcon = rememberVectorPainter(Icons.Outlined.Wallet)
+
     Surface(
         modifier = modifier.wrapContentWidth().wrapContentHeight(),
         color = AppThemeProvider.colorsSystem.fill.secondary,
         shape = MaterialTheme.shapes.large
     ) {
-        Column(modifier = Modifier.padding(24.dp).selectableGroup(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        Column(
+            modifier = Modifier.padding(24.dp).selectableGroup(),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
             Text(
                 text = "Select an account",
                 style = AppThemeProvider.typography.l.heading3,
                 color = AppThemeProvider.colorsSystem.text.primary,
             )
 
-            accounts.forEach { account ->
-                RadioItem(
-                    selectedAccountId = selectedAccountId,
-                    accountName = account.name,
-                    accountId = account.id,
-                    accountAmount = account.formattedAmount,
-                    onClick = onClick
-                )
+            if (isTotalsInclude) {
+                model.accountsUIWithTotals.forEach { account ->
+                    val isSelected = selectedAccountId == account.id
+                    val painter = if (selectedAccountId == null) {
+                        painterResource(Res.drawable.money_bag_outline)
+                    } else {
+                        walletIcon
+                    }
+
+                    RadioItem(
+                        isSelected = isSelected,
+                        painter = painter,
+                        title = account.name,
+                        subtitle = account.formattedAmount,
+                        onClick = { onClick.invoke(account.id) }
+                    )
+                }
+            } else {
+                model.accountsUI.forEach { account ->
+                    val isSelected = selectedAccountId == account.id
+                    RadioItem(
+                        isSelected = isSelected,
+                        painter = walletIcon,
+                        title = account.name,
+                        subtitle = account.formattedAmount,
+                        onClick = { onClick.invoke(account.id) }
+                    )
+                }
             }
         }
     }
@@ -65,25 +96,25 @@ fun ChooseAccountView(
 
 @Composable
 private fun RadioItem(
-    selectedAccountId: String?,
-    accountId: String?,
-    accountName: String,
-    accountAmount: String,
-    onClick: (String?) -> Unit
+    isSelected: Boolean,
+    painter: Painter,
+    title: String,
+    subtitle: String,
+    onClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .selectable(
-                selected = selectedAccountId == accountId, onClick = {
-                    onClick.invoke(accountId)
-                }, role = Role.RadioButton
+                selected = isSelected,
+                onClick = onClick,
+                role = Role.RadioButton,
             ).fillMaxWidth()
             ,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
     ) {
         RadioButton(
-            selected = selectedAccountId == accountId,
+            selected = isSelected,
             onClick = null,
             colors = RadioButtonDefaults.colors().copy(
                 selectedColor = AppThemeProvider.colorsSystem.icon.active,
@@ -93,33 +124,24 @@ private fun RadioItem(
 
         Spacer(Modifier.width(8.dp))
 
-        if (accountId == null) {
-            Icon(
-                painter = painterResource(Res.drawable.money_bag_outline),
-                contentDescription = null,
-                modifier = Modifier.size(32.dp),
-                tint = AppThemeProvider.colorsSystem.icon.primary
-            )
-        } else {
-            Icon(
-                imageVector = Icons.Outlined.Wallet,
-                contentDescription = null,
-                modifier = Modifier.size(32.dp),
-                tint = AppThemeProvider.colorsSystem.icon.primary
-            )
-        }
+        Icon(
+            painter = painter,
+            contentDescription = null,
+            modifier = Modifier.size(32.dp),
+            tint = AppThemeProvider.colorsSystem.icon.primary
+        )
 
         Spacer(Modifier.width(8.dp))
 
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
             Text(
-                text = accountName,
+                text = title,
                 style = AppThemeProvider.typography.l.body,
                 color = AppThemeProvider.colorsSystem.text.primary,
                 modifier = Modifier
             )
             Text(
-                text = accountAmount,
+                text = subtitle,
                 style = AppThemeProvider.typography.l.body,
                 color = AppThemeProvider.colorsSystem.text.secondary
             )

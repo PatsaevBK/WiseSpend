@@ -1,14 +1,18 @@
 package info.javaway.wiseSpend.features.events.models
 
 import info.javaway.wiseSpend.extensions.now
+import info.javaway.wiseSpend.features.accounts.models.Account
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.plus
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class SpendEvent(
     val id: String,
     val categoryId: String,
+    val accountId: String,
     val title: String,
     val cost: Double,
     val date: LocalDate,
@@ -20,6 +24,7 @@ data class SpendEvent(
         val NONE = SpendEvent(
             id = "",
             categoryId = "",
+            accountId = Account.DEFAULT_ID,
             title = "",
             cost = 0.0,
             date = LocalDate.now(),
@@ -27,14 +32,5 @@ data class SpendEvent(
             updatedAt = LocalDateTime.now(),
             note = ""
         )
-
-        fun getStubs() = List(20) {
-            NONE.copy(
-                id = "$it",
-                title = "event $it",
-                cost = it.toDouble(),
-                date = LocalDate.now().plus(it, DateTimeUnit.DAY),
-            )
-        }
     }
 }

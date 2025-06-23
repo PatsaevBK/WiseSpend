@@ -11,6 +11,10 @@ interface CreateAccountContract {
     data class State(
         val account: Account,
     ) : BaseViewState {
+
+        val isValidToSave
+            get() = account.name.isNotEmpty() && (account.amount >= 0)
+
         companion object {
             val NONE = State(
                 account = Account(

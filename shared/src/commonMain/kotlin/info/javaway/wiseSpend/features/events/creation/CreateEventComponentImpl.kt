@@ -52,7 +52,6 @@ class CreateEventComponentImpl(
     )
 
     override fun selectDate(date: LocalDate?) = _model.update { it.copy(date = date ?: LocalDate.now()) }
-    override fun resetState() = _model.update { State.NONE }
     override fun changeTitle(title: String) = _model.update { it.copy(title = title) }
     override fun changeNote(note: String) = _model.update { it.copy(note = note) }
     override fun changeCost(cost: String) = _model.update { it.copy(cost = cost.toDoubleOrNull() ?: it.cost) }
@@ -79,6 +78,8 @@ class CreateEventComponentImpl(
         resetState()
         onSave.invoke(spendEvent)
     }
+
+    private fun resetState() = _model.update { State.NONE }
 
     @Serializable
     private data object Config

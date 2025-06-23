@@ -23,9 +23,9 @@ fun AppTextField(
         modifier = modifier,
         textStyle = AppThemeProvider.typography.l.body.copy(color = AppThemeProvider.colorsSystem.text.primary),
         colors = TextFieldDefaults.colors(
-            focusedIndicatorColor = Color.Transparent,
+            focusedIndicatorColor = AppThemeProvider.colorsSystem.separator.primary,
             cursorColor = AppThemeProvider.colorsSystem.fill.active,
-            unfocusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = AppThemeProvider.colorsSystem.separator.primary,
             focusedContainerColor = Color.Transparent,
             unfocusedContainerColor = Color.Transparent
         ),

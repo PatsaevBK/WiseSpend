@@ -7,6 +7,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.stack.Children
+import info.javaway.wiseSpend.features.accounts.list.compose.AccountsListScreen
 import info.javaway.wiseSpend.features.categories.list.compose.CategoriesScreen
 import info.javaway.wiseSpend.features.events.list.compose.EventsScreen
 import info.javaway.wiseSpend.features.settings.compose.SettingScreen
@@ -26,7 +27,6 @@ fun RootScreen(
         themeIsDark = state.themeIsDark,
         appPrefs = state.appPrefs
     ) {
-
         Scaffold(
             modifier = modifier,
             bottomBar = {
@@ -38,7 +38,7 @@ fun RootScreen(
                 when (val child = it.instance) {
                     is RootComponent.Child.Events -> EventsScreen(component = child.component)
                     is RootComponent.Child.Categories -> CategoriesScreen(component = child.component)
-                    is RootComponent.Child.Accounts -> TODO()
+                    is RootComponent.Child.Accounts -> AccountsListScreen(component = child.component)
                     is RootComponent.Child.Settings -> SettingScreen(component = child.component)
                 }
             }

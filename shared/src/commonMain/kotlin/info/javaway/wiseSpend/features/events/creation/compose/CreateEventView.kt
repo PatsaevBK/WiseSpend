@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -20,7 +21,7 @@ import info.javaway.wiseSpend.di.getKoinInstance
 import info.javaway.wiseSpend.features.categories.list.compose.CategoriesListView
 import info.javaway.wiseSpend.features.events.creation.CreateEventComponent
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.AppButton
-import info.javaway.wiseSpend.uiLibrary.ui.atoms.AppCostTextField
+import info.javaway.wiseSpend.uiLibrary.ui.atoms.AppNumberTextField
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.AppTextField
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.BottomModalContainer
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.TextPairButton
@@ -34,7 +35,7 @@ import wisespend.shared.generated.resources.date
 import wisespend.shared.generated.resources.empty_category
 import wisespend.shared.generated.resources.note
 import wisespend.shared.generated.resources.save
-import wisespend.shared.generated.resources.spend_to
+import wisespend.shared.generated.resources.title
 
 @Composable
 fun CreateEventView(
@@ -48,9 +49,10 @@ fun CreateEventView(
     var showDateDialog by remember { mutableStateOf(false) }
 
     BottomModalContainer(modifier = modifier) {
-        AppCostTextField(
+        AppNumberTextField(
             value = model.cost.toString(),
             placeholder = stringResource(Res.string.cost),
+            hint = stringResource(Res.string.cost),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         ) { component.changeCost(it) }
 
@@ -61,14 +63,18 @@ fun CreateEventView(
             colorHex = model.category.colorHex.takeIf { it.isNotEmpty() }
         ) { component.showCategory() }
 
+        HorizontalDivider(color = AppThemeProvider.colorsSystem.separator.primary)
+
         TextPairButton(
             title = stringResource(Res.string.date),
             buttonTitle = model.date.toString()
         ) { showDateDialog = true }
 
+        HorizontalDivider(color = AppThemeProvider.colorsSystem.separator.primary)
+
         AppTextField(
             value = model.title,
-            placeholder = stringResource(Res.string.spend_to),
+            placeholder = stringResource(Res.string.title),
             modifier = Modifier.fillMaxWidth()
         ) { component.changeTitle(it) }
 

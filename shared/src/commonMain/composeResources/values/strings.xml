@@ -11,9 +11,11 @@
     <string name="empty_category">Without category</string>
     <string name="category">Category</string>
     <string name="date">Date</string>
-    <string name="spend_to">Spend to..</string>
-    <string name="note">Note</string>
+    <string name="title">Write title</string>
+    <string name="note">Write note</string>
     <string name="cost">Cost</string>
+    <string name="amount">Amount</string>
+    <string name="account_name">Write account name</string>
 
     <string name="data_sync_success">Sync success</string>
     <string name="data_sync_error">Sync error</string>

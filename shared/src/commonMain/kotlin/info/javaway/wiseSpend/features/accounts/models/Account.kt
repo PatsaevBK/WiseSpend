@@ -2,7 +2,9 @@ package info.javaway.wiseSpend.features.accounts.models
 
 import info.javaway.wiseSpend.extensions.now
 import kotlinx.datetime.LocalDateTime
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Account(
     val id: String,
     val name: String,

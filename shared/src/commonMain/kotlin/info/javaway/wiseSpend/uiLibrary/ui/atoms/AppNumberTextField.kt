@@ -16,15 +16,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
-import org.jetbrains.compose.resources.stringResource
-import wisespend.shared.generated.resources.Res
-import wisespend.shared.generated.resources.cost
 
 @Composable
-fun AppCostTextField(
+fun AppNumberTextField(
     value: String,
     modifier: Modifier = Modifier,
     currency: String = "RUB",
+    hint: String,
     placeholder: String = "",
     keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
     onValueChange: (String) -> Unit,
@@ -39,7 +37,7 @@ fun AppCostTextField(
             onValueChange = onValueChange,
             label = {
                 Text(
-                    text = stringResource(Res.string.cost),
+                    text = hint,
                     style = AppThemeProvider.typography.s.body,
                     color = AppThemeProvider.colorsSystem.text.secondary
                 )

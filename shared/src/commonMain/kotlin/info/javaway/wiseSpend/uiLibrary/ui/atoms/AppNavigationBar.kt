@@ -21,7 +21,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun AppNavigationBar(rootComponent: RootComponent, modifier: Modifier = Modifier.Companion) {
     Column(modifier = modifier) {
-        HorizontalDivider(thickness = 1.dp, color = AppThemeProvider.colorsSystem.separator.primary)
+        HorizontalDivider(thickness = 1.dp, color = AppThemeProvider.colorsSystem.fill.default)
         NavigationBar(
             containerColor = AppThemeProvider.colorsSystem.fill.primary,
         ) {

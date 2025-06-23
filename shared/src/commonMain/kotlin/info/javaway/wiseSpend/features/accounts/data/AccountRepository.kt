@@ -22,4 +22,6 @@ class AccountRepository(
 
     fun getAllFlow(): Flow<List<Account>> =
         dao.getAllFlow()
+
+    fun getAll(): List<Account> = dao.getAll()
 }

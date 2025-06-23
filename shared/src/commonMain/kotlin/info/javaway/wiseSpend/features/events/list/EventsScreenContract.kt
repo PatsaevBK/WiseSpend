@@ -2,6 +2,7 @@ package info.javaway.wiseSpend.features.events.list
 
 import info.javaway.wiseSpend.base.BaseViewEvent
 import info.javaway.wiseSpend.base.BaseViewState
+import info.javaway.wiseSpend.features.accounts.data.buildAccountsUi
 import info.javaway.wiseSpend.features.accounts.data.toUi
 import info.javaway.wiseSpend.features.accounts.models.Account
 import info.javaway.wiseSpend.features.accounts.models.AccountUi
@@ -35,17 +36,7 @@ interface EventsScreenContract {
             }
 
         val accountsUi: List<AccountUi>
-            get() {
-                val totals = accounts.fold(0.0) { total, account ->
-                    total + account.amount
-                }
-                val currency = accounts.firstOrNull()?.currency
-                val totalAccount = AccountUi(id = null, TOTAL_ACCOUNTS_NAME, "$totals ${currency.orEmpty()}")
-                return buildList {
-                    add(totalAccount)
-                    addAll(accounts.map { it.toUi() })
-                }
-            }
+            get() = buildAccountsUi(accounts)
 
         val selectedAccountUi: AccountUi
             get() {

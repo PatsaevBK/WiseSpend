@@ -21,6 +21,5 @@ interface CreateEventComponent {
     fun showCategory()
     fun dismissCategory()
 
-    fun resetState()
     fun finish()
 }

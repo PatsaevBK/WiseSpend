@@ -13,7 +13,6 @@ import info.javaway.wiseSpend.features.categories.data.CategoriesRepository
 import info.javaway.wiseSpend.features.events.creation.CreateEventComponent
 import info.javaway.wiseSpend.features.events.creation.CreateEventComponentImpl
 import info.javaway.wiseSpend.features.events.data.EventsRepository
-import info.javaway.wiseSpend.features.events.models.SpendEvent
 import info.javaway.wiseSpend.uiLibrary.ui.calendar.model.CalendarDay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -66,12 +65,6 @@ class EventsListComponentImpl(
 
     override fun selectDay(calendarDay: CalendarDay) {
         _model.update { it.copy(selectedDay = calendarDay) }
-    }
-
-    override fun createEvent(newEvent: SpendEvent) {
-        scope.launch {
-            eventsRepository.create(newEvent)
-        }
     }
 
     override fun newEvent(calendarDay: CalendarDay?) = createEventNav.activate(CreateEventConfig(calendarDay))

@@ -40,6 +40,7 @@ fun ChooseAccountView(
 ) {
     Surface(
         modifier = modifier.wrapContentWidth().wrapContentHeight(),
+        color = AppThemeProvider.colorsSystem.fill.secondary,
         shape = MaterialTheme.shapes.large
     ) {
         Column(modifier = Modifier.padding(24.dp).selectableGroup(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
@@ -93,9 +94,19 @@ private fun RadioItem(
         Spacer(Modifier.width(8.dp))
 
         if (accountId == null) {
-            Icon(painterResource(Res.drawable.money_bag_outline), null, modifier = Modifier.size(32.dp))
+            Icon(
+                painter = painterResource(Res.drawable.money_bag_outline),
+                contentDescription = null,
+                modifier = Modifier.size(32.dp),
+                tint = AppThemeProvider.colorsSystem.icon.primary
+            )
         } else {
-            Icon(imageVector = Icons.Outlined.Wallet, contentDescription = null, modifier = Modifier.size(32.dp))
+            Icon(
+                imageVector = Icons.Outlined.Wallet,
+                contentDescription = null,
+                modifier = Modifier.size(32.dp),
+                tint = AppThemeProvider.colorsSystem.icon.primary
+            )
         }
 
         Spacer(Modifier.width(8.dp))

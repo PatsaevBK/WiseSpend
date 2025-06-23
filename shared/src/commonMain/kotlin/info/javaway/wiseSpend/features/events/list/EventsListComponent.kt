@@ -16,7 +16,6 @@ interface EventsListComponent {
     fun selectDay(calendarDay: CalendarDay)
     fun newEvent(calendarDay: CalendarDay?)
     fun onDismiss()
-    fun createEvent(newEvent: SpendEvent)
 
     fun selectAccount(id: String?)
 

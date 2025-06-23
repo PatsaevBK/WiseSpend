@@ -101,7 +101,10 @@ fun EventsScreen(
             ChooseAccountView(
                 accounts = model.accountsUi,
                 selectedAccountId = model.selectedAccountId,
-                onClick = component::selectAccount,
+                onClick = {
+                    component.selectAccount(it)
+                    showAccountDialog = false
+                },
             )
         }
     }

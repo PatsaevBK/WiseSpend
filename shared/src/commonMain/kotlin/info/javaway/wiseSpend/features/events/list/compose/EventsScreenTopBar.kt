@@ -8,6 +8,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.AppAccountsButton
 import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
@@ -16,6 +17,7 @@ import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
 @Composable
 fun EventScreenTopBar(
     accountName: String,
+    icon: Painter,
     accountAmount: String,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
@@ -36,7 +38,8 @@ fun EventScreenTopBar(
                 AppAccountsButton(
                     text = accountName,
                     amount = accountAmount,
-                    onClick = onClick
+                    onClick = onClick,
+                    icon = icon,
                 )
             }
         )

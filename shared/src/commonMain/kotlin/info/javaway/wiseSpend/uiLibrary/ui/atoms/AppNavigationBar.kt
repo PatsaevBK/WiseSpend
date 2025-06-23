@@ -42,19 +42,21 @@ private fun RowScope.NavigationButtons(
         val isSelected = when (bottomBarItem) {
             BottomBarItem.EVENTS -> isActive is RootComponent.Child.Events
             BottomBarItem.CATEGORIES -> isActive is RootComponent.Child.Categories
+            BottomBarItem.ACCOUNTS -> isActive is RootComponent.Child.Accounts
             BottomBarItem.SETTINGS -> isActive is RootComponent.Child.Settings
         }
         val onClick = when (bottomBarItem) {
             BottomBarItem.EVENTS -> component::onEventsClick
             BottomBarItem.CATEGORIES -> component::onCategoriesClick
+            BottomBarItem.ACCOUNTS -> component::onAccountsClick
             BottomBarItem.SETTINGS -> component::onSettingsClick
         }
         val label = stringResource(bottomBarItem.title)
 
         NavigationBarItem(
             selected = isSelected,
-            icon = { Icon(imageVector = bottomBarItem.image, contentDescription = label) },
-            label = { Text(text = label, color = AppThemeProvider.colorsSystem.text.primary, style = AppThemeProvider.typography.m.label2) },
+            icon = { Icon(imageVector = bottomBarItem.image, contentDescription = label, tint = AppThemeProvider.colorsSystem.icon.primary) },
+            label = { Text(text = label, color = AppThemeProvider.colorsSystem.text.primary, style = AppThemeProvider.typography.m.body) },
             colors = NavigationBarItemDefaults.colors().copy(
                 selectedIndicatorColor = AppThemeProvider.colorsSystem.fill.card.grey,
             ),

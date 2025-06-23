@@ -12,15 +12,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
-import org.jetbrains.compose.resources.painterResource
-import wisespend.shared.generated.resources.Res
-import wisespend.shared.generated.resources.money_bag_outline
 
 @Composable
 fun AppAccountsButton(
     text: String,
+    icon: Painter,
     amount: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -32,7 +31,7 @@ fun AppAccountsButton(
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             Icon(
-                painter = painterResource(Res.drawable.money_bag_outline),
+                painter = icon,
                 contentDescription = null,
                 modifier = Modifier.size(24.dp)
             )

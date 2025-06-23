@@ -1,8 +1,7 @@
 package info.javaway.wiseSpend.root.compose
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -22,10 +21,9 @@ fun RootScreen(
     modifier: Modifier = Modifier,
 ) {
     val state by rootComponent.state.collectAsState()
-    isSystemInDarkTheme()
 
     Theme(
-        themeIsDark = isSystemInDarkTheme(),
+        themeIsDark = state.themeIsDark,
         appPrefs = state.appPrefs
     ) {
 
@@ -34,12 +32,13 @@ fun RootScreen(
             bottomBar = {
                 AppNavigationBar(rootComponent)
             },
-            backgroundColor = AppThemeProvider.colorsSystem.fill.primary
+            contentColor = AppThemeProvider.colorsSystem.fill.primary,
         ) { paddingValues ->
             Children(stack = rootComponent.stack, modifier = Modifier.padding(paddingValues)) {
                 when (val child = it.instance) {
                     is RootComponent.Child.Events -> EventsScreen(component = child.component)
                     is RootComponent.Child.Categories -> CategoriesScreen(component = child.component)
+                    is RootComponent.Child.Accounts -> TODO()
                     is RootComponent.Child.Settings -> SettingScreen(component = child.component)
                 }
             }

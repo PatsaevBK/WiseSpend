@@ -4,6 +4,8 @@ import info.javaway.wiseSpend.db.AppDb
 import info.javaway.wiseSpend.extensions.appLog
 import info.javaway.wiseSpend.features.accounts.data.AccountDao
 import info.javaway.wiseSpend.features.accounts.data.AccountRepository
+import info.javaway.wiseSpend.features.accounts.list.AccountsListComponent
+import info.javaway.wiseSpend.features.accounts.list.AccountsListComponentImpl
 import info.javaway.wiseSpend.features.categories.data.CategoriesRepository
 import info.javaway.wiseSpend.features.categories.data.CategoryDao
 import info.javaway.wiseSpend.features.categories.list.CategoriesListComponent
@@ -17,6 +19,7 @@ import info.javaway.wiseSpend.features.settings.SettingsComponentImpl
 import info.javaway.wiseSpend.features.settings.child.auth.AuthComponent
 import info.javaway.wiseSpend.features.settings.child.auth.AuthComponentImpl
 import info.javaway.wiseSpend.features.settings.child.auth.child.register.RegisterComponent
+import info.javaway.wiseSpend.features.settings.child.auth.child.register.RegisterComponentImpl
 import info.javaway.wiseSpend.features.settings.child.auth.child.signIn.SignInComponent
 import info.javaway.wiseSpend.features.settings.child.auth.child.signIn.SignInComponentImpl
 import info.javaway.wiseSpend.features.settings.child.sync.SyncComponent
@@ -144,14 +147,15 @@ object ViewModelModule {
 
 object ComponentsFactoryModule {
     val componentFactory = module {
-        single<RootComponent.Factory> { RootComponentImpl.Factory(get(), get(), get(), get())  }
+        single<RootComponent.Factory> { RootComponentImpl.Factory(get(), get(), get(), get(), get())  }
         factory<SettingsComponent.Factory> { SettingsComponentImpl.Factory(get(), get(), get(), get()) }
         factory<CategoriesListComponent.Factory> { CategoriesListComponentImpl.Factory(get()) }
         factory<EventsListComponent.Factory> { EventsListComponentImpl.Factory(get(), get(), get()) }
         factory<AuthComponent.Factory> { AuthComponentImpl.Factory(get(), get()) }
         factory<SignInComponent.Factory> { SignInComponentImpl.Factory(get(), get()) }
-        factory<RegisterComponent.Factory> { info.javaway.wiseSpend.features.settings.child.auth.child.register.RegisterComponentImpl.Factory(get(), get()) }
+        factory<RegisterComponent.Factory> { RegisterComponentImpl.Factory(get(), get()) }
         factory<SyncComponent.Factory> { SyncComponentImpl.Factory(get(), get(), get(), get()) }
+        factory<AccountsListComponent.Factory> { AccountsListComponentImpl.Factory(get()) }
     }
 }
 

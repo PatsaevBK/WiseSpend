@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Wallet
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -18,6 +20,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import info.javaway.wiseSpend.di.DatePickerSingleQualifier
@@ -28,6 +32,9 @@ import info.javaway.wiseSpend.uiLibrary.ui.atoms.FAB
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.RootBox
 import info.javaway.wiseSpend.uiLibrary.ui.calendar.compose.DatePickerView
 import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
+import org.jetbrains.compose.resources.painterResource
+import wisespend.shared.generated.resources.Res
+import wisespend.shared.generated.resources.money_bag_outline
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,6 +46,7 @@ fun EventsScreen(
     val createEventSlot by component.createEventSlot.subscribeAsState()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var showAccountDialog by remember { mutableStateOf(false) }
+    val walletPainter = rememberVectorPainter(Icons.Outlined.Wallet)
 
     Scaffold(
         modifier = modifier,
@@ -47,9 +55,11 @@ fun EventsScreen(
             FAB { component.newEvent(model.selectedDay) }
         },
         topBar = {
+            val icon = if (model.selectedAccountId == null) painterResource(Res.drawable.money_bag_outline) else walletPainter
             EventScreenTopBar(
                 accountName = model.selectedAccountUi.name,
                 accountAmount = model.selectedAccountUi.formattedAmount,
+                icon = icon
             ) {
                 showAccountDialog = true
             }

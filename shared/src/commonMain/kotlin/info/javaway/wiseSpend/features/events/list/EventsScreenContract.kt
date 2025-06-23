@@ -61,7 +61,7 @@ interface EventsScreenContract {
 
                 }
                 return AccountUi(
-                    id = null,
+                    id = selectedAccount.id,
                     name = selectedAccount.name,
                     formattedAmount = "${selectedAccount.amount} ${selectedAccount.currency}"
                 )

@@ -35,6 +35,6 @@ fun buildAccountsUiWithTotals(accounts: List<Account>): List<AccountUi> {
         AccountUi(id = null, TOTAL_ACCOUNTS_NAME, "$totals ${currency.orEmpty()}")
     return buildList {
         add(totalAccount)
-        addAll(accounts.map { it.toUi() })
+        addAll(accounts.map { it.toUi() }.sortedBy { it.name })
     }
 }

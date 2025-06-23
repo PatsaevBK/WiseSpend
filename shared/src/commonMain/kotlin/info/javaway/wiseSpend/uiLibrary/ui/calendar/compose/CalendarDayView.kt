@@ -58,7 +58,7 @@ fun RowScope.DayContainer(
     Box(
         modifier = Modifier
             .weight(1f)
-            .aspectRatio(1.5f)
+            .aspectRatio(1f)
             .let {
                 if (calendarDay.selectable) {
                     it.clickable {
@@ -137,7 +137,7 @@ fun GradientLabels(labels: List<CalendarLabel>){
 fun List<CalendarLabel>.mapToColors() = this.map {
     it.colorHex?.takeIf { it.isNotEmpty() }?.let { colorHex ->
         Color.fromHex(colorHex)
-    } ?: LocalCalendarColors.current.colorAccent
+    } ?: AppThemeProvider.colorsSystem.fill.disable
 }
     .toSet()
     .toList()

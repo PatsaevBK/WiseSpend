@@ -34,9 +34,6 @@ interface EventsScreenContract {
                     ?: Category.NONE)
             }
 
-        val accountsUi: List<AccountUi>
-            get() = buildAccountsUiWithTotals(accounts)
-
         val selectedAccountUi: AccountUi
             get() {
                 val selectedAccount =

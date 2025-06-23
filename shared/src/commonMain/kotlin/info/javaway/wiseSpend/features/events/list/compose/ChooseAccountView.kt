@@ -64,7 +64,7 @@ fun ChooseAccountView(
             if (isTotalsInclude) {
                 model.accountsUIWithTotals.forEach { account ->
                     val isSelected = selectedAccountId == account.id
-                    val painter = if (selectedAccountId == null) {
+                    val painter = if (account.id == null) {
                         painterResource(Res.drawable.money_bag_outline)
                     } else {
                         walletIcon

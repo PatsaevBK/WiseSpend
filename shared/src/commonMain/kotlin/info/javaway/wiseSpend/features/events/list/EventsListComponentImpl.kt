@@ -58,7 +58,12 @@ class EventsListComponentImpl(
                 componentContext = ctx,
                 onSave = { spendEvent ->
                     scope.launch {
-                        createEventAndUpdateAccount(spendEvent)
+                        when (config) {
+                            is EventConfig.CreateEventConfig ->
+                                createEventAndUpdateAccount(spendEvent)
+                            is EventConfig.EditEventConfig ->
+                                editExistedEventAndUpdateAccount(oldEvent = config.event, newEvent = spendEvent)
+                        }
                     }
                     createEventNav.dismiss()
                 }
@@ -120,6 +125,14 @@ class EventsListComponentImpl(
         val oldAccount = accountsRepository.getById(spendEvent.accountId) ?: return
         val updatedAccount = oldAccount.copy(amount = oldAccount.amount - spendEvent.cost)
         accountsRepository.create(updatedAccount)
+    }
+
+    private suspend fun editExistedEventAndUpdateAccount(oldEvent: SpendEvent, newEvent: SpendEvent) {
+        val oldAccount = accountsRepository.getById(oldEvent.accountId) ?: return
+        val newAccount = accountsRepository.getById(newEvent.accountId) ?: return
+        if (oldEvent.cost == newEvent.cost && oldAccount.id == newAccount.id) return
+
+        TODO()
     }
 
     @Serializable

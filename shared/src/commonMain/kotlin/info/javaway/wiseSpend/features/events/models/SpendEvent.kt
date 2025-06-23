@@ -2,10 +2,8 @@ package info.javaway.wiseSpend.features.events.models
 
 import info.javaway.wiseSpend.extensions.now
 import info.javaway.wiseSpend.features.accounts.models.Account
-import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.plus
 import kotlinx.serialization.Serializable
 
 @Serializable

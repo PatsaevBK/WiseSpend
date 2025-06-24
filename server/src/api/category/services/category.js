@@ -14,7 +14,7 @@ module.exports = createCoreService('api::category.category', ({ strapi }) =>  ({
         // Извлекает тело запроса (ctx.request.body), которое содержит категории, отправленные клиентом.
         console.log('Request body:', ctx.request.body);
         const user = ctx.state.user
-        const body = ctx.request.body.map(item => item.data);
+        const { body } = ctx.request
         const type = 'api::category.category'
 
         // Выполняет запрос к базе данных Strapi для получения категорий, связанных с пользователем (userId: user.id).

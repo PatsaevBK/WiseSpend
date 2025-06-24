@@ -386,6 +386,7 @@ export interface ApiAccountAccount extends Struct.CollectionTypeSchema {
     createdAtLocal: Schema.Attribute.BigInteger;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    currency: Schema.Attribute.String;
     idLocal: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -450,13 +451,14 @@ export interface ApiSpendEventSpendEvent extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    accountId: Schema.Attribute.String;
     categoryId: Schema.Attribute.String;
     cost: Schema.Attribute.Decimal;
     createdAt: Schema.Attribute.DateTime;
     createdAtLocal: Schema.Attribute.BigInteger;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    date: Schema.Attribute.DateTime;
+    Date: Schema.Attribute.BigInteger;
     idLocal: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<

@@ -18,7 +18,7 @@ inline fun <reified T: Any> getKoinInstance(qualifier: Qualifier? = null): T {
 fun initKoin(appModule: Module = module {  }) = startKoin {
     modules(
         CoreModules.deviceInfo,
-        CoreModules.coroutineScope,
+        CoreModules.coroutineContext,
         StorageModule.settingsManager,
         StorageModule.db,
         StorageModule.dao,

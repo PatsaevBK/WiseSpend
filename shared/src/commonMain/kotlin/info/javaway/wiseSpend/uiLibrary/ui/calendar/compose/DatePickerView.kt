@@ -163,7 +163,7 @@ fun CalendarDaysLabels(
                 Column(
                     modifier = Modifier
                         .weight(1f)
-                        .aspectRatio(1f),
+                        .aspectRatio(1.5f),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {

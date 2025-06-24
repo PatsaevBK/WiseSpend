@@ -24,9 +24,6 @@
     "cost": {
       "type": "decimal"
     },
-    "date": {
-      "type": "datetime"
-    },
     "note": {
       "type": "string"
     },
@@ -37,6 +34,12 @@
       "type": "biginteger"
     },
     "updatedAtLocal": {
+      "type": "biginteger"
+    },
+    "accountId": {
+      "type": "string"
+    },
+    "Date": {
       "type": "biginteger"
     }
   }

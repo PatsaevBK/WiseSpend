@@ -137,7 +137,7 @@ fun GradientLabels(labels: List<CalendarLabel>){
 fun List<CalendarLabel>.mapToColors() = this.map {
     it.colorHex?.takeIf { it.isNotEmpty() }?.let { colorHex ->
         Color.fromHex(colorHex)
-    } ?: LocalCalendarColors.current.colorAccent
+    } ?: AppThemeProvider.colorsSystem.fill.disable
 }
     .toSet()
     .toList()

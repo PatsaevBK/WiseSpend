@@ -5,8 +5,6 @@ import app.cash.sqldelight.coroutines.mapToList
 import db.events.EventTable
 import info.javaway.wiseSpend.db.AppDb
 import info.javaway.wiseSpend.features.events.models.SpendEvent
-import info.javaway.wiseSpend.features.events.models.toDb
-import info.javaway.wiseSpend.features.events.models.toSpendEvent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlin.coroutines.CoroutineContext
@@ -33,15 +31,15 @@ class EventDao(
         .executeAsOneOrNull()
         ?.toSpendEvent()
 
-    suspend fun insert(spendEvent: SpendEvent) = eventQueries
+    fun insert(spendEvent: SpendEvent) = eventQueries
         .insert(spendEvent.toDb())
 
-    suspend fun insertAll(spendEvents: List<SpendEvent>) = eventQueries
+    fun insertAll(spendEvents: List<SpendEvent>) = eventQueries
         .transaction {
             spendEvents.forEach { eventQueries.insert(it.toDb()) }
         }
 
 
-    suspend fun delete(id: String) = eventQueries
+    fun delete(id: String) = eventQueries
         .delete(id)
 }

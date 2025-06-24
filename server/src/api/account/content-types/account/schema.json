@@ -29,6 +29,9 @@
     },
     "updatedAtLocal": {
       "type": "biginteger"
+    },
+    "currency": {
+      "type": "string"
     }
   }
 }

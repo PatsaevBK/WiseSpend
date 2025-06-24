@@ -12,6 +12,7 @@ data class SpendEventApi(
     val id: String?,
     val title: String?,
     val categoryId: String?,
+    val accountId: String?,
     val cost: Double?,
     @Contextual
     val date: LocalDate?,

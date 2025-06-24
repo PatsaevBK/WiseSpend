@@ -34,8 +34,8 @@ fun SyncView(
 
     val model by component.model.collectAsState()
 
-    AppCard(modifier) {
-        Box {
+    Box(modifier) {
+        AppCard {
             Column {
                 Text(
                     text = stringResource(Res.string.auth_info, model.email),
@@ -53,19 +53,19 @@ fun SyncView(
                     onClick = component::logout
                 )
             }
+        }
 
-            if (model.isLoading) {
-                Box(modifier = Modifier.fillMaxSize()
-                    .background(AppThemeProvider.colorsSystem.fill.secondary.copy(0.5f))
-                    .clickable { }
-                ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center),
-                        color = AppThemeProvider.colorsSystem.icon.tertiary
-                    )
-                }
+        if (model.isLoading) {
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .background(AppThemeProvider.colorsSystem.fill.transparentDark)
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
+                    color = AppThemeProvider.colorsSystem.icon.tertiary
+                )
             }
         }
     }
-
 }

@@ -4,6 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.BasicAlertDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -19,8 +22,9 @@ import info.javaway.wiseSpend.di.DatePickerFactoryQualifier
 import info.javaway.wiseSpend.di.getKoinInstance
 import info.javaway.wiseSpend.features.categories.list.compose.CategoriesListView
 import info.javaway.wiseSpend.features.events.creation.CreateEventComponent
+import info.javaway.wiseSpend.features.events.list.compose.ChooseAccountView
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.AppButton
-import info.javaway.wiseSpend.uiLibrary.ui.atoms.AppCostTextField
+import info.javaway.wiseSpend.uiLibrary.ui.atoms.AppNumberTextField
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.AppTextField
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.BottomModalContainer
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.TextPairButton
@@ -28,14 +32,16 @@ import info.javaway.wiseSpend.uiLibrary.ui.calendar.compose.DatePickerView
 import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
 import org.jetbrains.compose.resources.stringResource
 import wisespend.shared.generated.resources.Res
+import wisespend.shared.generated.resources.accounts
 import wisespend.shared.generated.resources.category
 import wisespend.shared.generated.resources.cost
 import wisespend.shared.generated.resources.date
 import wisespend.shared.generated.resources.empty_category
 import wisespend.shared.generated.resources.note
 import wisespend.shared.generated.resources.save
-import wisespend.shared.generated.resources.spend_to
+import wisespend.shared.generated.resources.title
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateEventView(
     component: CreateEventComponent,
@@ -43,32 +49,43 @@ fun CreateEventView(
 ) {
 
     val model by component.model.collectAsState()
-    val slot by component.dialogSlot.subscribeAsState()
+    val categorySlot by component.categorySlot.subscribeAsState()
+    val accountSlot by component.accountSlot.subscribeAsState()
 
     var showDateDialog by remember { mutableStateOf(false) }
 
     BottomModalContainer(modifier = modifier) {
-        AppCostTextField(
+        AppNumberTextField(
             value = model.cost.toString(),
             placeholder = stringResource(Res.string.cost),
+            hint = stringResource(Res.string.cost),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         ) { component.changeCost(it) }
 
         TextPairButton(
             title = stringResource(Res.string.category),
-            buttonTitle = model.category.title.ifEmpty { stringResource(Res.string.empty_category) },
+            buttonTitle = model.selectedCategory.title.ifEmpty { stringResource(Res.string.empty_category) },
             enabled = model.isCategoriesEmpty.not(),
-            colorHex = model.category.colorHex.takeIf { it.isNotEmpty() }
+            colorHex = model.selectedCategory.colorHex.takeIf { it.isNotEmpty() }
         ) { component.showCategory() }
+
+        TextPairButton(
+            title = stringResource(Res.string.accounts),
+            buttonTitle = model.selectedAccount.name,
+        ) { component.showAccount() }
+
+        HorizontalDivider(color = AppThemeProvider.colorsSystem.separator.primary)
 
         TextPairButton(
             title = stringResource(Res.string.date),
             buttonTitle = model.date.toString()
         ) { showDateDialog = true }
 
+        HorizontalDivider(color = AppThemeProvider.colorsSystem.separator.primary)
+
         AppTextField(
             value = model.title,
-            placeholder = stringResource(Res.string.spend_to),
+            placeholder = stringResource(Res.string.title),
             modifier = Modifier.fillMaxWidth()
         ) { component.changeTitle(it) }
 
@@ -78,17 +95,17 @@ fun CreateEventView(
             modifier = Modifier.fillMaxWidth()
         ) { component.changeNote(it) }
 
-        AppButton(stringResource(Res.string.save)) {
+        AppButton(title = stringResource(Res.string.save), enabled = model.isEventValid) {
             component.finish()
         }
     }
 
-    slot.child?.instance?.let {
-        Dialog(
+    categorySlot.child?.instance?.let { categoryListComponent ->
+        BasicAlertDialog(
             onDismissRequest = { component.dismissCategory() }
         ) {
             CategoriesListView(
-                component = it,
+                component = categoryListComponent,
                 modifier = Modifier.background(
                     AppThemeProvider.colorsSystem.fill.secondary,
                     RoundedCornerShape(16.dp)
@@ -100,11 +117,27 @@ fun CreateEventView(
         }
     }
 
+    accountSlot.child?.instance?.let { accountsListComponent ->
+        BasicAlertDialog(
+            onDismissRequest = component::dismissAccount
+        ) {
+            ChooseAccountView(
+                selectedAccountId = model.selectedAccount.id,
+                accountListComponent = accountsListComponent,
+                isTotalsInclude = false,
+                onClick = { accountId ->
+                    accountId?.let { component.selectAccount(it) }
+                    component.dismissAccount()
+                },
+            )
+        }
+    }
+
     if (showDateDialog) {
         Dialog(onDismissRequest = { showDateDialog = false }) {
             DatePickerView(
                 viewModel = getKoinInstance(DatePickerFactoryQualifier),
-            ){ day ->
+            ) { day ->
                 showDateDialog = false
                 component.selectDate(day.date)
             }

@@ -8,6 +8,9 @@ import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
 import info.javaway.wiseSpend.extensions.componentScope
+import info.javaway.wiseSpend.features.accounts.data.AccountRepository
+import info.javaway.wiseSpend.features.accounts.list.AccountsListComponent
+import info.javaway.wiseSpend.features.accounts.list.AccountsListComponentImpl
 import info.javaway.wiseSpend.features.categories.data.CategoriesRepository
 import info.javaway.wiseSpend.features.events.creation.CreateEventComponent
 import info.javaway.wiseSpend.features.events.creation.CreateEventComponentImpl
@@ -27,6 +30,7 @@ class EventsListComponentImpl(
     componentContext: ComponentContext,
     private val categoriesRepository: CategoriesRepository,
     private val eventsRepository: EventsRepository,
+    private val accountsRepository: AccountRepository,
 ) : EventsListComponent, ComponentContext by componentContext {
 
     private val scope = componentScope()
@@ -34,31 +38,62 @@ class EventsListComponentImpl(
     private val _model = MutableStateFlow(EventsScreenContract.State.NONE)
     override val model: StateFlow<EventsScreenContract.State> = _model.asStateFlow()
 
-    private val nav = SlotNavigation<Config>()
-    override val slot: Value<ChildSlot<*, CreateEventComponent>> = childSlot(
-        source = nav,
-        serializer = Config.serializer(),
+    private val createEventNav = SlotNavigation<EventConfig>()
+    override val createEventSlot: Value<ChildSlot<*, CreateEventComponent>> = childSlot(
+        source = createEventNav,
+        serializer = EventConfig.serializer(),
         handleBackButton = true,
+        key = "EventSlot",
         childFactory = { config, ctx ->
+            val (initialDate, event) = when (config) {
+                is EventConfig.CreateEventConfig -> Pair(config.calendarDay, null)
+                is EventConfig.EditEventConfig -> Pair(null, config.event)
+            }
+
             CreateEventComponentImpl(
-                initialDate = config.calendarDay,
+                initialDate = initialDate,
+                spendEvent = event,
                 categoriesRepository = categoriesRepository,
+                accountsRepository = accountsRepository,
                 componentContext = ctx,
-                onSave = {
-                    scope.launch { eventsRepository.create(it) }
-                    nav.dismiss()
+                onSave = { spendEvent ->
+                    when (config) {
+                        is EventConfig.CreateEventConfig ->
+                            createEventAndUpdateAccount(spendEvent)
+
+                        is EventConfig.EditEventConfig ->
+                            editExistedEventAndUpdateAccount(
+                                oldEvent = config.event,
+                                newEvent = spendEvent
+                            )
+                    }
+                    createEventNav.dismiss()
                 }
             )
         }
     )
 
+    private val accountNav = SlotNavigation<AccountConfig>()
+    override val accountsSlot: Value<ChildSlot<*, AccountsListComponent>> = childSlot(
+        source = accountNav,
+        serializer = AccountConfig.serializer(),
+        key = "AccountsSlot",
+        handleBackButton = true,
+        childFactory = { _, ctx ->
+            AccountsListComponentImpl(
+                componentContext = ctx,
+                accountRepository = accountsRepository,
+            )
+        }
+    )
 
     init {
         combine(
             eventsRepository.getAllFlow(),
             categoriesRepository.getAllFlow(),
-        ) { spendEvents, categories ->
-            _model.update { it.copy(events = spendEvents, categories = categories) }
+            accountsRepository.getAllFlow(),
+        ) { spendEvents, categories, accounts ->
+            _model.update { it.copy(events = spendEvents, categories = categories, accounts = accounts) }
         }.launchIn(scope)
     }
 
@@ -66,28 +101,86 @@ class EventsListComponentImpl(
         _model.update { it.copy(selectedDay = calendarDay) }
     }
 
-    override fun createEvent(newEvent: SpendEvent) {
-        scope.launch {
-            eventsRepository.create(newEvent)
+    override fun newEvent(calendarDay: CalendarDay?) =
+        createEventNav.activate(EventConfig.CreateEventConfig(calendarDay))
+
+    override fun editEvent(eventId: String) {
+        eventsRepository.getById(eventId)?.let {
+            createEventNav.activate(EventConfig.EditEventConfig(it))
         }
     }
 
-    override fun newEvent(calendarDay: CalendarDay?) = nav.activate(Config(calendarDay))
+    override fun onEventDismiss() = createEventNav.dismiss()
 
-    override fun onDismiss() = nav.dismiss()
+    override fun selectAccount(id: String?) {
+        _model.update { it.copy(selectedAccountId = id) }
+    }
+
+    override fun showAccounts() {
+        accountNav.activate(AccountConfig)
+    }
+
+    override fun onAccountsDismiss() = accountNav.dismiss()
+
+    private fun createEventAndUpdateAccount(spendEvent: SpendEvent) {
+        eventsRepository.create(spendEvent)
+        val oldAccount = accountsRepository.getById(spendEvent.accountId) ?: return
+        val updatedAccount = oldAccount.copy(amount = oldAccount.amount - spendEvent.cost)
+        with(updatedAccount) {
+            accountsRepository.update(id = id, name = name, amount = amount, updatedAt = updatedAt)
+        }
+    }
+
+    private fun editExistedEventAndUpdateAccount(oldEvent: SpendEvent, newEvent: SpendEvent) {
+        val oldAccount = accountsRepository.getById(oldEvent.accountId) ?: return
+        val newAccount = accountsRepository.getById(newEvent.accountId) ?: return
+
+        val costUnchanged = oldEvent.cost == newEvent.cost
+        val sameAccount = oldAccount.id == newAccount.id
+
+        if (costUnchanged && sameAccount) return
+
+        if (!sameAccount) {
+            val resetOldAccount = oldAccount.copy(amount = oldAccount.amount + oldEvent.cost)
+            with(resetOldAccount) {
+                accountsRepository.update(id = id, name = name, amount = amount, updatedAt = updatedAt)
+            }
+        }
+
+        val amountDelta = newAccount.amount - newEvent.cost
+        if (amountDelta != 0.0) {
+            val updateNewAccount = newAccount.copy(amount = amountDelta)
+            with(updateNewAccount) {
+                accountsRepository.update(
+                    id = id,
+                    name = name,
+                    amount = amountDelta,
+                    updatedAt = updatedAt
+                )
+            }
+        }
+    }
 
     @Serializable
-    private data class Config(val calendarDay: CalendarDay?)
+    private sealed interface EventConfig {
+        data class CreateEventConfig(val calendarDay: CalendarDay?): EventConfig
+        data class EditEventConfig(val event: SpendEvent): EventConfig
+    }
+
+    @Serializable
+    private data object AccountConfig
 
     class Factory(
         private val categoriesRepository: CategoriesRepository,
         private val eventsRepository: EventsRepository,
+        private val accountRepository: AccountRepository,
     ) : EventsListComponent.Factory {
         override fun create(componentContext: ComponentContext): EventsListComponent {
             return EventsListComponentImpl(
                 componentContext = componentContext,
                 categoriesRepository = categoriesRepository,
-                eventsRepository = eventsRepository
+                eventsRepository = eventsRepository,
+                accountsRepository = accountRepository,
             )
         }
     }

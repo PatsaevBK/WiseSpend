@@ -8,9 +8,11 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
 import info.javaway.wiseSpend.features.categories.list.CategoriesListComponent
 import info.javaway.wiseSpend.extensions.componentScope
+import info.javaway.wiseSpend.features.accounts.list.AccountsListComponent
 import info.javaway.wiseSpend.features.events.list.EventsListComponent
 import info.javaway.wiseSpend.root.model.RootContract
 import info.javaway.wiseSpend.features.settings.SettingsComponent
+import info.javaway.wiseSpend.root.RootComponent.Child.*
 import info.javaway.wiseSpend.storage.SettingsManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,7 +27,8 @@ class RootComponentImpl(
     settingsManager: SettingsManager,
     private val categoriesFactory: CategoriesListComponent.Factory,
     private val eventsListComponentFactory: EventsListComponent.Factory,
-    private val settingsComponent: SettingsComponent.Factory,
+    private val accountsListComponentFactory: AccountsListComponent.Factory,
+    private val settingsComponentFactory: SettingsComponent.Factory,
 ): RootComponent, ComponentContext by componentContext {
 
     private val scope = componentScope()
@@ -57,6 +60,10 @@ class RootComponentImpl(
         nav.bringToFront(Config.Categories)
     }
 
+    override fun onAccountsClick() {
+        nav.bringToFront(Config.Accounts)
+    }
+
     override fun onSettingsClick() {
         nav.bringToFront(Config.Settings)
     }
@@ -64,23 +71,27 @@ class RootComponentImpl(
     private fun child(config: Config, componentContext: ComponentContext) : RootComponent.Child =
         when (config) {
             Config.Categories ->
-                RootComponent.Child.Categories(component = categoriesFactory.create(componentContext))
+                Categories(component = categoriesFactory.create(componentContext))
             Config.Events ->
-                RootComponent.Child.Events(component = eventsListComponentFactory.create(componentContext))
+                Events(component = eventsListComponentFactory.create(componentContext))
+            Config.Accounts ->
+                Accounts(component = accountsListComponentFactory.create(componentContext))
             Config.Settings ->
-                RootComponent.Child.Settings(component = settingsComponent.create(componentContext))
+                Settings(component = settingsComponentFactory.create(componentContext))
         }
 
     @Serializable
     private sealed interface Config {
         data object Events : Config
         data object Categories : Config
+        data object Accounts : Config
         data object Settings : Config
     }
 
     class Factory(
         private val categoriesFactory: CategoriesListComponent.Factory,
         private val eventsListComponentFactory: EventsListComponent.Factory,
+        private val accountsListComponentFactory: AccountsListComponent.Factory,
         private val settingsComponent: SettingsComponent.Factory,
         private val settingsManager: SettingsManager,
     ): RootComponent.Factory {
@@ -90,7 +101,8 @@ class RootComponentImpl(
                 settingsManager = settingsManager,
                 categoriesFactory = categoriesFactory,
                 eventsListComponentFactory = eventsListComponentFactory,
-                settingsComponent = settingsComponent
+                accountsListComponentFactory = accountsListComponentFactory,
+                settingsComponentFactory = settingsComponent
             )
         }
     }

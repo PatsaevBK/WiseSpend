@@ -13,7 +13,7 @@ module.exports = createCoreService('api::account.account',
             console.log('Request body:', ctx.request.body);
 
             const user = ctx.state.user
-            const body = ctx.request.body.map(item => item.data);
+            const { body } = ctx.request
             const type = 'api::account.account'
 
             const accountsFromDb = await strapi.db.query(type)

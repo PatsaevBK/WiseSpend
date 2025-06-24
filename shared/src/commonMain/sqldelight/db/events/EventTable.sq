@@ -9,7 +9,8 @@ CREATE TABLE EventTable(
     date TEXT AS LocalDate NOT NULL,
     createdAt TEXT AS LocalDateTime NOT NULL,
     updatedAt TEXT AS LocalDateTime NOT NULL,
-    note TEXT
+    note TEXT,
+    accountId TEXT NOT NULL
 );
 
 get:

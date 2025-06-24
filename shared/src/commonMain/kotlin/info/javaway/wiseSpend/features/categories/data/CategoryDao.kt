@@ -5,8 +5,6 @@ import app.cash.sqldelight.coroutines.mapToList
 import db.categories.CategoryTable
 import info.javaway.wiseSpend.db.AppDb
 import info.javaway.wiseSpend.features.categories.models.Category
-import info.javaway.wiseSpend.features.categories.models.toCategory
-import info.javaway.wiseSpend.features.categories.models.toDb
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlin.coroutines.CoroutineContext
@@ -34,15 +32,15 @@ class CategoryDao(
         .executeAsOneOrNull()
         ?.toCategory()
 
-    suspend fun insert(category: Category) = categoryQueries
+    fun insert(category: Category) = categoryQueries
         .insert(category.toDb())
 
-    suspend fun insertAll(categories: List<Category>) = categoryQueries
+    fun insertAll(categories: List<Category>) = categoryQueries
         .transaction {
             categories.forEach { categoryQueries.insert(it.toDb()) }
         }
 
 
-    suspend fun delete(id: String) = categoryQueries
+    fun delete(id: String) = categoryQueries
         .delete(id)
 }

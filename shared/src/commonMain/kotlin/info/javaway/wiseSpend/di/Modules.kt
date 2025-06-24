@@ -154,7 +154,7 @@ object ComponentsFactoryModule {
         factory<AuthComponent.Factory> { AuthComponentImpl.Factory(get(), get()) }
         factory<SignInComponent.Factory> { SignInComponentImpl.Factory(get(), get()) }
         factory<RegisterComponent.Factory> { RegisterComponentImpl.Factory(get(), get()) }
-        factory<SyncComponent.Factory> { SyncComponentImpl.Factory(get(), get(), get(), get()) }
+        factory<SyncComponent.Factory> { SyncComponentImpl.Factory(get(), get(), get(), get(), get()) }
         factory<AccountsListComponent.Factory> { AccountsListComponentImpl.Factory(get()) }
     }
 }

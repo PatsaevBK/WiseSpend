@@ -33,11 +33,11 @@ class AccountDao(
         ?.toAccount()
 
     fun insert(account: Account) = accountTableQueries
-        .insert(account.toDb())
+        .insert(account.toAccountEntity())
 
-    fun insertAll(categories: List<Account>) = accountTableQueries
+    fun insertAll(accounts: List<Account>) = accountTableQueries
         .transaction {
-            categories.forEach { accountTableQueries.insert(it.toDb()) }
+            accounts.forEach { accountTableQueries.insert(it.toAccountEntity()) }
         }
 
 

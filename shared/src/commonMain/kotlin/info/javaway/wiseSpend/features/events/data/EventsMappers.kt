@@ -47,7 +47,7 @@ fun SpendEvent.toApi() = SpendEventApi(
     note = note
 )
 
-fun SpendEventApi.toEntity() = SpendEvent(
+fun SpendEventApi.toEvent() = SpendEvent(
     id = id.orEmpty(),
     categoryId = categoryId.orEmpty(),
     accountId = accountId.orEmpty(),

@@ -1,5 +1,6 @@
 package info.javaway.wiseSpend.network
 
+import info.javaway.wiseSpend.features.accounts.models.AccountApi
 import info.javaway.wiseSpend.features.categories.models.CategoryApi
 import info.javaway.wiseSpend.features.events.models.SpendEventApi
 import info.javaway.wiseSpend.features.settings.child.auth.child.register.model.RegisterRequest
@@ -51,6 +52,15 @@ class AppApi(
                 contentType(ContentType.Application.Json)
                 bearerAuth(settingsManager.token)
                 setBody(events)
+            }
+        }
+
+    suspend fun syncAccounts(accounts: List<AccountApi>) =
+        withContext(Dispatchers.IO) {
+            httpClient.post("${settingsManager.serverUrl}/api/accounts/sync") {
+                contentType(ContentType.Application.Json)
+                bearerAuth(settingsManager.token)
+                setBody(accounts)
             }
         }
 }

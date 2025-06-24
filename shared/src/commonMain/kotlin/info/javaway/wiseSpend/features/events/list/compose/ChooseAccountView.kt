@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Money
 import androidx.compose.material.icons.outlined.Wallet
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -31,9 +32,6 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import info.javaway.wiseSpend.features.accounts.list.AccountsListComponent
 import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
-import org.jetbrains.compose.resources.painterResource
-import wisespend.shared.generated.resources.Res
-import wisespend.shared.generated.resources.money_bag_outline
 
 @Composable
 fun ChooseAccountView(
@@ -45,6 +43,7 @@ fun ChooseAccountView(
 ) {
     val model by accountListComponent.model.collectAsState()
     val walletIcon = rememberVectorPainter(Icons.Outlined.Wallet)
+    val totalWalletPainter = rememberVectorPainter(Icons.Outlined.Money)
 
     Surface(
         modifier = modifier.wrapContentWidth().wrapContentHeight(),
@@ -65,7 +64,7 @@ fun ChooseAccountView(
                 model.accountsUIWithTotals.forEach { account ->
                     val isSelected = selectedAccountId == account.id
                     val painter = if (account.id == null) {
-                        painterResource(Res.drawable.money_bag_outline)
+                        totalWalletPainter
                     } else {
                         walletIcon
                     }

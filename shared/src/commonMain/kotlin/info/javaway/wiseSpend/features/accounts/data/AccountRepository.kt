@@ -26,6 +26,8 @@ class AccountRepository(
     fun update(id: String, name: String, amount: Double, updatedAt: LocalDateTime) =
         dao.update(id = id, name = name, amount = amount, updatedAt = updatedAt)
 
+    fun insertAll(accounts: List<Account>) = dao.insertAll(accounts)
+
     private fun insertDefaultAccountIfNeed() {
         if (getById(Account.DEFAULT_ID) == null) {
             create(Account.DEFAULT)

@@ -11,6 +11,7 @@ data class AccountApi(
     val id: String,
     val name: String,
     val amount: Double,
+    val currency: String,
     @Contextual
     @SerialName("createdAtLocal")
     val createdAt: LocalDateTime,

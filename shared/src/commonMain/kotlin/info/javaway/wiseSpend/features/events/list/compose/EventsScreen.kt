@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Money
 import androidx.compose.material.icons.outlined.Wallet
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,9 +30,6 @@ import info.javaway.wiseSpend.uiLibrary.ui.atoms.FAB
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.RootBox
 import info.javaway.wiseSpend.uiLibrary.ui.calendar.compose.DatePickerView
 import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
-import org.jetbrains.compose.resources.painterResource
-import wisespend.shared.generated.resources.Res
-import wisespend.shared.generated.resources.money_bag_outline
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,6 +42,7 @@ fun EventsScreen(
     val accountSlot by component.accountsSlot.subscribeAsState()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val walletPainter = rememberVectorPainter(Icons.Outlined.Wallet)
+    val totalWalletPainter = rememberVectorPainter(Icons.Outlined.Money)
 
     Scaffold(
         modifier = modifier,
@@ -53,7 +52,7 @@ fun EventsScreen(
         },
         topBar = {
             val icon = if (model.selectedAccountId == null)
-                painterResource(Res.drawable.money_bag_outline)
+                totalWalletPainter
             else walletPainter
             EventScreenTopBar(
                 accountName = model.selectedAccountUi.name,

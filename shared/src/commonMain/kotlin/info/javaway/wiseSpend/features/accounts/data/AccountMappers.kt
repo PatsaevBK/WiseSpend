@@ -6,8 +6,8 @@ import info.javaway.wiseSpend.features.accounts.models.AccountApi
 import info.javaway.wiseSpend.features.accounts.models.AccountUi
 import info.javaway.wiseSpend.features.events.list.EventsScreenContract.State.Companion.TOTAL_ACCOUNTS_NAME
 
-fun AccountApi.toDb() = AccountTable(
-    id = id, name = name, amount = amount, createdAt = createdAt, updatedAt = updatedAt
+fun AccountApi.toAccount() = Account(
+    id = id, name = name, amount = amount, createdAt = createdAt, updatedAt = updatedAt, currency = currency
 )
 
 fun AccountTable.toAccount() = Account(
@@ -15,10 +15,10 @@ fun AccountTable.toAccount() = Account(
 )
 
 fun Account.toApi() = AccountApi(
-    id = id, name = name, amount = amount, createdAt = createdAt, updatedAt = updatedAt
+    id = id, name = name, amount = amount, createdAt = createdAt, updatedAt = updatedAt, currency = currency
 )
 
-fun Account.toDb() = AccountTable(
+fun Account.toAccountEntity() = AccountTable(
     id = id, name = name, amount = amount, createdAt = createdAt, updatedAt = updatedAt
 )
 

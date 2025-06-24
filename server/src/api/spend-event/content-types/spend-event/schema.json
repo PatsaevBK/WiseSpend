@@ -24,9 +24,6 @@
     "cost": {
       "type": "decimal"
     },
-    "date": {
-      "type": "datetime"
-    },
     "note": {
       "type": "string"
     },
@@ -41,6 +38,9 @@
     },
     "accountId": {
       "type": "string"
+    },
+    "Date": {
+      "type": "biginteger"
     }
   }
 }

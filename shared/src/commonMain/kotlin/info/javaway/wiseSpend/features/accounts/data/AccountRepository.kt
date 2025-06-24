@@ -1,19 +1,19 @@
 package info.javaway.wiseSpend.features.accounts.data
 
 import info.javaway.wiseSpend.features.accounts.models.Account
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.withContext
+import kotlinx.datetime.LocalDateTime
 
 class AccountRepository(
     private val dao: AccountDao,
 ) {
 
-    suspend fun create(account: Account) =
-        withContext(Dispatchers.IO) {
-            dao.insert(account)
-        }
+    init {
+        insertDefaultAccountIfNeed()
+    }
+
+    fun create(account: Account) =
+        dao.insert(account)
 
     fun getById(accountId: String): Account? =
         dao.get(accountId)
@@ -22,4 +22,13 @@ class AccountRepository(
         dao.getAllFlow()
 
     fun getAll(): List<Account> = dao.getAll()
+
+    fun update(id: String, name: String, amount: Double, updatedAt: LocalDateTime) =
+        dao.update(id = id, name = name, amount = amount, updatedAt = updatedAt)
+
+    private fun insertDefaultAccountIfNeed() {
+        if (getById(Account.DEFAULT_ID) == null) {
+            create(Account.DEFAULT)
+        }
+    }
 }

@@ -22,3 +22,11 @@ DELETE FROM AccountTable WHERE id = :id;
 
 clear:
 DELETE FROM AccountTable;
+
+update:
+UPDATE AccountTable
+SET
+  name = :name,
+  amount = :amount,
+  updatedAt = :updatedAt
+WHERE id = :id;

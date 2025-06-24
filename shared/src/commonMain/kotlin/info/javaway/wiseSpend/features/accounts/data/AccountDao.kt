@@ -6,6 +6,7 @@ import info.javaway.wiseSpend.db.AppDb
 import info.javaway.wiseSpend.features.accounts.models.Account
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.LocalDateTime
 import kotlin.coroutines.CoroutineContext
 
 class AccountDao(
@@ -14,10 +15,6 @@ class AccountDao(
 ) {
 
     private val accountTableQueries = db.accountTableQueries
-
-    init {
-        insertDefaultAccountIfNeed()
-    }
 
     fun getAll(): List<Account> = accountTableQueries
         .getAll()
@@ -35,21 +32,19 @@ class AccountDao(
         .executeAsOneOrNull()
         ?.toAccount()
 
-    suspend fun insert(account: Account) = accountTableQueries
+    fun insert(account: Account) = accountTableQueries
         .insert(account.toDb())
 
-    suspend fun insertAll(categories: List<Account>) = accountTableQueries
+    fun insertAll(categories: List<Account>) = accountTableQueries
         .transaction {
             categories.forEach { accountTableQueries.insert(it.toDb()) }
         }
 
 
-    suspend fun delete(id: String) = accountTableQueries
+    fun delete(id: String) = accountTableQueries
         .delete(id)
 
-    private fun insertDefaultAccountIfNeed() {
-        if (this.get(Account.DEFAULT_ID) == null) {
-            accountTableQueries.insert(Account.DEFAULT.toDb())
-        }
-    }
+    fun update(id: String, name: String, amount: Double, updatedAt: LocalDateTime) = accountTableQueries
+        .update(id = id, name = name, amount = amount, updatedAt = updatedAt)
+
 }

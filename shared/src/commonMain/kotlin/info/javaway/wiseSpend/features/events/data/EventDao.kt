@@ -31,15 +31,15 @@ class EventDao(
         .executeAsOneOrNull()
         ?.toSpendEvent()
 
-    suspend fun insert(spendEvent: SpendEvent) = eventQueries
+    fun insert(spendEvent: SpendEvent) = eventQueries
         .insert(spendEvent.toDb())
 
-    suspend fun insertAll(spendEvents: List<SpendEvent>) = eventQueries
+    fun insertAll(spendEvents: List<SpendEvent>) = eventQueries
         .transaction {
             spendEvents.forEach { eventQueries.insert(it.toDb()) }
         }
 
 
-    suspend fun delete(id: String) = eventQueries
+    fun delete(id: String) = eventQueries
         .delete(id)
 }

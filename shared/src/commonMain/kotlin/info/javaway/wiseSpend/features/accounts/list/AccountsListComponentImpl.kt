@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
 class AccountsListComponentImpl(
@@ -42,9 +41,16 @@ class AccountsListComponentImpl(
             CreateAccountComponentImpl(
                 account = cnf.account,
                 componentContext = ctx,
-                onSave = {
-                    scope.launch {
-                        accountRepository.create(it)
+                onSave = { account ->
+                    if (cnf.account == null) {
+                        accountRepository.create(account)
+                    } else {
+                        accountRepository.update(
+                            id = account.id,
+                            name = account.name,
+                            amount = account.amount,
+                            updatedAt = account.updatedAt
+                        )
                     }
                     nav.dismiss()
                 }

@@ -10,6 +10,6 @@ class EventsRepository(
     fun getAll() = dao.getAll()
     fun getById(id: String) = dao.get(id)
 
-    suspend fun insertAll(events: List<SpendEvent>) = dao.insertAll(events)
-    suspend fun create(spendEvent: SpendEvent) = dao.insert(spendEvent)
+    fun insertAll(events: List<SpendEvent>) = dao.insertAll(events)
+    fun create(spendEvent: SpendEvent) = dao.insert(spendEvent)
 }

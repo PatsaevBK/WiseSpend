@@ -57,13 +57,15 @@ class EventsListComponentImpl(
                 accountsRepository = accountsRepository,
                 componentContext = ctx,
                 onSave = { spendEvent ->
-                    scope.launch {
-                        when (config) {
-                            is EventConfig.CreateEventConfig ->
-                                createEventAndUpdateAccount(spendEvent)
-                            is EventConfig.EditEventConfig ->
-                                editExistedEventAndUpdateAccount(oldEvent = config.event, newEvent = spendEvent)
-                        }
+                    when (config) {
+                        is EventConfig.CreateEventConfig ->
+                            createEventAndUpdateAccount(spendEvent)
+
+                        is EventConfig.EditEventConfig ->
+                            editExistedEventAndUpdateAccount(
+                                oldEvent = config.event,
+                                newEvent = spendEvent
+                            )
                     }
                     createEventNav.dismiss()
                 }
@@ -120,19 +122,43 @@ class EventsListComponentImpl(
 
     override fun onAccountsDismiss() = accountNav.dismiss()
 
-    private suspend fun createEventAndUpdateAccount(spendEvent: SpendEvent) {
+    private fun createEventAndUpdateAccount(spendEvent: SpendEvent) {
         eventsRepository.create(spendEvent)
         val oldAccount = accountsRepository.getById(spendEvent.accountId) ?: return
         val updatedAccount = oldAccount.copy(amount = oldAccount.amount - spendEvent.cost)
-        accountsRepository.create(updatedAccount)
+        with(updatedAccount) {
+            accountsRepository.update(id = id, name = name, amount = amount, updatedAt = updatedAt)
+        }
     }
 
-    private suspend fun editExistedEventAndUpdateAccount(oldEvent: SpendEvent, newEvent: SpendEvent) {
+    private fun editExistedEventAndUpdateAccount(oldEvent: SpendEvent, newEvent: SpendEvent) {
         val oldAccount = accountsRepository.getById(oldEvent.accountId) ?: return
         val newAccount = accountsRepository.getById(newEvent.accountId) ?: return
-        if (oldEvent.cost == newEvent.cost && oldAccount.id == newAccount.id) return
 
-        TODO()
+        val costUnchanged = oldEvent.cost == newEvent.cost
+        val sameAccount = oldAccount.id == newAccount.id
+
+        if (costUnchanged && sameAccount) return
+
+        if (!sameAccount) {
+            val resetOldAccount = oldAccount.copy(amount = oldAccount.amount + oldEvent.cost)
+            with(resetOldAccount) {
+                accountsRepository.update(id = id, name = name, amount = amount, updatedAt = updatedAt)
+            }
+        }
+
+        val amountDelta = newAccount.amount - newEvent.cost
+        if (amountDelta != 0.0) {
+            val updateNewAccount = newAccount.copy(amount = amountDelta)
+            with(updateNewAccount) {
+                accountsRepository.update(
+                    id = id,
+                    name = name,
+                    amount = amountDelta,
+                    updatedAt = updatedAt
+                )
+            }
+        }
     }
 
     @Serializable

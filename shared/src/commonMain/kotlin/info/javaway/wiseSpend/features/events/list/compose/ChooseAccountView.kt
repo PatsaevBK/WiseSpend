@@ -73,7 +73,7 @@ fun ChooseAccountView(
                         isSelected = isSelected,
                         painter = painter,
                         title = account.name,
-                        subtitle = account.formattedAmount,
+                        subtitle = account.amount.simpleAmount,
                         onClick = { onClick.invoke(account.id) }
                     )
                 }
@@ -84,7 +84,7 @@ fun ChooseAccountView(
                         isSelected = isSelected,
                         painter = walletIcon,
                         title = account.name,
-                        subtitle = account.formattedAmount,
+                        subtitle = account.amount.simpleAmount,
                         onClick = { onClick.invoke(account.id) }
                     )
                 }

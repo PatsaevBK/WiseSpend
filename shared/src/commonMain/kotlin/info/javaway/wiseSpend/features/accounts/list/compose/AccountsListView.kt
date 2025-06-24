@@ -27,7 +27,7 @@ fun AccountsListView(
                 if (account.id != null) {
                     AccountCell(
                         title = account.name,
-                        subtitle = account.formattedAmount,
+                        subtitle = account.amount.simpleAmount,
                         editable = true,
                         modifier = Modifier.clickable {
                             component.changeAccount(accountId = account.id)
@@ -36,7 +36,7 @@ fun AccountsListView(
                 } else {
                     AccountCell(
                         title = account.name,
-                        subtitle = account.formattedAmount,
+                        subtitle = account.amount.simpleAmount,
                         editable = false,
                     )
                 }

@@ -1,5 +1,6 @@
-package info.javaway.wiseSpend.uiLibrary.ui.atoms
+package info.javaway.wiseSpend.features.events.list.compose
 
+import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,16 +15,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
+import info.javaway.wiseSpend.features.accounts.models.Amount
 import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
 
 @Composable
-fun AppAccountsButton(
+fun EventsAccountButton(
     text: String,
     icon: Painter,
-    amount: String,
+    amount: Amount,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val animatedAmountIntPart = animateIntAsState(
+        targetValue = amount.integerPart
+    )
+
     Column(modifier, horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
         Row(
             modifier = Modifier.clickable(onClick = onClick),
@@ -46,6 +52,26 @@ fun AppAccountsButton(
                 tint = AppThemeProvider.colorsSystem.icon.primary,
             )
         }
-        Text(text = amount, style = AppThemeProvider.typography.l.heading3, color = AppThemeProvider.colorsSystem.text.primary)
+
+        Row {
+            Text(
+                text = animatedAmountIntPart.value.toString(),
+                style = AppThemeProvider.typography.l.heading3,
+                color = AppThemeProvider.colorsSystem.text.primary,
+                modifier = Modifier.alignByBaseline()
+            )
+            Text(
+                text = amount.separator,
+                style = AppThemeProvider.typography.l.heading3,
+                color = AppThemeProvider.colorsSystem.text.primary,
+                modifier = Modifier.alignByBaseline()
+            )
+            Text(
+                text = amount.floatPart,
+                style = AppThemeProvider.typography.l.label1,
+                color = AppThemeProvider.colorsSystem.text.secondary,
+                modifier = Modifier.alignByBaseline()
+            )
+        }
     }
 }

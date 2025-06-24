@@ -38,6 +38,9 @@
     },
     "updatedAtLocal": {
       "type": "biginteger"
+    },
+    "accountId": {
+      "type": "string"
     }
   }
 }

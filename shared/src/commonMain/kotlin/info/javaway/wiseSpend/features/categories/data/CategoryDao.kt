@@ -32,15 +32,15 @@ class CategoryDao(
         .executeAsOneOrNull()
         ?.toCategory()
 
-    suspend fun insert(category: Category) = categoryQueries
+    fun insert(category: Category) = categoryQueries
         .insert(category.toDb())
 
-    suspend fun insertAll(categories: List<Category>) = categoryQueries
+    fun insertAll(categories: List<Category>) = categoryQueries
         .transaction {
             categories.forEach { categoryQueries.insert(it.toDb()) }
         }
 
 
-    suspend fun delete(id: String) = categoryQueries
+    fun delete(id: String) = categoryQueries
         .delete(id)
 }

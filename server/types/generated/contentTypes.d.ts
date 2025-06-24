@@ -450,6 +450,7 @@ export interface ApiSpendEventSpendEvent extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    accountId: Schema.Attribute.String;
     categoryId: Schema.Attribute.String;
     cost: Schema.Attribute.Decimal;
     createdAt: Schema.Attribute.DateTime;

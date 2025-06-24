@@ -9,6 +9,6 @@ class CategoriesRepository(
     fun getAll() = dao.getAll()
     fun getById(categoryId: String) = dao.get(categoryId)
 
-    suspend fun insertAll(categories: List<Category>) = dao.insertAll(categories)
-    suspend fun createCategory(category: Category) = dao.insert(category)
+    fun insertAll(categories: List<Category>) = dao.insertAll(categories)
+    fun create(category: Category) = dao.insert(category)
 }

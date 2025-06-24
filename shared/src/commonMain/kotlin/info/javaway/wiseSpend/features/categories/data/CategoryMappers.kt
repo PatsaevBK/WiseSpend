@@ -46,12 +46,3 @@ fun CategoryApi.toEntity() = Category(
     updatedAt = updatedAt ?: LocalDateTime.now(),
     colorHex = colorHex.orEmpty(),
 )
-
-fun CreateCategoryComponent.State.toCategory(dateTime: LocalDateTime) = Category(
-    id = randomUUID(),
-    title = title,
-    description = subtitle,
-    createdAt = dateTime,
-    updatedAt = dateTime,
-    colorHex = Color(red = color.red, blue = color.blue, green = color.green).toArgb().toString(16),
-)

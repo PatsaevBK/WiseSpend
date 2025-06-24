@@ -8,19 +8,15 @@ import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
 import info.javaway.wiseSpend.extensions.componentScope
-import info.javaway.wiseSpend.extensions.now
 import info.javaway.wiseSpend.features.categories.data.CategoriesRepository
 import info.javaway.wiseSpend.features.categories.creation.CreateCategoryComponent
 import info.javaway.wiseSpend.features.categories.creation.CreateCategoryComponentImpl
-import info.javaway.wiseSpend.features.categories.data.toCategory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable
 
 class CategoriesListComponentImpl(
@@ -43,9 +39,7 @@ class CategoriesListComponentImpl(
                 componentContext = ctx,
                 onDismiss = { nav.dismiss() },
                 onSaveCategory = {
-                    scope.launch {
-                        categoriesRepository.createCategory(it.toCategory(LocalDateTime.now()))
-                    }
+                    categoriesRepository.create(it)
                     nav.dismiss()
                 },
             )

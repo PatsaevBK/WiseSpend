@@ -11,8 +11,12 @@ import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import info.javaway.wiseSpend.features.accounts.creation.compose.CreateAccountView
 import info.javaway.wiseSpend.features.accounts.list.AccountsListComponent
+import info.javaway.wiseSpend.uiLibrary.ui.atoms.AppTopBar
 import info.javaway.wiseSpend.uiLibrary.ui.atoms.FAB
 import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
+import org.jetbrains.compose.resources.stringResource
+import wisespend.shared.generated.resources.Res
+import wisespend.shared.generated.resources.accounts
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,7 +34,7 @@ fun AccountsListScreen(
             FAB { component.newAccount() }
         },
         topBar = {
-            AccountsScreenTopBar()
+            AppTopBar(text = stringResource(Res.string.accounts))
         }
     ) { paddingValues ->
         AccountsListView(component, modifier = Modifier.padding(paddingValues))

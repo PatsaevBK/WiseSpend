@@ -14,15 +14,20 @@ import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
 fun AppButton(
     title: String,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    onClickWhenDisabled: () -> Unit = { },
     onClick: () -> Unit,
 ) {
     OutlinedButton(
         modifier = modifier
             .fillMaxWidth(),
         onClick = onClick,
+        enabled = enabled,
         colors = ButtonDefaults.outlinedButtonColors(
-            contentColor = AppThemeProvider.colorsSystem.icon.primary,
-            containerColor = AppThemeProvider.colorsSystem.fill.secondary,
+            contentColor = AppThemeProvider.colorsSystem.icon.controls,
+            disabledContentColor = AppThemeProvider.colorsSystem.icon.controls,
+            containerColor = AppThemeProvider.colorsSystem.icon.active,
+            disabledContainerColor = AppThemeProvider.colorsSystem.fill.disable
         ),
         border = BorderStroke(
             width = 1.dp,
@@ -32,7 +37,7 @@ fun AppButton(
         Text(
             text = title,
             style = AppThemeProvider.typography.l.body,
-            color = AppThemeProvider.colorsSystem.text.primary
+            color = AppThemeProvider.colorsSystem.text.controls
         )
     }
 }

@@ -1,4 +1,4 @@
-package info.javaway.wiseSpend.features.accounts.list.compose
+package info.javaway.wiseSpend.uiLibrary.ui.atoms
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -13,14 +13,15 @@ import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AccountsScreenTopBar(
-    modifier: Modifier = Modifier
+fun AppTopBar(
+    modifier: Modifier = Modifier,
+    text: String,
 ) {
     Column(modifier) {
         TopAppBar(
             title = {
                 Text(
-                    text = "Accounts",
+                    text = text,
                     style = AppThemeProvider.typography.l.heading2,
                     color = AppThemeProvider.colorsSystem.text.primary,
                 )

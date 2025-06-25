@@ -8,11 +8,13 @@ import info.javaway.wiseSpend.features.accounts.data.AccountRepositoryImpl
 import info.javaway.wiseSpend.features.accounts.list.AccountsListComponent
 import info.javaway.wiseSpend.features.accounts.list.AccountsListComponentImpl
 import info.javaway.wiseSpend.features.categories.data.CategoriesRepository
+import info.javaway.wiseSpend.features.categories.data.CategoriesRepositoryImpl
 import info.javaway.wiseSpend.features.categories.data.CategoryDao
 import info.javaway.wiseSpend.features.categories.list.CategoriesListComponent
 import info.javaway.wiseSpend.features.categories.list.CategoriesListComponentImpl
 import info.javaway.wiseSpend.features.events.data.EventDao
 import info.javaway.wiseSpend.features.events.data.EventsRepository
+import info.javaway.wiseSpend.features.events.data.EventsRepositoryImpl
 import info.javaway.wiseSpend.features.events.list.EventsListComponent
 import info.javaway.wiseSpend.features.events.list.EventsListComponentImpl
 import info.javaway.wiseSpend.features.settings.SettingsComponent
@@ -133,8 +135,8 @@ object NetworkModule {
 
 object RepositoriesModule {
     val repository = module {
-        single { CategoriesRepository(get()) }
-        single { EventsRepository(get()) }
+        single<CategoriesRepository> { CategoriesRepositoryImpl(get()) }
+        single<EventsRepository> { EventsRepositoryImpl(get()) }
         single<AccountRepository> { AccountRepositoryImpl(get()) }
     }
 }

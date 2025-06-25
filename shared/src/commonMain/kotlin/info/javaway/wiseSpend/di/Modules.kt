@@ -4,6 +4,7 @@ import info.javaway.wiseSpend.db.AppDb
 import info.javaway.wiseSpend.extensions.appLog
 import info.javaway.wiseSpend.features.accounts.data.AccountDao
 import info.javaway.wiseSpend.features.accounts.data.AccountRepository
+import info.javaway.wiseSpend.features.accounts.data.AccountRepositoryImpl
 import info.javaway.wiseSpend.features.accounts.list.AccountsListComponent
 import info.javaway.wiseSpend.features.accounts.list.AccountsListComponentImpl
 import info.javaway.wiseSpend.features.categories.data.CategoriesRepository
@@ -134,7 +135,7 @@ object RepositoriesModule {
     val repository = module {
         single { CategoriesRepository(get()) }
         single { EventsRepository(get()) }
-        single { AccountRepository(get()) }
+        single<AccountRepository> { AccountRepositoryImpl(get()) }
     }
 }
 

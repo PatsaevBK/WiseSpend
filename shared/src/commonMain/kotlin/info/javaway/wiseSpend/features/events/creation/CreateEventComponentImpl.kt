@@ -134,7 +134,7 @@ class CreateEventComponentImpl(
                 title = "",
                 selectedCategory = Category.NONE,
                 categories = categoriesRepository.getAll(),
-                selectedAccount = accountsRepository.getById(Account.DEFAULT_ID) ?: Account.DEFAULT,
+                selectedAccount = Account.DEFAULT,
                 date = initialDate?.date ?: LocalDate.now(),
                 createdAt = LocalDateTime.now(),
                 cost = 0.0,

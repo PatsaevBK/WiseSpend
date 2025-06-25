@@ -30,3 +30,15 @@ DELETE FROM EventTable WHERE id = :id;
 
 clear:
 DELETE FROM EventTable;
+
+update:
+UPDATE EventTable
+SET
+  categoryId = :categoryId,
+  accountId = :accountId,
+  title = :title,
+  cost = :cost,
+  date = :date,
+  note = :note,
+  updatedAt = :updatedAt
+WHERE id = :id;

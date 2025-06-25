@@ -1,14 +1,14 @@
 package info.javaway.wiseSpend.features.categories.data
 
 import info.javaway.wiseSpend.features.categories.models.Category
+import kotlinx.coroutines.flow.Flow
 
-class CategoriesRepository(
-    private val dao: CategoryDao
-) {
-    fun getAllFlow() = dao.getAllFlow()
-    fun getAll() = dao.getAll()
-    fun getById(categoryId: String) = dao.get(categoryId)
+interface CategoriesRepository {
 
-    fun insertAll(categories: List<Category>) = dao.insertAll(categories)
-    fun create(category: Category) = dao.insert(category)
+    fun getAllFlow(): Flow<List<Category>>
+    fun getAll(): List<Category>
+    fun getById(categoryId: String): Category?
+
+    fun insertAll(categories: List<Category>)
+    fun create(category: Category)
 }

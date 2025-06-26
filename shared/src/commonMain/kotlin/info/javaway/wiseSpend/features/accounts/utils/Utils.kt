@@ -23,6 +23,9 @@ fun editExistedEventAndUpdateAccount(
     eventsRepository: EventsRepository,
     accountsRepository: AccountRepository
 ) {
+    val oldAccount = accountsRepository.getById(oldEvent.accountId) ?: return
+    val newAccount = accountsRepository.getById(newEvent.accountId) ?: return
+
     with(newEvent) {
         eventsRepository.update(
             categoryId = categoryId,
@@ -35,31 +38,19 @@ fun editExistedEventAndUpdateAccount(
             id = id
         )
     }
-    val oldAccount = accountsRepository.getById(oldEvent.accountId) ?: return
-    val newAccount = accountsRepository.getById(newEvent.accountId) ?: return
 
-    val costUnchanged = oldEvent.cost == newEvent.cost
-    val sameAccount = oldAccount.id == newAccount.id
-
-    if (costUnchanged && sameAccount) return
-
-    if (!sameAccount) {
-        val resetOldAccount = oldAccount.copy(amount = oldAccount.amount + oldEvent.cost)
-        with(resetOldAccount) {
-            accountsRepository.update(id = id, name = name, amount = amount, updatedAt = updatedAt)
-        }
+    val resetOldAccount = oldAccount.copy(amount = oldAccount.amount + oldEvent.cost)
+    with(resetOldAccount) {
+        accountsRepository.update(id = id, name = name, amount = amount, updatedAt = updatedAt)
     }
 
-    val amountDelta = newAccount.amount - newEvent.cost
-    if (amountDelta != 0.0) {
-        val updateNewAccount = newAccount.copy(amount = amountDelta)
-        with(updateNewAccount) {
-            accountsRepository.update(
-                id = id,
-                name = name,
-                amount = amountDelta,
-                updatedAt = updatedAt
-            )
-        }
+    val updateNewAccount = newAccount.copy(amount = newAccount.amount - newEvent.cost)
+    with(updateNewAccount) {
+        accountsRepository.update(
+            id = id,
+            name = name,
+            amount = amount,
+            updatedAt = updatedAt
+        )
     }
 }

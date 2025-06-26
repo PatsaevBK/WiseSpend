@@ -91,9 +91,9 @@ internal class UtilsTest {
 
     @Test
     fun `editExistedEventAndUpdateAccount update newAccount`() {
-        val oldEvent = spendEvent.copy(id = "old", accountId = "old", cost = 500.0)
+        val oldEvent = spendEvent.copy(id = "same", accountId = "old", cost = 500.0)
         val oldAccount = Account.DEFAULT.copy(id = "old", amount = 1_000.0)
-        val newEvent = spendEvent.copy(id = "new", accountId = "new", cost = 100.0)
+        val newEvent = spendEvent.copy(id = "same", accountId = "new", cost = 100.0)
         val newAccount = Account.DEFAULT.copy(id = "new", amount = 2_000.0)
         accountsRepositoryMock.enqueueAccounts(oldAccount, newAccount)
 
@@ -107,5 +107,39 @@ internal class UtilsTest {
         val requiredAccount = newAccount.copy(amount = newAccount.amount - newEvent.cost)
         assertThat(accountsRepositoryMock.stubbedUpdateId.lastOrNull()).isEqualTo(requiredAccount.id)
         assertThat(accountsRepositoryMock.stubbedUpdateAmount.lastOrNull()).isEqualTo(requiredAccount.amount)
+    }
+
+    @Test
+    fun `editExistedEventAndUpdateAccount update newAccount if cost increased`() {
+        val sameAccount = Account.DEFAULT.copy(id = "same", amount = 1_000.0)
+        val oldEvent = spendEvent.copy(id = "same", accountId = sameAccount.id, cost = 100.0, note = "old")
+        val newEvent = spendEvent.copy(id = "same", accountId = sameAccount.id, cost = 150.00, note = "new")
+        accountsRepositoryMock.enqueueAccounts(sameAccount, sameAccount)
+
+        editExistedEventAndUpdateAccount(
+            oldEvent = oldEvent,
+            newEvent = newEvent,
+            eventsRepository = eventsRepositoryMock,
+            accountsRepository = accountsRepositoryMock
+        )
+
+        assertThat(accountsRepositoryMock.stubbedUpdateAmount.lastOrNull()).isEqualTo(950.00)
+    }
+
+    @Test
+    fun `editExistedEventAndUpdateAccount update newAccount if cost decreased`() {
+        val sameAccount = Account.DEFAULT.copy(id = "same", amount = 1_000.0)
+        val oldEvent = spendEvent.copy(id = "same", accountId = sameAccount.id, cost = 100.0, note = "old")
+        val newEvent = spendEvent.copy(id = "same", accountId = sameAccount.id, cost = 50.00, note = "new")
+        accountsRepositoryMock.enqueueAccounts(sameAccount, sameAccount)
+
+        editExistedEventAndUpdateAccount(
+            oldEvent = oldEvent,
+            newEvent = newEvent,
+            eventsRepository = eventsRepositoryMock,
+            accountsRepository = accountsRepositoryMock
+        )
+
+        assertThat(accountsRepositoryMock.stubbedUpdateAmount.lastOrNull()).isEqualTo(1_050.00)
     }
 }

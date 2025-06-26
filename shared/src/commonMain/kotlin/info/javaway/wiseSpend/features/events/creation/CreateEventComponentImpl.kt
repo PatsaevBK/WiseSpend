@@ -115,26 +115,27 @@ class CreateEventComponentImpl(
         spendEvent: SpendEvent?
     ): State {
         return if (spendEvent != null) {
-            val selectedCategory = categoriesRepository.getById(spendEvent.categoryId)
-            val selectedAccount = accountsRepository.getById(spendEvent.accountId)
+            val selectedCategory = categoriesRepository.getById(spendEvent.categoryId) ?: Category.NONE
+            val selectedAccount = accountsRepository.getById(spendEvent.accountId) ?: Account.DEFAULT
             State(
                 eventId = spendEvent.id,
                 title = spendEvent.title,
-                selectedCategory = selectedCategory ?: Category.NONE,
+                selectedCategory = selectedCategory,
                 categories = categoriesRepository.getAll(),
-                selectedAccount = selectedAccount ?: Account.DEFAULT,
+                selectedAccount = selectedAccount,
                 date = spendEvent.date,
                 createdAt = spendEvent.createdAt,
                 cost = spendEvent.cost,
                 note = spendEvent.note,
             )
         } else {
+            val selectedAccount = accountsRepository.getById(Account.DEFAULT_ID) ?: Account.DEFAULT
             State(
                 eventId = randomUUID(),
                 title = "",
                 selectedCategory = Category.NONE,
                 categories = categoriesRepository.getAll(),
-                selectedAccount = accountsRepository.getById(Account.DEFAULT_ID) ?: Account.DEFAULT,
+                selectedAccount = selectedAccount,
                 date = initialDate?.date ?: LocalDate.now(),
                 createdAt = LocalDateTime.now(),
                 cost = 0.0,

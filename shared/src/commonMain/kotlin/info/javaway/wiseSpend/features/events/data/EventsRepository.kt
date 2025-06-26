@@ -1,15 +1,25 @@
 package info.javaway.wiseSpend.features.events.data
 
 import info.javaway.wiseSpend.features.events.models.SpendEvent
+import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
 
-class EventsRepository(
-    private val dao: EventDao
-) {
+interface EventsRepository {
+    fun getAllFlow(): Flow<List<SpendEvent>>
+    fun getAll(): List<SpendEvent>
+    fun getById(id: String): SpendEvent?
 
-    fun getAllFlow() = dao.getAllFlow()
-    fun getAll() = dao.getAll()
-    fun getById(id: String) = dao.get(id)
-
-    fun insertAll(events: List<SpendEvent>) = dao.insertAll(events)
-    fun create(spendEvent: SpendEvent) = dao.insert(spendEvent)
+    fun insertAll(events: List<SpendEvent>)
+    fun create(spendEvent: SpendEvent)
+    fun update(
+        id: String,
+        categoryId: String,
+        accountId: String,
+        title: String,
+        cost: Double,
+        date: LocalDate,
+        updatedAt: LocalDateTime,
+        note: String
+    )
 }

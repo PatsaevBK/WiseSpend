@@ -13,6 +13,7 @@ ktor = "3.0.1"
 napier = "2.7.1"
 kotlinx-serialization = "1.8.1"
 composeHotReload = "1.0.0-alpha10"
+assertk = "0.28.1"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-ktx" }
@@ -40,6 +41,9 @@ napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
 decompose-extensions-compose = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "decompose" }
 lifecycle = { module = "com.arkivanov.essenty:lifecycle", version.ref = "essenty" }
+
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+assertk = { module = "com.willowtreeapps.assertk:assertk", version.ref = "assertk" }
 
 [plugins]
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

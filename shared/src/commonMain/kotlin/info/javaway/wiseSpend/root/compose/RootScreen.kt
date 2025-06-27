@@ -7,6 +7,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.stack.Children
+import com.arkivanov.decompose.extensions.compose.stack.animation.fade
+import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import info.javaway.wiseSpend.features.accounts.list.compose.AccountsListScreen
 import info.javaway.wiseSpend.features.categories.list.compose.CategoriesScreen
 import info.javaway.wiseSpend.features.events.list.compose.EventsScreen
@@ -33,8 +35,12 @@ fun RootScreen(
                 AppNavigationBar(rootComponent)
             },
             contentColor = AppThemeProvider.colorsSystem.fill.primary,
+            containerColor = AppThemeProvider.colorsSystem.fill.primary
         ) { paddingValues ->
-            Children(stack = rootComponent.stack, modifier = Modifier.padding(paddingValues)) {
+            Children(
+                stack = rootComponent.stack, modifier = Modifier.padding(paddingValues),
+                animation = stackAnimation(fade()),
+            ) {
                 when (val child = it.instance) {
                     is RootComponent.Child.Events -> EventsScreen(component = child.component)
                     is RootComponent.Child.Categories -> CategoriesScreen(component = child.component)

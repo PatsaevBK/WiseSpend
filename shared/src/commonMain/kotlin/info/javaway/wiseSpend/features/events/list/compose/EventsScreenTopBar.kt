@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
-import info.javaway.wiseSpend.uiLibrary.ui.atoms.AppAccountsButton
+import info.javaway.wiseSpend.features.accounts.models.Amount
 import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -18,7 +18,7 @@ import info.javaway.wiseSpend.uiLibrary.ui.theme.AppThemeProvider
 fun EventScreenTopBar(
     accountName: String,
     icon: Painter,
-    accountAmount: String,
+    amount: Amount,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
@@ -35,11 +35,11 @@ fun EventScreenTopBar(
                 containerColor = AppThemeProvider.colorsSystem.fill.primary
             ),
             actions = {
-                AppAccountsButton(
+                EventsAccountButton(
                     text = accountName,
-                    amount = accountAmount,
                     onClick = onClick,
                     icon = icon,
+                    amount = amount,
                 )
             }
         )

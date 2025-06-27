@@ -56,7 +56,7 @@ fun EventsScreen(
             else walletPainter
             EventScreenTopBar(
                 accountName = model.selectedAccountUi.name,
-                accountAmount = model.selectedAccountUi.formattedAmount,
+                amount = model.selectedAccountUi.amount,
                 icon = icon
             ) {
                 component.showAccounts()

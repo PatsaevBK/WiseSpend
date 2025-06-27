@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Money
+import androidx.compose.material.icons.outlined.Payments
 import androidx.compose.material.icons.outlined.Wallet
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -42,7 +42,7 @@ fun EventsScreen(
     val accountSlot by component.accountsSlot.subscribeAsState()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val walletPainter = rememberVectorPainter(Icons.Outlined.Wallet)
-    val totalWalletPainter = rememberVectorPainter(Icons.Outlined.Money)
+    val totalWalletPainter = rememberVectorPainter(Icons.Outlined.Payments)
 
     Scaffold(
         modifier = modifier,

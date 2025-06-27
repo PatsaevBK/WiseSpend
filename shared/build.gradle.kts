@@ -67,6 +67,13 @@ kotlin {
             }
         }
 
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation(kotlin("test-annotations-common"))
+
+            implementation(libs.assertk)
+        }
+
         jvmMain.dependencies {
             implementation(libs.sqldelight.desktop.driver)
             implementation(libs.kotlinx.coroutines.swing)

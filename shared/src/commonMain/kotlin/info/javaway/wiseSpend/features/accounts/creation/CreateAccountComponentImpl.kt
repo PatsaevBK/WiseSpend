@@ -1,12 +1,14 @@
 package info.javaway.wiseSpend.features.accounts.creation
 
 import com.arkivanov.decompose.ComponentContext
+import info.javaway.wiseSpend.extensions.now
 import info.javaway.wiseSpend.features.accounts.creation.CreateAccountContract.State.Companion.NONE
 import info.javaway.wiseSpend.features.accounts.models.Account
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.datetime.LocalDateTime
 
 class CreateAccountComponentImpl(
     account: Account?,
@@ -26,7 +28,7 @@ class CreateAccountComponentImpl(
     override fun changeAmount(amount: String) {
         amount.toDoubleOrNull()?.let {
             _model.update { oldState ->
-                oldState.copy(account = oldState.account.copy(amount = it))
+                oldState.copy(account = oldState.account.copy(amount = it, updatedAt = LocalDateTime.now()))
             }
         }
     }

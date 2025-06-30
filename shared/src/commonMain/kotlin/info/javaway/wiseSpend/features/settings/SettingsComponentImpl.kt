@@ -113,7 +113,13 @@ class SettingsComponentImpl(
 
     private fun bindToToken() {
         settingsManager.tokenFlow.onEach { token ->
-            _model.update { it.copy(isAuth = token.isNotBlank()) }
+            _model.update {
+                val isAuth = token.isNotBlank()
+                if (!isAuth) {
+                    nav.replaceAll(Config.Auth)
+                }
+                it.copy(isAuth = isAuth)
+            }
         }.launchIn(scope)
     }
 

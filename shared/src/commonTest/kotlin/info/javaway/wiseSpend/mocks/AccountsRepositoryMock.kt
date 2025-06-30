@@ -8,7 +8,7 @@ import kotlinx.datetime.LocalDateTime
 internal class AccountsRepositoryMock: AccountRepository {
 
     var createInvoked = false
-    override fun create(account: Account) {
+    override suspend fun create(account: Account) {
         createInvoked = true
     }
 
@@ -19,7 +19,7 @@ internal class AccountsRepositoryMock: AccountRepository {
     }
     var getByIdInvoked = false
     var getByIdInvokedWithId = ""
-    override fun getById(accountId: String): Account? {
+    override suspend fun getById(accountId: String): Account? {
         getByIdInvokedWithId = accountId
         getByIdInvoked = true
         return accountsQueue.removeFirstOrNull()
@@ -29,13 +29,13 @@ internal class AccountsRepositoryMock: AccountRepository {
         TODO("Not yet implemented")
     }
 
-    override fun getAll(): List<Account> {
+    override suspend fun getAll(): List<Account> {
         TODO("Not yet implemented")
     }
 
     val stubbedUpdateId = mutableListOf<String>()
     val stubbedUpdateAmount = mutableListOf<Double>()
-    override fun update(
+    override suspend fun update(
         id: String,
         name: String,
         amount: Double,
@@ -45,7 +45,7 @@ internal class AccountsRepositoryMock: AccountRepository {
         stubbedUpdateId.add(id)
     }
 
-    override fun insertAll(accounts: List<Account>) {
+    override suspend fun insertAll(accounts: List<Account>) {
         TODO("Not yet implemented")
     }
 }

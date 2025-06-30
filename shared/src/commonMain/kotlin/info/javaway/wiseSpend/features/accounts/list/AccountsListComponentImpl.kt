@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
 class AccountsListComponentImpl(
@@ -28,7 +29,14 @@ class AccountsListComponentImpl(
     private val scope = componentScope()
 
     private val _model: MutableStateFlow<AccountsListContract.State> = MutableStateFlow(
-        AccountsListContract.State(accountRepository.getAll()))
+        AccountsListContract.State(emptyList())
+    )
+
+    init {
+        scope.launch {
+            _model.update { it.copy(accounts = accountRepository.getAll()) }
+        }
+    }
 
     override val model: StateFlow<AccountsListContract.State> = _model.asStateFlow()
 
@@ -42,17 +50,19 @@ class AccountsListComponentImpl(
                 account = cnf.account,
                 componentContext = ctx,
                 onSave = { account ->
-                    if (cnf.account == null) {
-                        accountRepository.create(account)
-                    } else {
-                        accountRepository.update(
-                            id = account.id,
-                            name = account.name,
-                            amount = account.amount,
-                            updatedAt = account.updatedAt
-                        )
+                    scope.launch {
+                        if (cnf.account == null) {
+                            accountRepository.create(account)
+                        } else {
+                            accountRepository.update(
+                                id = account.id,
+                                name = account.name,
+                                amount = account.amount,
+                                updatedAt = account.updatedAt
+                            )
+                        }
+                        nav.dismiss()
                     }
-                    nav.dismiss()
                 }
             )
         },
@@ -63,8 +73,10 @@ class AccountsListComponentImpl(
     }
 
     override fun changeAccount(accountId: String) {
-        val account = accountRepository.getById(accountId) ?: return
-        nav.activate(Config(account))
+        scope.launch {
+            val account = accountRepository.getById(accountId) ?: return@launch
+            nav.activate(Config(account))
+        }
     }
 
     override fun newAccount() {

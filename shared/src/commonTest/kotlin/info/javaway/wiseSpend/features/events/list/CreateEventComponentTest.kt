@@ -18,15 +18,28 @@ import info.javaway.wiseSpend.features.events.models.SpendEvent
 import info.javaway.wiseSpend.mocks.AccountsRepositoryMock
 import info.javaway.wiseSpend.mocks.CategoriesRepositoryMock
 import info.javaway.wiseSpend.uiLibrary.ui.calendar.model.CalendarDay
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.setMain
 import kotlinx.datetime.LocalDate
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class CreateEventComponentTest {
     
     private lateinit var sut: CreateEventComponent
     private var accountsRepositoryMock: AccountsRepositoryMock = AccountsRepositoryMock()
     private var categoriesRepositoryMock: CategoriesRepositoryMock = CategoriesRepositoryMock()
+
+    private val dispatcher = UnconfinedTestDispatcher()
+
+    @BeforeTest
+    fun setup() {
+        Dispatchers.setMain(dispatcher)
+    }
 
     @Test
     fun `when initial event not null should event account be in state`() {

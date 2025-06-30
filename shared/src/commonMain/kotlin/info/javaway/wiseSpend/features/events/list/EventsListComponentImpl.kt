@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
 class EventsListComponentImpl(
@@ -58,23 +59,25 @@ class EventsListComponentImpl(
                 accountsRepository = accountsRepository,
                 componentContext = ctx,
                 onSave = { spendEvent ->
-                    when (config) {
-                        is EventConfig.CreateEventConfig ->
-                            createEventAndUpdateAccount(
-                                spendEvent = spendEvent,
-                                eventsRepository = eventsRepository,
-                                accountsRepository = accountsRepository
-                            )
+                    scope.launch {
+                        when (config) {
+                            is EventConfig.CreateEventConfig ->
+                                createEventAndUpdateAccount(
+                                    spendEvent = spendEvent,
+                                    eventsRepository = eventsRepository,
+                                    accountsRepository = accountsRepository
+                                )
 
-                        is EventConfig.EditEventConfig ->
-                            editExistedEventAndUpdateAccount(
-                                oldEvent = config.event,
-                                newEvent = spendEvent,
-                                eventsRepository = eventsRepository,
-                                accountsRepository = accountsRepository,
-                            )
+                            is EventConfig.EditEventConfig ->
+                                editExistedEventAndUpdateAccount(
+                                    oldEvent = config.event,
+                                    newEvent = spendEvent,
+                                    eventsRepository = eventsRepository,
+                                    accountsRepository = accountsRepository,
+                                )
+                        }
+                        createEventNav.dismiss()
                     }
-                    createEventNav.dismiss()
                 }
             )
         }
@@ -112,8 +115,10 @@ class EventsListComponentImpl(
         createEventNav.activate(EventConfig.CreateEventConfig(calendarDay))
 
     override fun editEvent(eventId: String) {
-        eventsRepository.getById(eventId)?.let {
-            createEventNav.activate(EventConfig.EditEventConfig(it))
+        scope.launch {
+            eventsRepository.getById(eventId)?.let {
+                createEventNav.activate(EventConfig.EditEventConfig(it))
+            }
         }
     }
 

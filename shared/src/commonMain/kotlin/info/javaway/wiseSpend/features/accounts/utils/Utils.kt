@@ -5,7 +5,7 @@ import info.javaway.wiseSpend.features.accounts.models.Account
 import info.javaway.wiseSpend.features.events.data.EventsRepository
 import info.javaway.wiseSpend.features.events.models.SpendEvent
 
-fun createEventAndUpdateAccount(
+suspend fun createEventAndUpdateAccount(
     spendEvent: SpendEvent,
     eventsRepository: EventsRepository,
     accountsRepository: AccountRepository
@@ -17,7 +17,7 @@ fun createEventAndUpdateAccount(
     updateAccount(oldAccount, decreasedAmount, accountsRepository)
 }
 
-fun editExistedEventAndUpdateAccount(
+suspend fun editExistedEventAndUpdateAccount(
     oldEvent: SpendEvent,
     newEvent: SpendEvent,
     eventsRepository: EventsRepository,
@@ -77,7 +77,7 @@ fun editExistedEventAndUpdateAccount(
     }
 }
 
-private fun updateAccount(
+private suspend fun updateAccount(
     newAccount: Account,
     newAmount: Double,
     accountsRepository: AccountRepository
@@ -93,7 +93,7 @@ private fun updateAccount(
     }
 }
 
-private fun resetOldAccount(
+private suspend fun resetOldAccount(
     oldAccount: Account,
     oldEvent: SpendEvent,
     accountsRepository: AccountRepository

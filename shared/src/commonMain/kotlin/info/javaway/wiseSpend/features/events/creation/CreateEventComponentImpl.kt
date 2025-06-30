@@ -7,6 +7,7 @@ import com.arkivanov.decompose.router.slot.activate
 import com.arkivanov.decompose.router.slot.childSlot
 import com.arkivanov.decompose.router.slot.dismiss
 import com.arkivanov.decompose.value.Value
+import info.javaway.wiseSpend.extensions.componentScope
 import info.javaway.wiseSpend.extensions.now
 import info.javaway.wiseSpend.features.accounts.data.AccountRepository
 import info.javaway.wiseSpend.features.accounts.list.AccountsListComponent
@@ -24,6 +25,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable
@@ -38,8 +40,16 @@ class CreateEventComponentImpl(
 ) : CreateEventComponent, ComponentContext by componentContext {
 
     private val _model: MutableStateFlow<State> = MutableStateFlow(
-        chooseMode(initialDate, spendEvent)
+        State.NONE
     )
+
+    private val scope = componentScope()
+
+    init {
+        scope.launch {
+            _model.value = chooseMode(initialDate, spendEvent)
+        }
+    }
 
     override val model: StateFlow<State> = _model.asStateFlow()
 
@@ -79,9 +89,11 @@ class CreateEventComponentImpl(
     override fun dismissCategory() = categoriesNav.dismiss()
 
     override fun selectAccount(accountId: String) {
-        accountsRepository.getById(accountId)?.let { account ->
-            _model.update { old ->
-                old.copy(selectedAccount = account)
+        scope.launch {
+            accountsRepository.getById(accountId)?.let { account ->
+                _model.update { old ->
+                    old.copy(selectedAccount = account)
+                }
             }
         }
     }
@@ -110,7 +122,7 @@ class CreateEventComponentImpl(
 
     private fun resetState() = _model.update { State.NONE }
 
-    private fun chooseMode(
+    private suspend fun chooseMode(
         initialDate: CalendarDay?,
         spendEvent: SpendEvent?
     ): State {

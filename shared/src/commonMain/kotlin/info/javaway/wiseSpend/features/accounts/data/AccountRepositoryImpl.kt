@@ -1,36 +1,40 @@
 package info.javaway.wiseSpend.features.accounts.data
 
 import info.javaway.wiseSpend.features.accounts.models.Account
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import kotlinx.datetime.LocalDateTime
 
 class AccountRepositoryImpl(
     private val dao: AccountDao,
 ): AccountRepository {
 
-    init {
-        insertDefaultAccountIfNeed()
-    }
+    override suspend fun create(account: Account) =
+        withContext(Dispatchers.IO) {
+            dao.insert(account)
+        }
 
-    override fun create(account: Account) =
-        dao.insert(account)
-
-    override fun getById(accountId: String): Account? =
-        dao.get(accountId)
+    override suspend fun getById(accountId: String): Account? =
+        withContext(Dispatchers.IO) {
+            dao.get(accountId)
+        }
 
     override fun getAllFlow(): Flow<List<Account>> =
-        dao.getAllFlow()
+        dao.getAllFlow().flowOn(Dispatchers.IO)
 
-    override fun getAll(): List<Account> = dao.getAll()
+    override suspend fun getAll(): List<Account> = withContext(Dispatchers.IO) {
+        dao.getAll()
+    }
 
-    override fun update(id: String, name: String, amount: Double, updatedAt: LocalDateTime) =
-        dao.update(id = id, name = name, amount = amount, updatedAt = updatedAt)
-
-    override fun insertAll(accounts: List<Account>) = dao.insertAll(accounts)
-
-    private fun insertDefaultAccountIfNeed() {
-        if (getById(Account.DEFAULT_ID) == null) {
-            create(Account.DEFAULT)
+    override suspend fun update(id: String, name: String, amount: Double, updatedAt: LocalDateTime) =
+        withContext(Dispatchers.IO){
+            dao.update(id = id, name = name, amount = amount, updatedAt = updatedAt)
         }
+
+    override suspend fun insertAll(accounts: List<Account>) = withContext(Dispatchers.IO){
+        dao.insertAll(accounts)
     }
 }

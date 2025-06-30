@@ -7,12 +7,12 @@ import kotlinx.datetime.LocalDateTime
 
 interface EventsRepository {
     fun getAllFlow(): Flow<List<SpendEvent>>
-    fun getAll(): List<SpendEvent>
-    fun getById(id: String): SpendEvent?
+    suspend fun getAll(): List<SpendEvent>
+    suspend fun getById(id: String): SpendEvent?
 
-    fun insertAll(events: List<SpendEvent>)
-    fun create(spendEvent: SpendEvent)
-    fun update(
+    suspend fun insertAll(events: List<SpendEvent>)
+    suspend fun create(spendEvent: SpendEvent)
+    suspend fun update(
         id: String,
         categoryId: String,
         accountId: String,

@@ -16,6 +16,10 @@ class AccountDao(
 
     private val accountTableQueries = db.accountTableQueries
 
+    init {
+        insertDefaultAccount()
+    }
+
     fun getAll(): List<Account> = accountTableQueries
         .getAll()
         .executeAsList()
@@ -47,4 +51,9 @@ class AccountDao(
     fun update(id: String, name: String, amount: Double, updatedAt: LocalDateTime) = accountTableQueries
         .update(id = id, name = name, amount = amount, updatedAt = updatedAt)
 
+    private fun insertDefaultAccount() {
+        if (get(Account.DEFAULT_ID) == null) {
+            insert(Account.DEFAULT)
+        }
+    }
 }

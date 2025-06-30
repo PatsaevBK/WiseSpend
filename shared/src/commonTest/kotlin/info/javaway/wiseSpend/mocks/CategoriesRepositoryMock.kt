@@ -10,20 +10,20 @@ internal class CategoriesRepositoryMock: CategoriesRepository {
     }
 
     var stubbedCategories: List<Category> = emptyList()
-    override fun getAll(): List<Category> {
+    override suspend fun getAll(): List<Category> {
         return stubbedCategories
     }
 
     var stubbedCategory: Category? = null
-    override fun getById(categoryId: String): Category? {
+    override suspend fun getById(categoryId: String): Category? {
         return stubbedCategory
     }
 
-    override fun insertAll(categories: List<Category>) {
+    override suspend fun insertAll(categories: List<Category>) {
         TODO("Not yet implemented")
     }
 
-    override fun create(category: Category) {
+    override suspend fun create(category: Category) {
         TODO("Not yet implemented")
     }
 }

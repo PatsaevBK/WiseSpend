@@ -6,15 +6,15 @@ import kotlinx.datetime.LocalDateTime
 
 interface AccountRepository {
 
-    fun create(account: Account)
+    suspend fun create(account: Account)
 
-    fun getById(accountId: String): Account?
+    suspend fun getById(accountId: String): Account?
 
     fun getAllFlow(): Flow<List<Account>>
 
-    fun getAll(): List<Account>
+    suspend fun getAll(): List<Account>
 
-    fun update(id: String, name: String, amount: Double, updatedAt: LocalDateTime)
+    suspend fun update(id: String, name: String, amount: Double, updatedAt: LocalDateTime)
 
-    fun insertAll(accounts: List<Account>)
+    suspend fun insertAll(accounts: List<Account>)
 }

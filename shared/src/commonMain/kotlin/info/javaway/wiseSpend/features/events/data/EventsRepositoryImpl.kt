@@ -1,6 +1,10 @@
 package info.javaway.wiseSpend.features.events.data
 
 import info.javaway.wiseSpend.features.events.models.SpendEvent
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 
@@ -9,15 +13,28 @@ class EventsRepositoryImpl(
 ): EventsRepository {
 
     override fun getAllFlow() = dao.getAllFlow()
-    override fun getAll() = dao.getAll()
-    override fun getById(id: String) = dao.get(id)
+        .flowOn(Dispatchers.IO)
 
-    override fun insertAll(events: List<SpendEvent>) = dao.insertAll(events)
-    override fun create(spendEvent: SpendEvent) {
-        dao.insert(spendEvent)
-    }
+    override suspend fun getAll() =
+        withContext(Dispatchers.IO) {
+            dao.getAll()
+        }
 
-    override fun update(
+    override suspend fun getById(id: String) =
+        withContext(Dispatchers.IO) {
+            dao.get(id)
+        }
+
+    override suspend fun insertAll(events: List<SpendEvent>) =
+        withContext(Dispatchers.IO) {
+            dao.insertAll(events)
+        }
+    override suspend fun create(spendEvent: SpendEvent) =
+        withContext(Dispatchers.IO) {
+            dao.insert(spendEvent)
+        }
+
+    override suspend fun update(
         id: String,
         categoryId: String,
         accountId: String,
@@ -27,15 +44,17 @@ class EventsRepositoryImpl(
         updatedAt: LocalDateTime,
         note: String
     ) {
-        dao.update(
-            id = id,
-            categoryId = categoryId,
-            accountId = accountId,
-            title = title,
-            cost = cost,
-            date = date,
-            updatedAt = updatedAt,
-            note = note
-        )
+        withContext(Dispatchers.IO) {
+            dao.update(
+                id = id,
+                categoryId = categoryId,
+                accountId = accountId,
+                title = title,
+                cost = cost,
+                date = date,
+                updatedAt = updatedAt,
+                note = note
+            )
+        }
     }
 }

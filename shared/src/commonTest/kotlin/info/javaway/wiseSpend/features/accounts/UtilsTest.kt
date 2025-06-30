@@ -9,6 +9,7 @@ import info.javaway.wiseSpend.features.accounts.utils.editExistedEventAndUpdateA
 import info.javaway.wiseSpend.features.events.models.SpendEvent
 import info.javaway.wiseSpend.mocks.AccountsRepositoryMock
 import info.javaway.wiseSpend.mocks.EventsRepositoryMock
+import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 
 internal class UtilsTest {
@@ -18,7 +19,7 @@ internal class UtilsTest {
     private var spendEvent = SpendEvent.NONE.copy(id = "test")
 
     @Test
-    fun `createEventAndUpdateAccount creates spend event in events repository`() {
+    fun `createEventAndUpdateAccount creates spend event in events repository`() = runTest {
         val requiredEvent = spendEvent
 
         createEventAndUpdateAccount(
@@ -32,7 +33,7 @@ internal class UtilsTest {
     }
 
     @Test
-    fun `createEventAndUpdateAccount decreases account balance by spend amount`() {
+    fun `createEventAndUpdateAccount decreases account balance by spend amount`() = runTest {
         val initialAmount = 1_000.50
         val spendCost = 550.10
         val requiredAccountAmount = initialAmount - spendCost
@@ -51,7 +52,7 @@ internal class UtilsTest {
 
 
     @Test
-    fun `editExistedEventAndUpdateAccount update spend event in events repository`() {
+    fun `editExistedEventAndUpdateAccount update spend event in events repository`() = runTest {
         val oldEvent = spendEvent.copy(id = "old", accountId = "old", cost = 500.0)
         val oldAccount = Account.DEFAULT.copy(id = "old", amount = 1_000.0)
         val newEvent = spendEvent.copy(id = "new", accountId = "new", cost = 100.0)
@@ -70,7 +71,7 @@ internal class UtilsTest {
     }
 
     @Test
-    fun `editExistedEventAndUpdateAccount reset oldAccount`() {
+    fun `editExistedEventAndUpdateAccount reset oldAccount`() = runTest {
         val oldEvent = spendEvent.copy(id = "old", accountId = "old", cost = 500.0)
         val oldAccount = Account.DEFAULT.copy(id = "old", amount = 1_000.0)
         val newEvent = spendEvent.copy(id = "new", accountId = "new", cost = 100.0)
@@ -90,7 +91,7 @@ internal class UtilsTest {
     }
 
     @Test
-    fun `editExistedEventAndUpdateAccount update newAccount`() {
+    fun `editExistedEventAndUpdateAccount update newAccount`() = runTest {
         val oldEvent = spendEvent.copy(id = "same", accountId = "old", cost = 500.0)
         val oldAccount = Account.DEFAULT.copy(id = "old", amount = 1_000.0)
         val newEvent = spendEvent.copy(id = "same", accountId = "new", cost = 100.0)
@@ -110,7 +111,7 @@ internal class UtilsTest {
     }
 
     @Test
-    fun `editExistedEventAndUpdateAccount update newAccount if cost increased`() {
+    fun `editExistedEventAndUpdateAccount update newAccount if cost increased`() = runTest {
         val sameAccount = Account.DEFAULT.copy(id = "same", amount = 1_000.0)
         val oldEvent = spendEvent.copy(id = "same", accountId = sameAccount.id, cost = 100.0, note = "old")
         val newEvent = spendEvent.copy(id = "same", accountId = sameAccount.id, cost = 150.00, note = "new")
@@ -127,7 +128,7 @@ internal class UtilsTest {
     }
 
     @Test
-    fun `editExistedEventAndUpdateAccount update newAccount if cost decreased`() {
+    fun `editExistedEventAndUpdateAccount update newAccount if cost decreased`() = runTest {
         val sameAccount = Account.DEFAULT.copy(id = "same", amount = 1_000.0)
         val oldEvent = spendEvent.copy(id = "same", accountId = sameAccount.id, cost = 100.0, note = "old")
         val newEvent = spendEvent.copy(id = "same", accountId = sameAccount.id, cost = 50.00, note = "new")

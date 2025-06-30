@@ -11,28 +11,28 @@ internal class EventsRepositoryMock : EventsRepository {
         TODO("Not yet implemented")
     }
 
-    override fun getAll(): List<SpendEvent> {
+    override suspend fun getAll(): List<SpendEvent> {
         TODO("Not yet implemented")
     }
 
-    override fun getById(id: String): SpendEvent? {
+    override suspend fun getById(id: String): SpendEvent? {
         TODO("Not yet implemented")
     }
 
-    override fun insertAll(events: List<SpendEvent>) {
+    override suspend fun insertAll(events: List<SpendEvent>) {
         TODO("Not yet implemented")
     }
 
     var createSpendEvent: SpendEvent? = null
     var isCreateInvoked = false
-    override fun create(spendEvent: SpendEvent) {
+    override suspend fun create(spendEvent: SpendEvent) {
         isCreateInvoked = true
         createSpendEvent = spendEvent
     }
 
     var updateId: String? = null
     var isUpdateInvoked = false
-    override fun update(
+    override suspend fun update(
         id: String,
         categoryId: String,
         accountId: String,

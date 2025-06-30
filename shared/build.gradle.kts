@@ -72,6 +72,7 @@ kotlin {
             implementation(kotlin("test-annotations-common"))
 
             implementation(libs.assertk)
+            implementation(libs.kotlin.coroutines.test)
         }
 
         jvmMain.dependencies {

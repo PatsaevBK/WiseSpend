@@ -14,6 +14,7 @@ napier = "2.7.1"
 kotlinx-serialization = "1.8.1"
 composeHotReload = "1.0.0-alpha10"
 assertk = "0.28.1"
+test-coroutines = "1.10.2"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-ktx" }
@@ -44,6 +45,7 @@ lifecycle = { module = "com.arkivanov.essenty:lifecycle", version.ref = "essenty
 
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 assertk = { module = "com.willowtreeapps.assertk:assertk", version.ref = "assertk" }
+kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "test-coroutines" }
 
 [plugins]
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

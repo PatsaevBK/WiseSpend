@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
 class CategoriesListComponentImpl(
@@ -39,8 +40,10 @@ class CategoriesListComponentImpl(
                 componentContext = ctx,
                 onDismiss = { nav.dismiss() },
                 onSaveCategory = {
-                    categoriesRepository.create(it)
-                    nav.dismiss()
+                    scope.launch {
+                        categoriesRepository.create(it)
+                        nav.dismiss()
+                    }
                 },
             )
         }

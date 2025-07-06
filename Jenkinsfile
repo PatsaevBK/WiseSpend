@@ -24,7 +24,13 @@ pipeline {
     }
     post {
         always {
-            cleanWs()
+            script {
+                if (getContext(hudson.FilePath)) {
+                    cleanWs()
+                } else {
+                    echo "Workspace is not available for cleanWs()"
+                }
+            }
         }
     }
 }
